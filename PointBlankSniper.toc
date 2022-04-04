@@ -1,0 +1,10 @@
+## Interface: 90200
+## Title: Blank Snipe
+## Version: @project-version@
+## Author: plusmouse
+## RequiredDeps: Auctionator
+## SavedVariables: BLANK_SNIPE_CURRENT_LIST
+## Notes: Snipes using a blank search on the Auction House
+
+Locales\Manifest.xml
+Source\Manifest.xml

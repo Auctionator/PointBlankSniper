@@ -1,0 +1,81 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Frame
+    name="PointBlankSniperTabFrameTemplate"
+    mixin="PointBlankSniperTabFrameMixin"
+    virtual="true"
+    parentKey="PointBlankSniperTabFrame"
+    hidden="true"
+  >
+    <Anchors>
+      <Anchor point="TOP" y="-60"/>
+      <Anchor point="LEFT" x="4"/>
+      <Anchor point="BOTTOMRIGHT" x="-4" y="27"/>
+    </Anchors>
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+      <OnUpdate method="OnUpdate"/>
+      <OnShow method="OnShow"/>
+    </Scripts>
+    <Frames>
+      <Frame parentKey="Scanner" inherits="PointBlankSniperListScannerTemplate"/>
+      <Button parentKey="StartButton" inherits="UIPanelDynamicResizeButtonTemplate" text="POINT_BLANK_SNIPER_L_START">
+        <Size x="70" y="22"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" y="20" x="180"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>self:GetParent():Start()</OnClick>
+        </Scripts>
+      </Button>
+      <Button parentKey="StopButton" inherits="UIPanelDynamicResizeButtonTemplate" text="POINT_BLANK_SNIPER_L_STOP">
+        <Size x="70" y="22"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.StartButton" x="20"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>self:GetParent():Stop()</OnClick>
+        </Scripts>
+      </Button>
+    </Frames>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <FontString parentKey="ShoppingListNameLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_SHOPPING_LIST_NAME_COLON">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.StopButton" x="40" y="-4"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <EditBox autoFocus="false" inherits="InputBoxTemplate" parentKey="ListName">
+        <Size x="70" y="20" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.ShoppingListNameLabel" x="20" y="4"/>
+        </Anchors>
+        <Scripts>
+          <OnEscapePressed>self:ClearFocus()</OnEscapePressed>
+          <OnEnterPressed>Auctionator.Components.ReportEnterPressed()</OnEnterPressed>
+        </Scripts>
+      </EditBox>
+      <Frame parentKey="DataProvider" mixin="PointBlankSniperDataProviderMixin">
+        <Scripts>
+          <OnLoad method="OnLoad"/>
+          <OnUpdate method="OnUpdate"/>
+        </Scripts>
+      </Frame>
+      <Frame parentKey="ResultsListing" inherits="AuctionatorResultsListingTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="0"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20"/>
+        </Anchors>
+      </Frame>
+
+      <Frame parentKey="ResultsListingInset" inherits="AuctionatorInsetTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ResultsListing" relativePoint="TOPLEFT" x="-24" y="-25"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ResultsListing" relativePoint="BOTTOMRIGHT"  y="2"/>
+        </Anchors>
+      </Frame>
+    </Frames>
+  </Frame>
+</Ui>
