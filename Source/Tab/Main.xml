@@ -9,7 +9,7 @@
     <Anchors>
       <Anchor point="TOP" y="-60"/>
       <Anchor point="LEFT" x="4"/>
-      <Anchor point="BOTTOMRIGHT" x="-4" y="27"/>
+      <Anchor point="BOTTOMRIGHT" x="-4"/>
     </Anchors>
     <Scripts>
       <OnLoad method="OnLoad"/>
@@ -65,8 +65,8 @@
       </Frame>
       <Frame parentKey="ResultsListing" inherits="AuctionatorResultsListingTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="0"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-40"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="27"/>
         </Anchors>
       </Frame>
 

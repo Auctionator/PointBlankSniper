@@ -138,8 +138,10 @@ function PointBlankSniperListScannerMixin:DoInternalSearch()
         and (
           not search.isExact or searchString == nameCache[index]
         )
-then
-        table.insert(self.results, self.blankSearchResults.cache[index])
+      then
+        if tIndexOf(self.results, currentResult) == nil then
+          table.insert(self.results, currentResult)
+        end
       end
       index = index + 1
     end
