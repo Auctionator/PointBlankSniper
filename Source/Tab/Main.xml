@@ -57,6 +57,17 @@
           <OnEnterPressed>Auctionator.Components.ReportEnterPressed()</OnEnterPressed>
         </Scripts>
       </EditBox>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="UseBleep">
+        <KeyValues>
+          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_USE_BLEEP" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" y="-10" x="20"/>
+          <Anchor point="RIGHT" relativePoint="RIGHT" x="-300"/>
+        </Anchors>
+      </Frame>
+
       <Frame parentKey="DataProvider" mixin="PointBlankSniperDataProviderMixin">
         <Scripts>
           <OnLoad method="OnLoad"/>

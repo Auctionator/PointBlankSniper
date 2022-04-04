@@ -9,10 +9,12 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   })
 
   POINT_BLANK_SNIPER_CURRENT_LIST = POINT_BLANK_SNIPER_CURRENT_LIST or ""
+  POINT_BLANK_SNIPER_DISABLE_BLEEP = POINT_BLANK_SNIPER_DISABLE_BLEEP or false
 
   self.ResultsListing:Init(self.DataProvider)
   self.ListName:SetText(POINT_BLANK_SNIPER_CURRENT_LIST)
   self.StartButton:SetEnabled(Auctionator.ShoppingLists.ListIndex(POINT_BLANK_SNIPER_CURRENT_LIST) ~= nil)
+  self.UseBleep:SetChecked(not POINT_BLANK_SNIPER_DISABLE_BLEEP)
 end
 
 function PointBlankSniperTabFrameMixin:OnShow()
@@ -34,6 +36,8 @@ function PointBlankSniperTabFrameMixin:OnUpdate()
   if not self.StartButton:IsEnabled() then
     self:Stop()
   end
+
+  POINT_BLANK_SNIPER_DISABLE_BLEEP = not self.UseBleep:GetChecked()
 end
 
 function PointBlankSniperTabFrameMixin:Stop()
@@ -44,13 +48,13 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
   if eventName == PointBlankSniper.Events.SnipeSearchStart then
   elseif eventName == PointBlankSniper.Events.SnipeSearchNewResults then
     local results = ...
-    if #results ~= self.oldResultsCount then
+    if #results ~= self.oldResultsCount and not POINT_BLANK_SNIPER_DISABLE_BLEEP then
       self.oldResultsCount = #results
       PlaySoundFile("Interface\\Addons\\PointBlankSniper\\Tones\\Bleep.mp3")
     end
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
     local results = ...
-    if #results ~= self.oldResultsCount then
+    if #results ~= self.oldResultsCount and not POINT_BLANK_SNIPER_DISABLE_BLEEP then
       self.oldResultsCount = #results
       PlaySoundFile("Interface\\Addons\\PointBlankSniper\\Tones\\Bleep.mp3")
     end

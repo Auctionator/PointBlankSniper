@@ -3,7 +3,7 @@
 ## Version: @project-version@
 ## Author: plusmouse
 ## RequiredDeps: Auctionator
-## SavedVariables: POINT_BLANK_SNIPER_CURRENT_LIST, POINT_BLANK_SNIPER_USE_BLEEP
+## SavedVariables: POINT_BLANK_SNIPER_CURRENT_LIST, POINT_BLANK_SNIPER_DISABLE_BLEEP
 ## Notes: Snipes using a blank search on the Auction House
 
 Locales\Manifest.xml
