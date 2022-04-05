@@ -9,6 +9,14 @@ local SNIPE_RESULTS_TABLE_LAYOUT = {
   },
   {
     headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerParameters = { "comparisonPrice" },
+    headerText = POINT_BLANK_SNIPER_L_COMPARISON_PRICE,
+    cellTemplate = "AuctionatorPriceCellTemplate",
+    cellParameters = { "comparisonPrice" },
+    width = 140
+  },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
     headerParameters = { "name" },
     headerText = AUCTIONATOR_L_RESULTS_NAME_COLUMN,
     cellTemplate = "AuctionatorItemKeyCellTemplate"

@@ -7,6 +7,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["STOP"] = "Stop"
   L["SHOPPING_LIST_NAME_COLON"] = "Shopping List Name:"
   L["USE_BLEEP"] = "Play bleep tone"
+  L["COMPARISON_PRICE"] = "Comparison Price"
 
   return L
 end

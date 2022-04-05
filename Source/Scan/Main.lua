@@ -120,12 +120,10 @@ local function GetStartingIndex(startPoint, endPoint, array, searchString)
   end
 end
 
-function PointBlankSniperListScannerMixin:DoInternalSearch()
+function PointBlankSniperListScannerMixin:DoShoppingListSearch()
   local strFind = string.find
   local nameCache = self.blankSearchResults.names
   for _, search in ipairs(self.searchFor) do
-    -- These parameters are cached in locals for performance. Testing indicates
-    -- time savings of at least 50% just from this.
     local searchString = search.searchString
     local index = GetStartingIndex(1, #nameCache, nameCache, searchString)
     while index < #nameCache and strFind(nameCache[index], searchString, 1, true) ~= nil do
@@ -140,12 +138,36 @@ function PointBlankSniperListScannerMixin:DoInternalSearch()
         )
       then
         if tIndexOf(self.results, currentResult) == nil then
+          currentResult.comparisonPrice = search.price
           table.insert(self.results, currentResult)
         end
       end
       index = index + 1
     end
   end
+end
+
+function PointBlankSniperListScannerMixin:DoUndermineSearch()
+  for _, result in ipairs(self.blankSearchResults.cache) do
+    local itemKey = result.itemKey
+    local itemString = "item:" .. itemKey.itemID
+    if itemKey.battlePetSpeciesID ~= 0 then
+      itemString = "battlepet:" .. itemKey.battlePetSpeciesID
+    end
+    local tujInfo = {}
+    TUJMarketInfo(itemString,tujInfo)
+    if tujInfo['globalMedian'] ~= nil then
+      if result.minPrice <= 0.25 * tujInfo['globalMedian'] then
+        table.insert(self.results, result)
+        result.comparisonPrice = tujInfo['globalMedian']
+      end
+    end
+  end
+end
+
+function PointBlankSniperListScannerMixin:DoInternalSearch()
+  self:DoShoppingListSearch()
+  --self:DoUndermineSearch()
 
   if self.blankSearchResults.announcedReady then
     Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchComplete, self.results)
