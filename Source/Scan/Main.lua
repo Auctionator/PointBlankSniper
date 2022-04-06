@@ -45,14 +45,8 @@ function PointBlankSniperListScannerMixin:Start()
 end
 
 function PointBlankSniperListScannerMixin:DoSearch()
-  self.blankSearchResults = {
-    cache = {},
-    names = {},
-    namesWaiting = 0,
-    gotCompleteCache = false,
-    announcedReady = false,
-  }
   self.results = {}
+  self.blankSearchResultsWaiting = 0
 
   Auctionator.AH.SendBrowseQuery({
       searchString = "",
@@ -69,8 +63,14 @@ function PointBlankSniperListScannerMixin:CacheSearchResults(addedResults)
     Auctionator.AH.RequestMoreBrowseResults()
   end
 
-  local resultsInfo = self.blankSearchResults
-  resultsInfo.gotCompleteCache = Auctionator.AH.HasFullBrowseResults()
+  local resultsInfo = {
+    cache = {},
+    names = {},
+    namesWaiting = 0,
+    gotCompleteCache = false,
+    announcedReady = false,
+  }
+  self.blankSearchResultsWaiting = self.blankSearchResultsWaiting + 1
   resultsInfo.namesWaiting = resultsInfo.namesWaiting + #addedResults
 
   for _, result in ipairs(addedResults) do
@@ -82,10 +82,9 @@ function PointBlankSniperListScannerMixin:CacheSearchResults(addedResults)
         resultsInfo.namesWaiting = resultsInfo.namesWaiting - 1
         resultsInfo.names[index] = CleanSearchString(itemKeyInfo.itemName)
         if resultsInfo.namesWaiting <= 0 then
-          if resultsInfo.gotCompleteCache then
-            resultsInfo.announcedReady = true
-          end
-          self:DoInternalSearch()
+          self.blankSearchResultsWaiting = self.blankSearchResultsWaiting - 1
+          resultsInfo.announcedReady = self.blankSearchResultsWaiting <= 0 and Auctionator.AH.HasFullBrowseResults()
+          self:DoInternalSearch(resultsInfo)
         end
       end)
     else
@@ -93,9 +92,9 @@ function PointBlankSniperListScannerMixin:CacheSearchResults(addedResults)
     end
   end
 
-  if resultsInfo.namesWaiting <= 0 and resultsInfo.gotCompleteCache and not resultsInfo.announcedReady then
-    self:UnregisterEvents(CACHING_SEARCH_EVENTS)
-    self:SearchGroupReady()
+  if resultsInfo.namesWaiting <= 0 and self.blankSearchResultsWaiting <= 0 and Auctionator.AH.HasFullBrowseResults() and not resultsInfo.announcedReady then
+    resultsInfo.announcedReady = true
+    self:DoInternalSearch(resultsInfo)
   end
 end
 
@@ -120,14 +119,14 @@ local function GetStartingIndex(startPoint, endPoint, array, searchString)
   end
 end
 
-function PointBlankSniperListScannerMixin:DoShoppingListSearch()
+function PointBlankSniperListScannerMixin:DoShoppingListSearch(resultsInfo)
   local strFind = string.find
-  local nameCache = self.blankSearchResults.names
+  local nameCache = resultsInfo.names
   for _, search in ipairs(self.searchFor) do
     local searchString = search.searchString
     local index = GetStartingIndex(1, #nameCache, nameCache, searchString)
     while index < #nameCache and strFind(nameCache[index], searchString, 1, true) ~= nil do
-      local currentResult = self.blankSearchResults.cache[index]
+      local currentResult = resultsInfo.cache[index]
       if (not search.price or (
           currentResult.minPrice <= search.price and
           currentResult.itemKey.itemLevel >= search.minItemLevel
@@ -147,8 +146,8 @@ function PointBlankSniperListScannerMixin:DoShoppingListSearch()
   end
 end
 
-function PointBlankSniperListScannerMixin:DoUndermineSearch()
-  for _, result in ipairs(self.blankSearchResults.cache) do
+function PointBlankSniperListScannerMixin:DoUndermineSearch(resultsInfo)
+  for _, result in ipairs(resultsInfo.cache) do
     local itemKey = result.itemKey
     local itemString = "item:" .. itemKey.itemID
     if itemKey.battlePetSpeciesID ~= 0 then
@@ -165,11 +164,11 @@ function PointBlankSniperListScannerMixin:DoUndermineSearch()
   end
 end
 
-function PointBlankSniperListScannerMixin:DoInternalSearch()
-  self:DoShoppingListSearch()
-  --self:DoUndermineSearch()
+function PointBlankSniperListScannerMixin:DoInternalSearch(resultsInfo)
+  self:DoShoppingListSearch(resultsInfo)
+  --self:DoUndermineSearch(resultsInfo)
 
-  if self.blankSearchResults.announcedReady then
+  if resultsInfo.announcedReady then
     Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchComplete, self.results)
     self:DoSearch()
   else
