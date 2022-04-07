@@ -1,10 +1,11 @@
 ## Interface: 90200
-## Title: Blank Snipe
+## Title: Point Blank Sniper
 ## Version: @project-version@
 ## Author: plusmouse
 ## RequiredDeps: Auctionator
+## OptionalDeps: TheUndermineJournal
 ## SavedVariables: POINT_BLANK_SNIPER_CURRENT_LIST, POINT_BLANK_SNIPER_DISABLE_BLEEP, POINT_BLANK_SNIPER_DISABLE_FLASH, POINT_BLANK_SNIPER_COLUMNS, POINT_BLANK_SNIPER_MARKET_DATA
-## Notes: Snipes using a blank search on the Auction House
+## Notes: Scans for great deals using a shopping list
 
 Locales\Manifest.xml
 Source\Manifest.xml
