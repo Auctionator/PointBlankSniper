@@ -58,6 +58,7 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
       self.oldResultsCount = #results
       PlaySoundFile("Interface\\Addons\\PointBlankSniper\\Tones\\Bleep.mp3")
     end
+    self.Scanner:Start()
   end
 end
 

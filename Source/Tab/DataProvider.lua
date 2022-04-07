@@ -52,7 +52,7 @@ function PointBlankSniperDataProviderMixin:ReceiveEvent(eventName, results, ...)
     self.onSearchStarted()
   elseif eventName == PointBlankSniper.Events.SnipeSearchNewResults then
     self.onSearchStarted()
-    self:AppendEntries(results)
+    self:AppendEntries(results, false)
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
     self:Reset()
     self:AppendEntries(results, true)

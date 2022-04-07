@@ -41,10 +41,7 @@ function PointBlankSniperListScannerMixin:Start()
     "AUCTION_HOUSE_BROWSE_RESULTS_ADDED",
     "AUCTION_HOUSE_BROWSE_FAILURE",
   })
-  self:DoSearch()
-end
 
-function PointBlankSniperListScannerMixin:DoSearch()
   self.results = {}
   self.blankSearchResultsWaiting = 0
 
@@ -54,10 +51,12 @@ function PointBlankSniperListScannerMixin:DoSearch()
       itemClassFilters = {},
       sorts = Auctionator.Constants.ShoppingListSorts,
   })
+
+  Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchStart)
 end
 
--- Cache the results of the blank search with the associated item names for the
--- results. Called multiple times to process each batch of results.
+-- Processes each batch of results, saving the names in advance before
+-- submitting them to another function to do the query on them
 function PointBlankSniperListScannerMixin:CacheSearchResults(addedResults)
   if not Auctionator.AH.HasFullBrowseResults() then
     Auctionator.AH.RequestMoreBrowseResults()
@@ -170,7 +169,6 @@ function PointBlankSniperListScannerMixin:DoInternalSearch(resultsInfo)
 
   if resultsInfo.announcedReady then
     Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchComplete, self.results)
-    self:DoSearch()
   else
     Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchNewResults, self.results)
   end
