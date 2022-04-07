@@ -43,7 +43,10 @@ function PointBlankSniperDataProviderMixin:SetUpEvents()
     PointBlankSniper.Events.SnipeSearchStart,
     PointBlankSniper.Events.SnipeSearchNewResults,
     PointBlankSniper.Events.SnipeSearchComplete,
-    PointBlankSniper.Events.SnipeSearchAbort
+    PointBlankSniper.Events.SnipeSearchAbort,
+    Auctionator.ShoppingLists.Events.EditListItem,
+    Auctionator.ShoppingLists.Events.ListItemAdded,
+    Auctionator.ShoppingLists.Events.ListItemReplaced
   })
 end
 
@@ -58,6 +61,9 @@ function PointBlankSniperDataProviderMixin:ReceiveEvent(eventName, results, ...)
     self:AppendEntries(results, true)
   elseif eventName == PointBlankSniper.Events.SnipeSearchAbort then
     self:AppendEntries({}, true)
+  else
+    -- Shopping list change
+    self:Reset()
   end
 end
 

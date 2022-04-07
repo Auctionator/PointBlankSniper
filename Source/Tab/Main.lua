@@ -51,12 +51,14 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
     if #results ~= self.oldResultsCount and not POINT_BLANK_SNIPER_DISABLE_BLEEP then
       self.oldResultsCount = #results
       PlaySoundFile("Interface\\Addons\\PointBlankSniper\\Tones\\Bleep.mp3")
+      FlashClientIcon()
     end
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
     local results = ...
     if #results ~= self.oldResultsCount and not POINT_BLANK_SNIPER_DISABLE_BLEEP then
       self.oldResultsCount = #results
       PlaySoundFile("Interface\\Addons\\PointBlankSniper\\Tones\\Bleep.mp3")
+      FlashClientIcon()
     end
     self.Scanner:Start()
   end
