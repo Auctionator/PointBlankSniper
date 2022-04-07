@@ -64,7 +64,17 @@
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" y="-10" x="20"/>
-          <Anchor point="RIGHT" relativePoint="RIGHT" x="-300"/>
+          <Anchor point="RIGHT" relativePoint="RIGHT" x="-400"/>
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="UseFlash">
+        <KeyValues>
+          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_USE_FLASH" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" y="-10" x="-400"/>
+          <Anchor point="RIGHT" relativePoint="RIGHT"/>
         </Anchors>
       </Frame>
 

@@ -28,6 +28,7 @@ PointBlankSniperDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMixi
 
 function PointBlankSniperDataProviderMixin:OnLoad()
   Auctionator.Debug.Message("PointBlankSniperDataProviderMixin:OnLoad()")
+  POINT_BLANK_SNIPER_COLUMNS = POINT_BLANK_SNIPER_COLUMNS or {}
 
   self:SetUpEvents()
 
