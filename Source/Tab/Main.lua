@@ -13,11 +13,16 @@ function PointBlankSniperTabFrameMixin:OnLoad()
 
   self.ResultsListing:Init(self.DataProvider)
   self.ListName:SetText(POINT_BLANK_SNIPER_CURRENT_LIST)
-  self.StartButton:SetEnabled(Auctionator.ShoppingLists.ListIndex(POINT_BLANK_SNIPER_CURRENT_LIST) ~= nil)
+  self:UpdateStartButton()
   self.UseBleep:SetChecked(not POINT_BLANK_SNIPER_DISABLE_BLEEP)
 end
 
+function PointBlankSniperTabFrameMixin:UpdateStartButton()
+  self.StartButton:SetEnabled(Auctionator.ShoppingLists.ListIndex(POINT_BLANK_SNIPER_CURRENT_LIST) ~= nil)
+end
+
 function PointBlankSniperTabFrameMixin:OnShow()
+  self:UpdateStartButton()
   if self.StartButton:IsEnabled() then
     self:Start()
   end
@@ -32,7 +37,7 @@ end
 
 function PointBlankSniperTabFrameMixin:OnUpdate()
   POINT_BLANK_SNIPER_CURRENT_LIST = self.ListName:GetText()
-  self.StartButton:SetEnabled(Auctionator.ShoppingLists.ListIndex(POINT_BLANK_SNIPER_CURRENT_LIST) ~= nil)
+  self:UpdateStartButton()
   if not self.StartButton:IsEnabled() then
     self:Stop()
   end
