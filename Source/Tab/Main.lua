@@ -14,10 +14,11 @@ function PointBlankSniperTabFrameMixin:OnLoad()
 
   self.ResultsListing:Init(self.DataProvider)
   self.ListName:SetText(POINT_BLANK_SNIPER_CURRENT_LIST)
-  self:UpdateStartButton()
-  self:UpdateConfigs()
   self.UseBleep:SetChecked(not POINT_BLANK_SNIPER_DISABLE_BLEEP)
   self.UseFlash:SetChecked(not POINT_BLANK_SNIPER_DISABLE_FLASH)
+
+  self:UpdateStartButton()
+  self:UpdateConfigs()
 end
 
 function PointBlankSniperTabFrameMixin:UpdateStartButton()
