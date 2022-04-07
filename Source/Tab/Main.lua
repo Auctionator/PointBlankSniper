@@ -8,8 +8,6 @@ function PointBlankSniperTabFrameMixin:OnLoad()
     PointBlankSniper.Events.SnipeSearchComplete
   })
 
-  self:SetupMarketDataMarketDropdown()
-
   POINT_BLANK_SNIPER_CURRENT_LIST = POINT_BLANK_SNIPER_CURRENT_LIST or ""
   POINT_BLANK_SNIPER_DISABLE_BLEEP = POINT_BLANK_SNIPER_DISABLE_BLEEP or false
   POINT_BLANK_SNIPER_DISABLE_FLASH = POINT_BLANK_SNIPER_DISABLE_FLASH or false
@@ -17,6 +15,8 @@ function PointBlankSniperTabFrameMixin:OnLoad()
     market = PointBlankSniper.Constants.Market.TUJ_Region,
     percentage = 0.15
   }
+
+  self:SetupMarketDataMarketDropdown()
 
   self.ResultsListing:Init(self.DataProvider)
   self.ListName:SetText(POINT_BLANK_SNIPER_CURRENT_LIST)
