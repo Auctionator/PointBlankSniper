@@ -1,7 +1,3 @@
--- Limits per-frame processing to minimise impact on frame rate. Increasing this
--- value usually speeds up the search, but drops the frame rate slightly.
-local PROCESSING_PER_FRAME_LIMIT = 400
-
 local function CleanSearchString(searchString)
   return string.gsub(string.lower(searchString), "\"", "")
 end
