@@ -93,7 +93,7 @@ function PointBlankSniperDataProviderMixin:GetTableLayout()
 end
 
 function PointBlankSniperDataProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.POINT_BLANK_SNIPER_COLUMNS)
+  return POINT_BLANK_SNIPER_COLUMNS
 end
 
 function PointBlankSniperDataProviderMixin:GetRowTemplate()
