@@ -23,6 +23,10 @@ function PointBlankSniperListScannerMixin:SetList(listName)
   end
 end
 
+function PointBlankSniperListScannerMixin:SetMarketCheck(checkFunc)
+  self.marketDataCheck = checkFunc or (function() return true end)
+end
+
 function PointBlankSniperListScannerMixin:OnShow()
   self.searchFor = {}
 end
@@ -122,15 +126,20 @@ function PointBlankSniperListScannerMixin:DoShoppingListSearch(resultsInfo)
     local index = GetStartingIndex(1, #nameCache, nameCache, searchString)
     while index < #nameCache and strFind(nameCache[index], searchString, 1, true) ~= nil do
       local currentResult = resultsInfo.cache[index]
-      if (not search.price or (
-          currentResult.minPrice <= search.price and
-          currentResult.itemKey.itemLevel >= search.minItemLevel
-          )
-        )
-        and (
-          not search.isExact or searchString == nameCache[index]
-        )
-      then
+      local check = true
+      if not search.price then
+        check = check and self.marketDataCheck(currentResult)
+      else
+        check = check and currentResult.minPrice <= search.price
+      end
+
+      if search.minItemLevel ~= nil then
+        check = check and currentResult.itemKey.itemLevel >= search.minItemLevel
+      end
+
+      check = check and (not search.IsExact or searchString == nameCache[index])
+
+      if check then
         if tIndexOf(self.results, currentResult) == nil then
           currentResult.comparisonPrice = search.price
           table.insert(self.results, currentResult)
@@ -141,27 +150,8 @@ function PointBlankSniperListScannerMixin:DoShoppingListSearch(resultsInfo)
   end
 end
 
-function PointBlankSniperListScannerMixin:DoUndermineSearch(resultsInfo)
-  for _, result in ipairs(resultsInfo.cache) do
-    local itemKey = result.itemKey
-    local itemString = "item:" .. itemKey.itemID
-    if itemKey.battlePetSpeciesID ~= 0 then
-      itemString = "battlepet:" .. itemKey.battlePetSpeciesID
-    end
-    local tujInfo = {}
-    TUJMarketInfo(itemString,tujInfo)
-    if tujInfo['globalMedian'] ~= nil then
-      if result.minPrice <= 0.25 * tujInfo['globalMedian'] then
-        table.insert(self.results, result)
-        result.comparisonPrice = tujInfo['globalMedian']
-      end
-    end
-  end
-end
-
 function PointBlankSniperListScannerMixin:DoInternalSearch(resultsInfo)
   self:DoShoppingListSearch(resultsInfo)
-  --self:DoUndermineSearch(resultsInfo)
 
   if resultsInfo.announcedReady then
     Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchComplete, self.results)

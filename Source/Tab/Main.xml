@@ -64,7 +64,7 @@
         </KeyValues>
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" y="-10" x="20"/>
-          <Anchor point="RIGHT" relativePoint="RIGHT" x="-400"/>
+          <Anchor point="RIGHT" relativePoint="RIGHT" x="-600"/>
         </Anchors>
       </Frame>
 
@@ -73,9 +73,25 @@
           <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_USE_FLASH" type="global" />
         </KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" y="-10" x="-400"/>
-          <Anchor point="RIGHT" relativePoint="RIGHT"/>
+          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" y="-10" x="-600"/>
+          <Anchor point="RIGHT" relativePoint="RIGHT" x="-400"/>
         </Anchors>
+      </Frame>
+    </Frames>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <FontString parentKey="MarketDataLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_MARKET_DATA_COLON">
+          <Anchors>
+            <Anchor point="TOPLEFT" x="30" y="-55"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Frame inherits="AuctionatorDropDown" parentKey="MarketDataMarket">
+       <Anchors>
+        <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.MarketDataLabel" y="8" x="5"/>
+       </Anchors>
       </Frame>
 
       <Frame parentKey="DataProvider" mixin="PointBlankSniperDataProviderMixin">
@@ -86,7 +102,7 @@
       </Frame>
       <Frame parentKey="ResultsListing" inherits="AuctionatorResultsListingTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-40"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-80"/>
           <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="27"/>
         </Anchors>
       </Frame>
