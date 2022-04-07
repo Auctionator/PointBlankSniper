@@ -1,0 +1,26 @@
+name: Curse Build
+
+on:
+  push:
+    branches:
+    - master
+    tags:
+    - '*'
+
+    paths-ignore:
+    - ".github/**"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - uses: BigWigsMods/packager@v2
+      with:
+        args: -p 606496
+      env:
+        GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+        CF_API_KEY: ${{ secrets.plusmouse_curseforge }}
