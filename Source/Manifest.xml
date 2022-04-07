@@ -3,6 +3,7 @@
   <Script file="Objects.lua" />
   <Script file="Events.lua" />
   <Script file="Constants.lua" />
+  <Script file="Config.lua" />
 
   <Include file="Scan\Manifest.xml"/>
   <Include file="Tab\Manifest.xml"/>

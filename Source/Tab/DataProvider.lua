@@ -13,6 +13,7 @@ local SNIPE_RESULTS_TABLE_LAYOUT = {
     headerText = POINT_BLANK_SNIPER_L_COMPARISON_PRICE,
     cellTemplate = "AuctionatorPriceCellTemplate",
     cellParameters = { "comparisonPrice" },
+    defaultHide = true,
     width = 140
   },
   {
@@ -90,9 +91,9 @@ function PointBlankSniperDataProviderMixin:GetTableLayout()
   return SNIPE_RESULTS_TABLE_LAYOUT
 end
 
---[[function PointBlankSniperDataProviderMixin:GetColumnHideStates()
-  return Auctionator.Config.Get(Auctionator.Config.Options.COLUMNS_SHOPPING)
-end]]
+function PointBlankSniperDataProviderMixin:GetColumnHideStates()
+  return Auctionator.Config.Get(Auctionator.Config.Options.POINT_BLANK_SNIPER_COLUMNS)
+end
 
 function PointBlankSniperDataProviderMixin:GetRowTemplate()
   return "AuctionatorShoppingListResultsRowTemplate"
