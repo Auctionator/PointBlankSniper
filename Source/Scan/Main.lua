@@ -137,7 +137,7 @@ function PointBlankSniperListScannerMixin:DoShoppingListSearch(resultsInfo)
         check = check and currentResult.itemKey.itemLevel >= search.minItemLevel
       end
 
-      check = check and (not search.IsExact or searchString == nameCache[index])
+      check = check and (not search.isExact or searchString == nameCache[index])
 
       if check then
         if tIndexOf(self.results, currentResult) == nil then
