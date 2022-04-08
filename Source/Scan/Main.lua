@@ -66,8 +66,8 @@ function PointBlankSniperListScannerMixin:CacheSearchResults(addedResults)
     cache = {},
     names = {},
     namesWaiting = 0,
-    gotCompleteCache = false,
     announcedReady = false,
+    cachingComplete = false,
   }
   self.blankSearchResultsWaiting = self.blankSearchResultsWaiting + 1
   resultsInfo.namesWaiting = resultsInfo.namesWaiting + #addedResults
@@ -77,12 +77,15 @@ function PointBlankSniperListScannerMixin:CacheSearchResults(addedResults)
       table.insert(resultsInfo.cache, result)
       local index = #resultsInfo.cache
       table.insert(resultsInfo.names, "")
-      Auctionator.AH.GetItemKeyInfo(result.itemKey, function(itemKeyInfo)
+      Auctionator.AH.GetItemKeyInfo(result.itemKey, function(itemKeyInfo, wasCached)
         resultsInfo.namesWaiting = resultsInfo.namesWaiting - 1
         resultsInfo.names[index] = CleanSearchString(itemKeyInfo.itemName)
         if resultsInfo.namesWaiting <= 0 then
+          resultsInfo.announcedReady = true
+
           self.blankSearchResultsWaiting = self.blankSearchResultsWaiting - 1
-          resultsInfo.announcedReady = self.blankSearchResultsWaiting <= 0 and Auctionator.AH.HasFullBrowseResults()
+          resultsInfo.cachingComplete = self.blankSearchResultsWaiting <= 0 and Auctionator.AH.HasFullBrowseResults()
+
           self:DoInternalSearch(resultsInfo)
         end
       end)
@@ -91,8 +94,12 @@ function PointBlankSniperListScannerMixin:CacheSearchResults(addedResults)
     end
   end
 
-  if resultsInfo.namesWaiting <= 0 and self.blankSearchResultsWaiting <= 0 and Auctionator.AH.HasFullBrowseResults() and not resultsInfo.announcedReady then
+  if resultsInfo.namesWaiting <= 0 and not resultsInfo.announcedReady then
     resultsInfo.announcedReady = true
+
+    self.blankSearchResultsWaiting = self.blankSearchResultsWaiting - 1
+    resultsInfo.cachingComplete = self.blankSearchResultsWaiting <= 0 and Auctionator.AH.HasFullBrowseResults()
+
     self:DoInternalSearch(resultsInfo)
   end
 end
@@ -119,6 +126,10 @@ local function GetStartingIndex(startPoint, endPoint, array, searchString)
 end
 
 function PointBlankSniperListScannerMixin:DoShoppingListSearch(resultsInfo)
+  if #resultsInfo.cache == 0 then
+    return
+  end
+
   local strFind = string.find
   local nameCache = resultsInfo.names
   for _, search in ipairs(self.searchFor) do
@@ -153,7 +164,7 @@ end
 function PointBlankSniperListScannerMixin:DoInternalSearch(resultsInfo)
   self:DoShoppingListSearch(resultsInfo)
 
-  if resultsInfo.announcedReady then
+  if resultsInfo.cachingComplete then
     Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchComplete, self.results)
   else
     Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchNewResults, self.results)
