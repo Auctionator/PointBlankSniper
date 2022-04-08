@@ -4,7 +4,6 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   Auctionator.Debug.Message("PointBlankSniperTabMixin:OnLoad()")
 
   Auctionator.EventBus:Register(self, {
-    PointBlankSniper.Events.SnipeSearchNewResults,
     PointBlankSniper.Events.SnipeSearchComplete
   })
 
@@ -15,6 +14,8 @@ function PointBlankSniperTabFrameMixin:OnLoad()
     market = PointBlankSniper.Constants.Market.TUJ_Region,
     percentage = 0.15
   }
+
+  self.Alert = CreateAndInitFromMixin(PointBlankSniperAlertMixin)
 
   self:SetupMarketDataMarketDropdown()
 
@@ -81,29 +82,8 @@ function PointBlankSniperTabFrameMixin:Stop()
   self.Scanner:Stop()
 end
 
-function PointBlankSniperTabFrameMixin:DoAlert()
-  if not POINT_BLANK_SNIPER_DISABLE_BLEEP then
-    PlaySoundFile("Interface\\Addons\\PointBlankSniper\\Tones\\Bleep.mp3")
-  end
-  if not POINT_BLANK_SNIPER_DISABLE_FLASH then
-    FlashClientIcon()
-  end
-end
-
 function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
-  if eventName == PointBlankSniper.Events.SnipeSearchStart then
-  elseif eventName == PointBlankSniper.Events.SnipeSearchNewResults then
-    local results = ...
-    if #results ~= self.oldResultsCount then
-      self.oldResultsCount = #results
-      self:DoAlert()
-    end
-  elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
-    local results = ...
-    if #results ~= self.oldResultsCount then
-      self.oldResultsCount = #results
-      self:DoAlert()
-    end
+  if eventName == PointBlankSniper.Events.SnipeSearchComplete then
     self.Scanner:Start()
   end
 end
