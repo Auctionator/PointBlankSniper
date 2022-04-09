@@ -12,6 +12,9 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   POINT_BLANK_SNIPER_CURRENT_LIST = POINT_BLANK_SNIPER_CURRENT_LIST or ""
   POINT_BLANK_SNIPER_DISABLE_BLEEP = POINT_BLANK_SNIPER_DISABLE_BLEEP or false
   POINT_BLANK_SNIPER_DISABLE_FLASH = POINT_BLANK_SNIPER_DISABLE_FLASH or false
+  if POINT_BLANK_SNIPER_CARRY_ON_AFTER_RESULT == nil then
+    POINT_BLANK_SNIPER_CARRY_ON_AFTER_RESULT = true
+  end
   POINT_BLANK_SNIPER_MARKET_DATA = POINT_BLANK_SNIPER_MARKET_DATA or {
     market = nil,
     percentage = 0.15
@@ -25,6 +28,7 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   self.ListName:SetText(POINT_BLANK_SNIPER_CURRENT_LIST)
   self.UseBleep:SetChecked(not POINT_BLANK_SNIPER_DISABLE_BLEEP)
   self.UseFlash:SetChecked(not POINT_BLANK_SNIPER_DISABLE_FLASH)
+  self.CarryOnAfterResult:SetChecked(POINT_BLANK_SNIPER_CARRY_ON_AFTER_RESULT)
   self.MarketDataMarket:SetValue(POINT_BLANK_SNIPER_MARKET_DATA.market)
 
   self.scanTime = -1
@@ -94,6 +98,7 @@ function PointBlankSniperTabFrameMixin:UpdateConfigs()
   POINT_BLANK_SNIPER_CURRENT_LIST = self.ListName:GetText()
   POINT_BLANK_SNIPER_DISABLE_BLEEP = not self.UseBleep:GetChecked()
   POINT_BLANK_SNIPER_DISABLE_FLASH = not self.UseFlash:GetChecked()
+  POINT_BLANK_SNIPER_CARRY_ON_AFTER_RESULT = self.CarryOnAfterResult:GetChecked()
 
   POINT_BLANK_SNIPER_MARKET_DATA.market = self.MarketDataMarket:GetValue()
 end
@@ -138,7 +143,9 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
     self.scanTime = debugprofilestop() - self.scanStartTime
     self:UpdateStatusMessageOngoing()
-    self.Scanner:Start()
+    if POINT_BLANK_SNIPER_CARRY_ON_AFTER_RESULT or not self.Alert:AnyItemsFound() then
+      self.Scanner:Start()
+    end
   end
 end
 

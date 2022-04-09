@@ -33,6 +33,7 @@ function PointBlankSniperAlertMixin:ProcessNewResults(results)
       doAlert = true
     end
     self.seenInThisScan[key] = true
+    self.itemsFound = true
   end
 
   if doAlert then
@@ -42,6 +43,7 @@ end
 
 function PointBlankSniperAlertMixin:ReceiveEvent(eventName, eventData)
   if eventName == PointBlankSniper.Events.SnipeSearchStart then
+    self.itemsFound = false
   elseif eventName == PointBlankSniper.Events.SnipeSearchNewResults then
     self:ProcessNewResults(eventData)
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
@@ -49,4 +51,8 @@ function PointBlankSniperAlertMixin:ReceiveEvent(eventName, eventData)
     self.seenResults = self.seenInThisScan
     self.seenInThisScan = {}
   end
+end
+
+function PointBlankSniperAlertMixin:AnyItemsFound()
+  return self.itemsFound
 end

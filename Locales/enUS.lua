@@ -10,6 +10,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
 
   L["USE_BLEEP"] = "Play bleep tone"
   L["USE_FLASH"] = "Flash taskbar icon"
+  L["CARRY_ON_AFTER_RESULT"] = "Carry on after finding item"
 
   L["MARKET_DATA_COLON"] = "Market Data:"
   L["TUJ_REGION"] = "Region - Undermine Journal"
