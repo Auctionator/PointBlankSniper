@@ -35,19 +35,31 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   self:UpdateConfigs()
 end
 
+local marketToName = {
+  [PointBlankSniper.Constants.Market.None] = AUCTIONATOR_L_NONE,
+  [PointBlankSniper.Constants.Market.TUJ_Region] = POINT_BLANK_SNIPER_L_TUJ_REGION,
+  [PointBlankSniper.Constants.Market.TUJ_Realm] = POINT_BLANK_SNIPER_L_TUJ_REALM,
+  [PointBlankSniper.Constants.Market.TSM_DBMarket] = POINT_BLANK_SNIPER_L_TSM_DBMARKET,
+}
 function PointBlankSniperTabFrameMixin:SetupMarketDataMarketDropdown()
-  self.MarketDataMarket:InitAgain({
-    AUCTIONATOR_L_NONE,
-    POINT_BLANK_SNIPER_L_TUJ_REGION,
-    POINT_BLANK_SNIPER_L_TUJ_REALM,
-    POINT_BLANK_SNIPER_L_TSM_DBMARKET,
-  }, {
-    PointBlankSniper.Constants.Market.None,
-    PointBlankSniper.Constants.Market.TUJ_Region,
-    PointBlankSniper.Constants.Market.TUJ_Realm,
-    PointBlankSniper.Constants.Market.TSM_DBMarket,
-  })
+  local marketNames = {}
+  local marketValues = {PointBlankSniper.Constants.Market.None}
+  for _, m in pairs(PointBlankSniper.Constants.Market) do
+    if PointBlankSniper.IsMarketDataActive(m) then
+      table.insert(marketValues, m)
+    end
+  end
 
+  table.sort(marketValues)
+  for _, m in ipairs(marketValues) do
+    table.insert(marketNames, marketToName[m])
+  end
+
+  if not PointBlankSniper.IsMarketDataActive(POINT_BLANK_SNIPER_MARKET_DATA.market) then
+    POINT_BLANK_SNIPER_MARKET_DATA.market = marketValues[1] or PointBlankSniper.Constants.Market.None
+  end
+
+  self.MarketDataMarket:InitAgain(marketNames, marketValues)
   self.MarketDataMarket:SetValue(POINT_BLANK_SNIPER_MARKET_DATA.market)
 end
 

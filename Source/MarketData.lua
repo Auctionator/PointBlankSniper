@@ -43,3 +43,21 @@ function PointBlankSniper.GetMarketDataFunction()
     end
   end
 end
+
+function PointBlankSniper.IsMarketDataActive(market)
+  if TUJMarketInfo then
+    if market == PointBlankSniper.Constants.Market.TUJ_Realm then
+      return true
+    elseif market == PointBlankSniper.Constants.Market.TUJ_Region then
+      return true
+    end
+  end
+
+  if TSM_API then
+    if market == PointBlankSniper.Constants.Market.TSM_DBMarket then
+      return true
+    end
+  end
+
+  return false
+end
