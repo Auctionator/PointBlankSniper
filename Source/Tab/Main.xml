@@ -89,7 +89,7 @@
     </Frames>
     <Layers>
       <Layer level="BACKGROUND">
-        <FontString parentKey="MarketDataLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_MARKET_DATA_COLON">
+        <FontString parentKey="PriceSourceLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_PRICE_SOURCE_COLON">
           <Anchors>
             <Anchor point="TOPLEFT" x="30" y="-55"/>
           </Anchors>
@@ -97,11 +97,32 @@
       </Layer>
     </Layers>
     <Frames>
-      <Frame inherits="AuctionatorDropDown" parentKey="MarketDataMarket">
+      <Frame inherits="AuctionatorDropDown" parentKey="PriceSource">
        <Anchors>
-        <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.MarketDataLabel" y="8" x="5"/>
+        <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.PriceSourceLabel" y="8" x="-10"/>
        </Anchors>
       </Frame>
+    </Frames>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <FontString parentKey="PercentageLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_PERCENTAGE_COLON">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.PriceSource.DropDown" x="15" y="-8"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <EditBox autoFocus="false" numeric="true" inherits="InputBoxTemplate" parentKey="Percentage">
+        <Size x="70" y="20" />
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.PercentageLabel" x="10" y="4"/>
+        </Anchors>
+        <Scripts>
+          <OnEscapePressed>self:ClearFocus()</OnEscapePressed>
+          <OnEnterPressed>Auctionator.Components.ReportEnterPressed()</OnEnterPressed>
+        </Scripts>
+      </EditBox>
 
       <Frame parentKey="DataProvider" mixin="PointBlankSniperDataProviderMixin">
         <Scripts>

@@ -20,7 +20,8 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   self.UseBleep:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_BLEEP))
   self.UseFlash:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_FLASH))
   self.CarryOnAfterResult:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT))
-  self.MarketDataMarket:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE))
+  self.PriceSource:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE))
+  self.Percentage:SetText(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PERCENTAGE) * 100)
 
   self.scanTime = -1
   self.currentBatch = 0
@@ -59,7 +60,7 @@ function PointBlankSniperTabFrameMixin:SetupMarketData()
     PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.PRICE_SOURCE,  marketValues[2] or PointBlankSniper.Constants.Market.None)
   end
 
-  self.MarketDataMarket:InitAgain(marketNames, marketValues)
+  self.PriceSource:InitAgain(marketNames, marketValues)
 end
 
 function PointBlankSniperTabFrameMixin:UpdateStartButton()
@@ -93,9 +94,14 @@ function PointBlankSniperTabFrameMixin:UpdateConfigs()
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT, self.CarryOnAfterResult:GetChecked())
 
   local oldMarket = PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE)
-  if oldMarket ~= self.MarketDataMarket:GetValue() then
-    PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.PRICE_SOURCE, self.MarketDataMarket:GetValue())
+  if oldMarket ~= self.PriceSource:GetValue() then
+    PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.PRICE_SOURCE, self.PriceSource:GetValue())
     PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.WAS_PRICE_SOURCE_CHANGED, true)
+  end
+
+  local percentage = tonumber(self.Percentage:GetText())
+  if percentage ~= nil and percentage >= 0 then
+    PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.PERCENTAGE, percentage / 100)
   end
 end
 

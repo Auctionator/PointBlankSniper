@@ -12,7 +12,8 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["USE_FLASH"] = "Flash taskbar icon"
   L["CARRY_ON_AFTER_RESULT"] = "Carry on after finding item"
 
-  L["MARKET_DATA_COLON"] = "Market Data:"
+  L["PRICE_SOURCE_COLON"] = "Price Source:"
+  L["PERCENTAGE_COLON"] = "Percentage:"
   L["TUJ_REGION"] = "Region - Undermine Journal"
   L["TUJ_REALM"] = "Realm - Undermine Journal"
   L["TSM_DBMARKET"] = "dbmarket - TradeSkillMaster"
