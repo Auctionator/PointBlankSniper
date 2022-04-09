@@ -15,5 +15,10 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["TUJ_REGION"] = "Region - Undermine Journal"
   L["TUJ_REALM"] = "Realm - Undermine Journal"
 
+  L["STATUS_MESSAGE"] = "Round %s - Processing batch %s - Last scan time is %ss."
+  L["STATUS_MESSAGE_NO_TIME"] = "Round %s - Processing batch %s."
+  L["STATUS_MESSAGE_STOPPED"] = "Scan stopped - Done round %s - Last scan time is %ss."
+  L["STATUS_MESSAGE_STOPPED_NO_TIME"] = "Scan stopped - Done round %s."
+
   return L
 end

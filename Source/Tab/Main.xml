@@ -37,8 +37,7 @@
         </Scripts>
       </Button>
     </Frames>
-    <Layers>
-      <Layer level="BACKGROUND">
+    <Layers> <Layer level="BACKGROUND">
         <FontString parentKey="ShoppingListNameLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_SHOPPING_LIST_NAME_COLON">
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.StopButton" x="40" y="-4"/>
@@ -114,5 +113,14 @@
         </Anchors>
       </Frame>
     </Frames>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <FontString parentKey="Status" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_STATUS_MESSAGE">
+          <Anchors>
+            <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeKey="$parent.ResultsListing" x="-5" y="-4"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
   </Frame>
 </Ui>
