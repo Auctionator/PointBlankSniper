@@ -15,8 +15,8 @@ local function ToTSMItemString(itemKey)
 end
 
 function PointBlankSniper.GetMarketDataFunction()
-  local percentage = POINT_BLANK_SNIPER_MARKET_DATA.percentage
-  local market = POINT_BLANK_SNIPER_MARKET_DATA.market
+  local market = PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE)
+  local percentage = PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PERCENTAGE)
 
   if TUJMarketInfo then
     if market == PointBlankSniper.Constants.Market.TUJ_Realm then

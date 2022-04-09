@@ -12,10 +12,10 @@ function PointBlankSniperAlertMixin:Init()
 end
 
 function PointBlankSniperAlertMixin:DoAlert()
-  if not POINT_BLANK_SNIPER_DISABLE_BLEEP then
+  if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_BLEEP) then
     PlaySoundFile("Interface\\Addons\\PointBlankSniper\\Tones\\Bleep.mp3")
   end
-  if not POINT_BLANK_SNIPER_DISABLE_FLASH then
+  if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_FLASH) then
     FlashClientIcon()
   end
 end

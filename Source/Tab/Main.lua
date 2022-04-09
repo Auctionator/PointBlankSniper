@@ -9,27 +9,18 @@ function PointBlankSniperTabFrameMixin:OnLoad()
     PointBlankSniper.Events.SnipeSearchComplete
   })
 
-  POINT_BLANK_SNIPER_CURRENT_LIST = POINT_BLANK_SNIPER_CURRENT_LIST or ""
-  POINT_BLANK_SNIPER_DISABLE_BLEEP = POINT_BLANK_SNIPER_DISABLE_BLEEP or false
-  POINT_BLANK_SNIPER_DISABLE_FLASH = POINT_BLANK_SNIPER_DISABLE_FLASH or false
-  if POINT_BLANK_SNIPER_CARRY_ON_AFTER_RESULT == nil then
-    POINT_BLANK_SNIPER_CARRY_ON_AFTER_RESULT = true
-  end
-  POINT_BLANK_SNIPER_MARKET_DATA = POINT_BLANK_SNIPER_MARKET_DATA or {
-    market = nil,
-    percentage = 0.15
-  }
+  PointBlankSniper.Config.InitializeData()
 
   self.Alert = CreateAndInitFromMixin(PointBlankSniperAlertMixin)
 
   self:SetupMarketData()
 
   self.ResultsListing:Init(self.DataProvider)
-  self.ListName:SetText(POINT_BLANK_SNIPER_CURRENT_LIST)
-  self.UseBleep:SetChecked(not POINT_BLANK_SNIPER_DISABLE_BLEEP)
-  self.UseFlash:SetChecked(not POINT_BLANK_SNIPER_DISABLE_FLASH)
-  self.CarryOnAfterResult:SetChecked(POINT_BLANK_SNIPER_CARRY_ON_AFTER_RESULT)
-  self.MarketDataMarket:SetValue(POINT_BLANK_SNIPER_MARKET_DATA.market)
+  self.ListName:SetText(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST))
+  self.UseBleep:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_BLEEP))
+  self.UseFlash:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_FLASH))
+  self.CarryOnAfterResult:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT))
+  self.MarketDataMarket:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE))
 
   self.scanTime = -1
   self.currentBatch = 0
@@ -62,16 +53,17 @@ function PointBlankSniperTabFrameMixin:SetupMarketData()
   -- Try to select some market that isn't None if the chosen market is
   -- unavailable or not configured yet. It will select None if there are no
   -- other options.
-  if not PointBlankSniper.IsMarketDataActive(POINT_BLANK_SNIPER_MARKET_DATA.market) then
-    POINT_BLANK_SNIPER_MARKET_DATA.market = marketValues[2] or PointBlankSniper.Constants.Market.None
+  if (not PointBlankSniper.IsMarketDataActive(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE))
+      and not PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.WAS_PRICE_SOURCE_CHANGED)
+    ) then
+    PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.PRICE_SOURCE,  marketValues[2] or PointBlankSniper.Constants.Market.None)
   end
 
   self.MarketDataMarket:InitAgain(marketNames, marketValues)
-  self.MarketDataMarket:SetValue(POINT_BLANK_SNIPER_MARKET_DATA.market)
 end
 
 function PointBlankSniperTabFrameMixin:UpdateStartButton()
-  self.StartButton:SetEnabled(Auctionator.ShoppingLists.ListIndex(POINT_BLANK_SNIPER_CURRENT_LIST) ~= nil)
+  self.StartButton:SetEnabled(Auctionator.ShoppingLists.ListIndex(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST)) ~= nil)
 end
 
 local function FormatTime(scanTime)
@@ -95,12 +87,16 @@ function PointBlankSniperTabFrameMixin:UpdateStatusMessageStopped()
 end
 
 function PointBlankSniperTabFrameMixin:UpdateConfigs()
-  POINT_BLANK_SNIPER_CURRENT_LIST = self.ListName:GetText()
-  POINT_BLANK_SNIPER_DISABLE_BLEEP = not self.UseBleep:GetChecked()
-  POINT_BLANK_SNIPER_DISABLE_FLASH = not self.UseFlash:GetChecked()
-  POINT_BLANK_SNIPER_CARRY_ON_AFTER_RESULT = self.CarryOnAfterResult:GetChecked()
+  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.CURRENT_LIST, self.ListName:GetText())
+  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.USE_BLEEP, self.UseBleep:GetChecked())
+  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.USE_FLASH, self.UseFlash:GetChecked())
+  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT, self.CarryOnAfterResult:GetChecked())
 
-  POINT_BLANK_SNIPER_MARKET_DATA.market = self.MarketDataMarket:GetValue()
+  local oldMarket = PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE)
+  if oldMarket ~= self.MarketDataMarket:GetValue() then
+    PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.PRICE_SOURCE, self.MarketDataMarket:GetValue())
+    PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.WAS_PRICE_SOURCE_CHANGED, true)
+  end
 end
 
 function PointBlankSniperTabFrameMixin:OnShow()
@@ -113,7 +109,7 @@ end
 function PointBlankSniperTabFrameMixin:Start()
   self.oldResultsCount = 0
 
-  self.Scanner:SetList(POINT_BLANK_SNIPER_CURRENT_LIST)
+  self.Scanner:SetList(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST))
   self.Scanner:SetMarketCheck(PointBlankSniper.GetMarketDataFunction())
   self.Scanner:Start()
 end
@@ -143,7 +139,7 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
     self.scanTime = debugprofilestop() - self.scanStartTime
     self:UpdateStatusMessageOngoing()
-    if POINT_BLANK_SNIPER_CARRY_ON_AFTER_RESULT or not self.Alert:AnyItemsFound() then
+    if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT) or not self.Alert:AnyItemsFound() then
       self.Scanner:Start()
     end
   end

@@ -1,3 +1,4 @@
 PointBlankSniper = {
+  Config = {},
   Utilities = {},
 }
