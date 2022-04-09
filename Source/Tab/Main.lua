@@ -29,6 +29,7 @@ function PointBlankSniperTabFrameMixin:OnLoad()
 
   self:UpdateStartButton()
   self:UpdateConfigs()
+  self.FilterKeySelector:Reset()
 end
 
 local marketToName = {
@@ -117,6 +118,7 @@ function PointBlankSniperTabFrameMixin:Start()
 
   self.Scanner:SetList(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST))
   self.Scanner:SetMarketCheck(PointBlankSniper.GetMarketDataFunction())
+  self.Scanner:SetCategories(self.FilterKeySelector:GetValue())
   self.Scanner:Start()
 end
 

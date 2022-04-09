@@ -18,6 +18,8 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["TUJ_REALM"] = "Realm - Undermine Journal"
   L["TSM_DBMARKET"] = "dbmarket - TradeSkillMaster"
 
+  L["ITEM_CLASS_COLON"] = "Item Class:"
+
   L["STATUS_MESSAGE"] = "Round %s - Processing batch %s - Last scan time is %ss."
   L["STATUS_MESSAGE_NO_TIME"] = "Round %s - Processing batch %s."
   L["STATUS_MESSAGE_STOPPED"] = "Scan stopped - Done round %s - Last scan time is %ss."
