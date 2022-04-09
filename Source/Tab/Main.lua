@@ -39,11 +39,13 @@ function PointBlankSniperTabFrameMixin:SetupMarketDataMarketDropdown()
   self.MarketDataMarket:InitAgain({
     AUCTIONATOR_L_NONE,
     POINT_BLANK_SNIPER_L_TUJ_REGION,
-    POINT_BLANK_SNIPER_L_TUJ_REALM
+    POINT_BLANK_SNIPER_L_TUJ_REALM,
+    POINT_BLANK_SNIPER_L_TSM_DBMARKET,
   }, {
     PointBlankSniper.Constants.Market.None,
     PointBlankSniper.Constants.Market.TUJ_Region,
-    PointBlankSniper.Constants.Market.TUJ_Realm
+    PointBlankSniper.Constants.Market.TUJ_Realm,
+    PointBlankSniper.Constants.Market.TSM_DBMarket,
   })
 
   self.MarketDataMarket:SetValue(POINT_BLANK_SNIPER_MARKET_DATA.market)

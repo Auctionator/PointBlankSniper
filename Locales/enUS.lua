@@ -14,6 +14,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["MARKET_DATA_COLON"] = "Market Data:"
   L["TUJ_REGION"] = "Region - Undermine Journal"
   L["TUJ_REALM"] = "Realm - Undermine Journal"
+  L["TSM_DBMARKET"] = "dbmarket - TradeSkillMaster"
 
   L["STATUS_MESSAGE"] = "Round %s - Processing batch %s - Last scan time is %ss."
   L["STATUS_MESSAGE_NO_TIME"] = "Round %s - Processing batch %s."

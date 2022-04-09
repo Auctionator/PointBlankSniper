@@ -3,5 +3,6 @@ PointBlankSniper.Constants = {
     None = 0,
     TUJ_Region = 1,
     TUJ_Realm = 2,
+    TSM_DBMarket = 3,
   }
 }
