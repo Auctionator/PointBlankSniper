@@ -13,13 +13,13 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   POINT_BLANK_SNIPER_DISABLE_BLEEP = POINT_BLANK_SNIPER_DISABLE_BLEEP or false
   POINT_BLANK_SNIPER_DISABLE_FLASH = POINT_BLANK_SNIPER_DISABLE_FLASH or false
   POINT_BLANK_SNIPER_MARKET_DATA = POINT_BLANK_SNIPER_MARKET_DATA or {
-    market = PointBlankSniper.Constants.Market.TUJ_Region,
+    market = nil,
     percentage = 0.15
   }
 
   self.Alert = CreateAndInitFromMixin(PointBlankSniperAlertMixin)
 
-  self:SetupMarketDataMarketDropdown()
+  self:SetupMarketData()
 
   self.ResultsListing:Init(self.DataProvider)
   self.ListName:SetText(POINT_BLANK_SNIPER_CURRENT_LIST)
@@ -41,9 +41,9 @@ local marketToName = {
   [PointBlankSniper.Constants.Market.TUJ_Realm] = POINT_BLANK_SNIPER_L_TUJ_REALM,
   [PointBlankSniper.Constants.Market.TSM_DBMarket] = POINT_BLANK_SNIPER_L_TSM_DBMARKET,
 }
-function PointBlankSniperTabFrameMixin:SetupMarketDataMarketDropdown()
+function PointBlankSniperTabFrameMixin:SetupMarketData()
   local marketNames = {}
-  local marketValues = {PointBlankSniper.Constants.Market.None}
+  local marketValues = {}
   for _, m in pairs(PointBlankSniper.Constants.Market) do
     if PointBlankSniper.IsMarketDataActive(m) then
       table.insert(marketValues, m)
@@ -55,8 +55,11 @@ function PointBlankSniperTabFrameMixin:SetupMarketDataMarketDropdown()
     table.insert(marketNames, marketToName[m])
   end
 
+  -- Try to select some market that isn't None if the chosen market is
+  -- unavailable or not configured yet. It will select None if there are no
+  -- other options.
   if not PointBlankSniper.IsMarketDataActive(POINT_BLANK_SNIPER_MARKET_DATA.market) then
-    POINT_BLANK_SNIPER_MARKET_DATA.market = marketValues[1] or PointBlankSniper.Constants.Market.None
+    POINT_BLANK_SNIPER_MARKET_DATA.market = marketValues[2] or PointBlankSniper.Constants.Market.None
   end
 
   self.MarketDataMarket:InitAgain(marketNames, marketValues)

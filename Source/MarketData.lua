@@ -59,5 +59,9 @@ function PointBlankSniper.IsMarketDataActive(market)
     end
   end
 
+  if market == PointBlankSniper.Constants.Market.None then
+    return true
+  end
+
   return false
 end
