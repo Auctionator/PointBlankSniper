@@ -141,6 +141,8 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
     self:UpdateStatusMessageOngoing()
     if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT) or not self.Alert:AnyItemsFound() then
       self.Scanner:Start()
+    else
+      self:Stop()
     end
   end
 end
