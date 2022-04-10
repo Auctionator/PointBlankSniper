@@ -2,6 +2,14 @@ local function CleanSearchString(searchString)
   return string.gsub(string.lower(searchString), "\"", "")
 end
 
+local VENDOR_BLACKLIST = {
+  38, --Recruit's Shirt (vendor version)
+  45, --Squire's Shirt (vendor version)
+}
+local function IsBlacklistedID(itemID)
+  return tIndexOf(VENDOR_BLACKLIST, itemID) ~= nil
+end
+
 PointBlankSniperListScannerMixin = {}
 
 function PointBlankSniperListScannerMixin:OnLoad()
@@ -153,6 +161,8 @@ function PointBlankSniperListScannerMixin:DoShoppingListSearch(resultsInfo)
       end
 
       check = check and (not search.isExact or searchString == nameCache[index])
+
+      check = check and not IsBlacklistedID(currentResult.itemKey.itemID)
 
       if check then
         if tIndexOf(self.results, currentResult) == nil then
