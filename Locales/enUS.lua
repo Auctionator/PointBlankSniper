@@ -16,7 +16,9 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["PERCENTAGE_COLON"] = "Percentage:"
   L["TUJ_REGION"] = "Region - Undermine Journal"
   L["TUJ_REALM"] = "Realm - Undermine Journal"
-  L["TSM_DBMARKET"] = "dbmarket - TradeSkillMaster"
+  L["TSM_DBMARKET"] = "DBMarket - TradeSkillMaster"
+  L["TSM_DBREGIONMARKETAVG"] = "DBRegionMarketAvg - TradeSkillMaster"
+  L["TSM_DBREGIONSALEAVG"] = "DBRegionSaleAvg - TradeSkillMaster"
 
   L["ITEM_CLASS_COLON"] = "Item Class:"
 

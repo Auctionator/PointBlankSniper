@@ -40,6 +40,16 @@ function PointBlankSniper.GetMarketDataFunction()
         local TSMPrice = TSM_API.GetCustomPriceValue("dbmarket", ToTSMItemString(result.itemKey))
         return TSMPrice and result.minPrice <= TSMPrice * percentage
       end
+    elseif market == PointBlankSniper.Constants.Market.TSM_DBRegionMarketAvg then
+      return function(result)
+        local TSMPrice = TSM_API.GetCustomPriceValue("dbregionmarketavg", ToTSMItemString(result.itemKey))
+        return TSMPrice and result.minPrice <= TSMPrice * percentage
+      end
+    elseif market == PointBlankSniper.Constants.Market.TSM_DBRegionSaleAvg then
+      return function(result)
+        local TSMPrice = TSM_API.GetCustomPriceValue("dbregionsaleavg", ToTSMItemString(result.itemKey))
+        return TSMPrice and result.minPrice <= TSMPrice * percentage
+      end
     end
   end
 end
@@ -55,6 +65,10 @@ function PointBlankSniper.IsMarketDataActive(market)
 
   if TSM_API then
     if market == PointBlankSniper.Constants.Market.TSM_DBMarket then
+      return true
+    elseif market == PointBlankSniper.Constants.Market.TSM_DBRegionMarketAvg then
+      return true
+    elseif market == PointBlankSniper.Constants.Market.TSM_DBRegionSaleAvg then
       return true
     end
   end
