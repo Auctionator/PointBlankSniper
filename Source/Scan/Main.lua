@@ -48,11 +48,14 @@ function PointBlankSniperListScannerMixin:OnHide()
 end
 
 function PointBlankSniperListScannerMixin:Start()
-  FrameUtil.RegisterFrameForEvents(self, {
-    "AUCTION_HOUSE_BROWSE_RESULTS_UPDATED",
-    "AUCTION_HOUSE_BROWSE_RESULTS_ADDED",
-    "AUCTION_HOUSE_BROWSE_FAILURE",
-  })
+  if not self.registered then
+    FrameUtil.RegisterFrameForEvents(self, {
+      "AUCTION_HOUSE_BROWSE_RESULTS_UPDATED",
+      "AUCTION_HOUSE_BROWSE_RESULTS_ADDED",
+      "AUCTION_HOUSE_BROWSE_FAILURE",
+    })
+    self.registered = true
+  end
 
   self.results = {}
   self.blankSearchResultsWaiting = 0
@@ -69,7 +72,7 @@ end
 
 -- Processes each batch of results, saving the names in advance before
 -- submitting them to another function to do the query on them
-function PointBlankSniperListScannerMixin:CacheSearchResults(addedResults)
+function PointBlankSniperListScannerMixin:CacheAndProcessSearchResults(addedResults)
   if not Auctionator.AH.HasFullBrowseResults() then
     Auctionator.AH.RequestMoreBrowseResults()
   end
@@ -114,10 +117,6 @@ function PointBlankSniperListScannerMixin:CacheSearchResults(addedResults)
 
     self:DoInternalSearch(resultsInfo)
   end
-end
-
-function PointBlankSniperListScannerMixin:SaveResults(results)
-  self:CacheSearchResults(results)
 end
 
 local function GetStartingIndex(startPoint, endPoint, array, searchString)
@@ -186,19 +185,22 @@ function PointBlankSniperListScannerMixin:DoInternalSearch(resultsInfo)
 end
 
 function PointBlankSniperListScannerMixin:Stop()
-  FrameUtil.UnregisterFrameForEvents(self, {
-    "AUCTION_HOUSE_BROWSE_RESULTS_UPDATED",
-    "AUCTION_HOUSE_BROWSE_RESULTS_ADDED",
-    "AUCTION_HOUSE_BROWSE_FAILURE",
-  })
+  if self.registered then
+    FrameUtil.UnregisterFrameForEvents(self, {
+      "AUCTION_HOUSE_BROWSE_RESULTS_UPDATED",
+      "AUCTION_HOUSE_BROWSE_RESULTS_ADDED",
+      "AUCTION_HOUSE_BROWSE_FAILURE",
+    })
+    self.registered = false
+  end
   Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchAbort, self.results)
 end
 
 function PointBlankSniperListScannerMixin:OnEvent(eventName, ...)
   if eventName == "AUCTION_HOUSE_BROWSE_RESULTS_ADDED" then
     local results = ...
-    self:SaveResults(results)
+    self:CacheAndProcessSearchResults(results)
   elseif eventName == "AUCTION_HOUSE_BROWSE_RESULTS_UPDATED" then
-    self:SaveResults(C_AuctionHouse.GetBrowseResults())
+    self:CacheAndProcessSearchResults(C_AuctionHouse.GetBrowseResults())
   end
 end
