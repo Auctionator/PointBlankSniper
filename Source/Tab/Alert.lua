@@ -28,8 +28,7 @@ function PointBlankSniperAlertMixin:ProcessNewResults(results)
   local doAlert = false
   for _, r in ipairs(results) do
     local key = ResultKey(r)
-    if not self.seenResults[key] then
-      self.seenResults[key] = true
+    if not self.seenResults[key] and not self.seenInThisScan[key] then
       doAlert = true
     end
     self.seenInThisScan[key] = true
