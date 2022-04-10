@@ -36,7 +36,7 @@ function PointBlankSniperListScannerMixin:SetMarketCheck(checkFunc)
 end
 
 function PointBlankSniperListScannerMixin:SetCategories(categoryString)
-  self.category = categoryString
+  self.categories = Auctionator.Search.GetItemClassCategories(categoryString)
 end
 
 function PointBlankSniperListScannerMixin:OnShow()
@@ -60,7 +60,7 @@ function PointBlankSniperListScannerMixin:Start()
   Auctionator.AH.SendBrowseQuery({
       searchString = "",
       filters = {},
-      itemClassFilters = Auctionator.Search.GetItemClassCategories(self.category),
+      itemClassFilters = self.categories,
       sorts = Auctionator.Constants.ShoppingListSorts,
   })
 
