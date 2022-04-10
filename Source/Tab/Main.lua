@@ -116,8 +116,6 @@ function PointBlankSniperTabFrameMixin:OnShow()
 end
 
 function PointBlankSniperTabFrameMixin:Start()
-  self.oldResultsCount = 0
-
   self.Scanner:SetList(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST))
   self.Scanner:SetMarketCheck(PointBlankSniper.GetMarketDataFunction())
   self.Scanner:SetCategories(self.FilterKeySelector:GetValue())
