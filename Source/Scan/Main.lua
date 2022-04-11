@@ -1,5 +1,5 @@
 local function CleanSearchString(searchString)
-  return string.gsub(string.lower(searchString), "\"", "")
+  return string.lower(searchString)
 end
 
 local VENDOR_BLACKLIST = {
