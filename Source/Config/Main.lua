@@ -6,6 +6,7 @@ PointBlankSniper.Config.Options = {
   PERCENTAGE = "percentage",
   WAS_PRICE_SOURCE_CHANGED = "was_price_source_changed",
   CURRENT_LIST = "current_list",
+  ITEM_CLASS = "item_class",
   COLUMNS = "columns",
 }
 
@@ -17,6 +18,7 @@ PointBlankSniper.Config.Defaults = {
   [PointBlankSniper.Config.Options.PERCENTAGE] = 0.15,
   [PointBlankSniper.Config.Options.WAS_PRICE_SOURCE_CHANGED] = false,
   [PointBlankSniper.Config.Options.CURRENT_LIST] = "",
+  [PointBlankSniper.Config.Options.ITEM_CLASS] = "",
   [PointBlankSniper.Config.Options.COLUMNS] = {},
 }
 

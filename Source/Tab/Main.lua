@@ -14,6 +14,7 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   self.Alert = CreateAndInitFromMixin(PointBlankSniperAlertMixin)
 
   self:SetupMarketData()
+  self.FilterKeySelector:Reset()
 
   self.ResultsListing:Init(self.DataProvider)
   self.ListName:SetText(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST))
@@ -22,6 +23,7 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   self.CarryOnAfterResult:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT))
   self.PriceSource:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE))
   self.Percentage:SetText(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PERCENTAGE) * 100)
+  self.FilterKeySelector:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.ITEM_CLASS))
 
   self.scanTime = -1
   self.currentBatch = 0
@@ -29,7 +31,6 @@ function PointBlankSniperTabFrameMixin:OnLoad()
 
   self:UpdateStartButton()
   self:UpdateConfigs()
-  self.FilterKeySelector:Reset()
 end
 
 local marketToName = {
@@ -90,21 +91,36 @@ function PointBlankSniperTabFrameMixin:UpdateStatusMessageStopped()
   end
 end
 
+local function ChangeCheck(config, newValue)
+  local oldValue = PointBlankSniper.Config.Get(config)
+  if oldValue ~= newValue then
+    PointBlankSniper.Config.Set(config, newValue)
+    return true
+  end
+  return false
+end
+
 function PointBlankSniperTabFrameMixin:UpdateConfigs()
-  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.CURRENT_LIST, self.ListName:GetText())
+  if ChangeCheck(PointBlankSniper.Config.Options.CURRENT_LIST, self.ListName:GetText()) then
+    self:Stop()
+  end
+
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.USE_BLEEP, self.UseBleep:GetChecked())
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.USE_FLASH, self.UseFlash:GetChecked())
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT, self.CarryOnAfterResult:GetChecked())
 
-  local oldMarket = PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE)
-  if oldMarket ~= self.PriceSource:GetValue() then
-    PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.PRICE_SOURCE, self.PriceSource:GetValue())
+  if ChangeCheck(PointBlankSniper.Config.Options.PRICE_SOURCE, self.PriceSource:GetValue()) then
     PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.WAS_PRICE_SOURCE_CHANGED, true)
+    self:Stop()
   end
 
   local percentage = tonumber(self.Percentage:GetText())
-  if percentage ~= nil and percentage >= 0 then
-    PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.PERCENTAGE, percentage / 100)
+  if percentage ~= nil and percentage >= 0 and ChangeCheck(PointBlankSniper.Config.Options.PERCENTAGE, percentage / 100) then
+    self:Stop()
+  end
+
+  if ChangeCheck(PointBlankSniper.Config.Options.ITEM_CLASS, self.FilterKeySelector:GetValue()) then
+    self:Stop()
   end
 end
 
@@ -125,9 +141,6 @@ end
 function PointBlankSniperTabFrameMixin:OnUpdate()
   self:UpdateConfigs()
   self:UpdateStartButton()
-  if not self.StartButton:IsEnabled() then
-    self:Stop()
-  end
 end
 
 function PointBlankSniperTabFrameMixin:Stop()
