@@ -9,5 +9,4 @@ plain-copy:
 required-dependencies:
   - auctionator
 optional-dependencies:
-  - tradeskillmaster
   - theunderminejournal
