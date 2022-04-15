@@ -1,5 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
-  <Script file="Main.lua" />
+  <Script file="NameCache.lua" />
+  <Script file="KeyCache.lua" />
+  <Script file="GetItemKeys.lua" />
 
   <Include file="Main.xml"/>
 </Ui>

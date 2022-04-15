@@ -1,0 +1,7 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Script file="Core.lua" />
+  <Script file="ItemKeyLoader.lua" />
+  <Script file="Main.lua" />
+
+  <Include file="Core.xml"/>
+</Ui>

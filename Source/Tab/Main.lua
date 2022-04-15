@@ -24,6 +24,7 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   self.PriceSource:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE))
   self.Percentage:SetText(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PERCENTAGE) * 100)
   self.FilterKeySelector:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.ITEM_CLASS))
+  self.NoGearMode:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.KEYS_MODE))
 
   self.scanTime = -1
   self.currentBatch = 0
@@ -45,7 +46,7 @@ function PointBlankSniperTabFrameMixin:SetupMarketData()
   local marketNames = {}
   local marketValues = {}
   for _, m in pairs(PointBlankSniper.Constants.Market) do
-    if PointBlankSniper.IsMarketDataActive(m) then
+    if PointBlankSniper.PriceCheck.IsAvailable(m) then
       table.insert(marketValues, m)
     end
   end
@@ -58,7 +59,7 @@ function PointBlankSniperTabFrameMixin:SetupMarketData()
   -- Try to select some market that isn't None if the chosen market is
   -- unavailable or not configured yet. It will select None if there are no
   -- other options.
-  if (not PointBlankSniper.IsMarketDataActive(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE))
+  if (not PointBlankSniper.PriceCheck.IsAvailable(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE))
       and not PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.WAS_PRICE_SOURCE_CHANGED)
     ) then
     PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.PRICE_SOURCE,  marketValues[2] or PointBlankSniper.Constants.Market.None)
@@ -122,6 +123,10 @@ function PointBlankSniperTabFrameMixin:UpdateConfigs()
   if ChangeCheck(PointBlankSniper.Config.Options.ITEM_CLASS, self.FilterKeySelector:GetValue()) then
     self:Stop()
   end
+
+  if ChangeCheck(PointBlankSniper.Config.Options.KEYS_MODE, self.NoGearMode:GetChecked()) then
+    self:Stop()
+  end
 end
 
 function PointBlankSniperTabFrameMixin:OnShow()
@@ -132,10 +137,21 @@ function PointBlankSniperTabFrameMixin:OnShow()
 end
 
 function PointBlankSniperTabFrameMixin:Start()
-  self.Scanner:SetList(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST))
-  self.Scanner:SetMarketCheck(PointBlankSniper.GetMarketDataFunction())
+  self.ScannerKeyCache:Stop()
+  self.ScannerNameCache:Stop()
+
+  if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.KEYS_MODE) then
+    self.Scanner = self.ScannerKeyCache
+  else
+    self.Scanner = self.ScannerNameCache
+  end
+
+  self.Scanner:SetPriceCheck(PointBlankSniper.PriceCheck.Get())
   self.Scanner:SetCategories(self.FilterKeySelector:GetValue())
-  self.Scanner:Start()
+  self.Scanner:SetList(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST))
+  if self.Scanner:GotAnyTerms() then
+    self.Scanner:Start()
+  end
 end
 
 function PointBlankSniperTabFrameMixin:OnUpdate()
@@ -144,7 +160,9 @@ function PointBlankSniperTabFrameMixin:OnUpdate()
 end
 
 function PointBlankSniperTabFrameMixin:Stop()
-  self.Scanner:Stop()
+  self.ScannerKeyCache:Stop()
+  self.ScannerNameCache:Stop()
+
   self:UpdateStatusMessageStopped()
 end
 

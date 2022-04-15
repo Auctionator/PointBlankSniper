@@ -17,7 +17,8 @@
       <OnShow method="OnShow"/>
     </Scripts>
     <Frames>
-      <Frame parentKey="Scanner" inherits="PointBlankSniperListScannerTemplate"/>
+      <Frame parentKey="ScannerNameCache" inherits="PointBlankSniperListScannerNameCacheTemplate"/>
+      <Frame parentKey="ScannerKeyCache" inherits="PointBlankSniperListScannerKeyCacheTemplate"/>
       <Button parentKey="StartButton" inherits="UIPanelDynamicResizeButtonTemplate" text="POINT_BLANK_SNIPER_L_START">
         <Size x="70" y="22"/>
         <Anchors>
@@ -140,6 +141,16 @@
           <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.FilterKeySelectorLabel" y="8" x="-10"/>
         </Anchors>
       </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="NoGearMode">
+        <KeyValues>
+          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_NO_GEAR_MODE" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.FilterKeySelector" x="40" y="0"/>
+        </Anchors>
+      </Frame>
+
 
       <Frame parentKey="DataProvider" mixin="PointBlankSniperDataProviderMixin">
         <Scripts>

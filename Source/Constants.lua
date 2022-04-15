@@ -6,5 +6,9 @@ PointBlankSniper.Constants = {
     TSM_DBMarket = 3,
     TSM_DBRegionMarketAvg = 4,
     TSM_DBRegionSaleAvg = 5,
-  }
+  },
+  VendorBlacklist = {
+    38, --Recruit's Shirt (vendor version)
+    45, --Squire's Shirt (vendor version)
+  },
 }

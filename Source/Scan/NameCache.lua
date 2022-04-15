@@ -1,53 +1,31 @@
-local function CleanSearchString(searchString)
-  return string.lower(searchString)
+PointBlankSniperListScannerNameCacheMixin = {}
+
+function PointBlankSniperListScannerNameCacheMixin:OnLoad()
+  Auctionator.EventBus:RegisterSource(self, "PointBlankSniperListScannerNameCacheMixin")
 end
 
-local VENDOR_BLACKLIST = {
-  38, --Recruit's Shirt (vendor version)
-  45, --Squire's Shirt (vendor version)
-}
-local function IsBlacklistedID(itemID)
-  return tIndexOf(VENDOR_BLACKLIST, itemID) ~= nil
-end
-
-PointBlankSniperListScannerMixin = {}
-
-function PointBlankSniperListScannerMixin:OnLoad()
-  Auctionator.EventBus:RegisterSource(self, "PointBlankSniperListScannerMixin")
-end
-
-function PointBlankSniperListScannerMixin:SetList(listName)
-  local list = Auctionator.ShoppingLists.GetListByName(listName)
-
-  self.searchFor = {}
-  for _, entry in ipairs(list.items) do
-    local advancedParams = Auctionator.Search.SplitAdvancedSearch(entry)
-    table.insert(self.searchFor, {
-      searchString = CleanSearchString(advancedParams.searchString),
-      price = advancedParams.maxPrice,
-      minItemLevel = advancedParams.minItemLevel or 0,
-      isExact = advancedParams.isExact
-    })
-  end
-end
-
-function PointBlankSniperListScannerMixin:SetMarketCheck(checkFunc)
-  self.marketDataCheck = checkFunc or (function() return true end)
-end
-
-function PointBlankSniperListScannerMixin:SetCategories(categoryString)
-  self.categories = Auctionator.Search.GetItemClassCategories(categoryString)
-end
-
-function PointBlankSniperListScannerMixin:OnShow()
-  self.searchFor = {}
-end
-
-function PointBlankSniperListScannerMixin:OnHide()
+function PointBlankSniperListScannerNameCacheMixin:OnHide()
   self:Stop()
 end
 
-function PointBlankSniperListScannerMixin:Start()
+function PointBlankSniperListScannerNameCacheMixin:SetPriceCheck(priceCheck)
+  self.priceCheck = priceCheck
+end
+
+function PointBlankSniperListScannerNameCacheMixin:SetCategories(categoryString)
+  self.filters = Auctionator.Search.GetItemClassCategories(categoryString) or {}
+end
+
+function PointBlankSniperListScannerNameCacheMixin:SetList(listName)
+  self.searchFor = PointBlankSniper.Utilities.ConvertList(Auctionator.ShoppingLists.GetListByName(listName))
+end
+
+function PointBlankSniperListScannerNameCacheMixin:GotAnyTerms()
+  return true
+end
+
+
+function PointBlankSniperListScannerNameCacheMixin:Start()
   if not self.registered then
     FrameUtil.RegisterFrameForEvents(self, {
       "AUCTION_HOUSE_BROWSE_RESULTS_UPDATED",
@@ -59,11 +37,12 @@ function PointBlankSniperListScannerMixin:Start()
 
   self.results = {}
   self.blankSearchResultsWaiting = 0
+  self.resultsSeen = 0
 
   Auctionator.AH.SendBrowseQuery({
       searchString = "",
       filters = {},
-      itemClassFilters = self.categories,
+      itemClassFilters = self.filters,
       sorts = Auctionator.Constants.ShoppingListSorts,
   })
 
@@ -72,10 +51,12 @@ end
 
 -- Processes each batch of results, saving the names in advance before
 -- submitting them to another function to do the query on them
-function PointBlankSniperListScannerMixin:CacheAndProcessSearchResults(addedResults)
+function PointBlankSniperListScannerNameCacheMixin:CacheAndProcessSearchResults(addedResults)
   if not Auctionator.AH.HasFullBrowseResults() then
     Auctionator.AH.RequestMoreBrowseResults()
   end
+
+  self.resultsSeen = self.resultsSeen + #addedResults
 
   local resultsInfo = {
     cache = {},
@@ -84,6 +65,7 @@ function PointBlankSniperListScannerMixin:CacheAndProcessSearchResults(addedResu
     announcedReady = false,
     cachingComplete = false,
   }
+  local CleanSearchString = PointBlankSniper.Utilities.CleanSearchString
   self.blankSearchResultsWaiting = self.blankSearchResultsWaiting + 1
   resultsInfo.namesWaiting = resultsInfo.namesWaiting + #addedResults
 
@@ -119,30 +101,15 @@ function PointBlankSniperListScannerMixin:CacheAndProcessSearchResults(addedResu
   end
 end
 
-local function GetStartingIndex(startPoint, endPoint, array, searchString)
-  if startPoint == endPoint then
-    return startPoint
-  end
-
-  local midPoint = math.floor((startPoint + endPoint)/2)
-
-  local entry = array[midPoint]
-  if (midPoint == 1 or array[midPoint - 1] < searchString) and entry >= searchString then
-    return midPoint
-  elseif entry < searchString then
-    return GetStartingIndex(midPoint + 1, endPoint, array, searchString)
-  else--if entry >= searchString then
-    return GetStartingIndex(startPoint, midPoint - 1, array, searchString)
-  end
-end
-
-function PointBlankSniperListScannerMixin:DoShoppingListSearch(resultsInfo)
+function PointBlankSniperListScannerNameCacheMixin:DoShoppingListSearch(resultsInfo)
   if #resultsInfo.cache == 0 then
     return
   end
 
   local strFind = string.find
   local nameCache = resultsInfo.names
+  local GetStartingIndex = PointBlankSniper.Utilities.GetStartingIndex
+  local IsBlacklistedID = PointBlankSniper.Utilities.IsBlacklistedID
   for _, search in ipairs(self.searchFor) do
     local searchString = search.searchString
     local index = GetStartingIndex(1, #nameCache, nameCache, searchString)
@@ -150,7 +117,7 @@ function PointBlankSniperListScannerMixin:DoShoppingListSearch(resultsInfo)
       local currentResult = resultsInfo.cache[index]
       local check = true
       if not search.price then
-        check = check and self.marketDataCheck(currentResult)
+        check = check and self.priceCheck:CheckResult(currentResult.minPrice, currentResult.itemKey)
       else
         check = check and currentResult.minPrice <= search.price
       end
@@ -174,7 +141,7 @@ function PointBlankSniperListScannerMixin:DoShoppingListSearch(resultsInfo)
   end
 end
 
-function PointBlankSniperListScannerMixin:DoInternalSearch(resultsInfo)
+function PointBlankSniperListScannerNameCacheMixin:DoInternalSearch(resultsInfo)
   self:DoShoppingListSearch(resultsInfo)
 
   if resultsInfo.cachingComplete then
@@ -184,7 +151,7 @@ function PointBlankSniperListScannerMixin:DoInternalSearch(resultsInfo)
   end
 end
 
-function PointBlankSniperListScannerMixin:Stop()
+function PointBlankSniperListScannerNameCacheMixin:Stop()
   if self.registered then
     FrameUtil.UnregisterFrameForEvents(self, {
       "AUCTION_HOUSE_BROWSE_RESULTS_UPDATED",
@@ -196,7 +163,7 @@ function PointBlankSniperListScannerMixin:Stop()
   Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchAbort, self.results)
 end
 
-function PointBlankSniperListScannerMixin:OnEvent(eventName, ...)
+function PointBlankSniperListScannerNameCacheMixin:OnEvent(eventName, ...)
   if eventName == "AUCTION_HOUSE_BROWSE_RESULTS_ADDED" then
     local results = ...
     self:CacheAndProcessSearchResults(results)

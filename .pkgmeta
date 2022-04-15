@@ -1,7 +1,13 @@
+package-as: PointBlankSniper
 ignore:
-  - README.md
+  - tmp
   - scripts
 plain-copy:
   - Source
+  - Data
+  - Tones
 required-dependencies:
   - auctionator
+optional-dependencies:
+  - tradeskillmaster
+  - theunderminejournal
