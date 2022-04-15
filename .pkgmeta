@@ -8,5 +8,3 @@ plain-copy:
   - Tones
 required-dependencies:
   - auctionator
-optional-dependencies:
-  - theunderminejournal
