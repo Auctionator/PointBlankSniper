@@ -96,5 +96,5 @@ function PointBlankSniperDataProviderMixin:GetColumnHideStates()
 end
 
 function PointBlankSniperDataProviderMixin:GetRowTemplate()
-  return "AuctionatorShoppingListResultsRowTemplate"
+  return "PointBlankSniperResultsRowTemplate"
 end

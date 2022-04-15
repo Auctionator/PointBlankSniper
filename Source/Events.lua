@@ -1,6 +1,8 @@
 PointBlankSniper.Events = {
-  SnipeSearchStart = "opensnipe_search_start",
-  SnipeSearchNewResults = "opensnipe_search_new_results",
-  SnipeSearchComplete = "opensnipe_search_complete",
-  SnipeSearchAbort = "opensnipe_search_abort",
+  SnipeSearchStart = "point_blank_sniper_search_start",
+  SnipeSearchNewResults = "point_blank_sniper_search_new_results",
+  SnipeSearchComplete = "point_blank_sniper_search_complete",
+  SnipeSearchAbort = "point_blank_sniper_search_abort",
+
+  OpenBuyView = "point_blank_sniper_open_buy_frame",
 }

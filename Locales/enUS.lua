@@ -35,5 +35,12 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["NO_ITEM_INFORMATION_AVAILABLE"] = "No item information available."
   L["RECORDING_ITEM_X"] = "Recording item %s."
 
+  L["PRICE_COLON_X"] = "Price: %s"
+  L["WAITING"] = "Waiting..."
+  L["BUY_NOW"] = "Buy Now"
+  L["SOLD"] = "Sold"
+  L["BUYING"] = "Buying..."
+  L["VIEW_ALL"] = "View All"
+
   return L
 end

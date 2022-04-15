@@ -6,8 +6,10 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   Auctionator.EventBus:Register(self, {
     PointBlankSniper.Events.SnipeSearchStart,
     PointBlankSniper.Events.SnipeSearchNewResults,
-    PointBlankSniper.Events.SnipeSearchComplete
+    PointBlankSniper.Events.SnipeSearchComplete,
+    PointBlankSniper.Events.OpenBuyView,
   })
+  Auctionator.EventBus:RegisterSource(self, "PointBlankSniperTabFrame")
 
   PointBlankSniper.Config.InitializeData()
 
@@ -183,6 +185,8 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
     else
       self:Stop()
     end
+  elseif eventName == PointBlankSniper.Events.OpenBuyView then
+    self:Stop()
   end
 end
 

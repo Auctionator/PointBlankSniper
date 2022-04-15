@@ -1,0 +1,42 @@
+<Ui>
+  <Frame name="PointBlankSniperItemIconTemplate" mixin="PointBlankSniperItemIconMixin" virtual="true">
+    <Size y="50"/>
+    <Scripts>
+      <OnEnter method="OnEnter"/>
+      <OnLeave method="OnLeave"/>
+    </Scripts>
+    <Layers>
+      <Layer level="BACKGROUND" textureSubLevel="2">
+        <Size x="50" y="50"/>
+        <Texture parentKey="Icon">
+          <Anchors>
+            <Anchor point="TOPLEFT"/>
+          </Anchors>
+        </Texture>
+        <MaskTexture parentKey="IconMask" file="Interface\Common\common-iconmask" hWrapMode="CLAMPTOBLACKADDITIVE" vWrapMode="CLAMPTOBLACKADDITIVE">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeKey="$parent.Icon" />
+            <Anchor point="BOTTOMRIGHT" relativeKey="$parent.Icon" />
+          </Anchors>
+          <MaskedTextures>
+            <MaskedTexture childKey="Icon"/>
+          </MaskedTextures>
+        </MaskTexture>
+      </Layer>
+      <Layer level="BACKGROUND" textureSubLevel="3">
+        <Texture parentKey="IconBorder" file="Interface\Common\WhiteIconFrame">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeKey="$parent.Icon" />
+            <Anchor point="BOTTOMRIGHT" relativeKey="$parent.Icon" />
+          </Anchors>
+        </Texture>
+        <FontString parentKey="ItemNameText" inherits="GameFontNormalLarge">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.Icon" x="10" y="-5" />
+            <Anchor point="BOTTOMRIGHT" relativePoint="TOPRIGHT" y="-60"/>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+  </Frame>
+</Ui>

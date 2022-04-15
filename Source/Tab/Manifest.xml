@@ -4,5 +4,8 @@
   <Script file="DataProvider.lua" />
   <Script file="Register.lua" />
 
+  <Script file="ResultsRow.lua" />
+  <Include file="ResultsRow.xml"/>
+
   <Include file="Main.xml"/>
 </Ui>

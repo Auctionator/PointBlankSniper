@@ -9,5 +9,6 @@
   <Include file="ItemKeyCache\Manifest.xml"/>
 
   <Include file="Scan\Manifest.xml"/>
+  <Include file="Buy\Manifest.xml"/>
   <Include file="Tab\Manifest.xml"/>
 </Ui>

@@ -19,6 +19,9 @@
     <Frames>
       <Frame parentKey="ScannerNameCache" inherits="PointBlankSniperListScannerNameCacheTemplate"/>
       <Frame parentKey="ScannerKeyCache" inherits="PointBlankSniperListScannerKeyCacheTemplate"/>
+
+      <Frame parentKey="Buy" inherits="PointBlankSniperBuyFrameTemplate"/>
+
       <Button parentKey="StartButton" inherits="UIPanelDynamicResizeButtonTemplate" text="POINT_BLANK_SNIPER_L_START">
         <Size x="70" y="22"/>
         <Anchors>
@@ -38,7 +41,8 @@
         </Scripts>
       </Button>
     </Frames>
-    <Layers> <Layer level="BACKGROUND">
+    <Layers>
+      <Layer level="BACKGROUND">
         <FontString parentKey="ShoppingListNameLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_SHOPPING_LIST_NAME_COLON">
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.StopButton" x="40" y="-4"/>
@@ -160,15 +164,21 @@
       </Frame>
       <Frame parentKey="ResultsListing" inherits="AuctionatorResultsListingTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent" relativePoint="TOPLEFT" x="20" y="-120"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent" relativePoint="BOTTOMRIGHT" x="-20" y="27"/>
+          <Anchor point="TOPLEFT" x="20" y="-120"/>
+          <Anchor point="BOTTOMRIGHT" x="-320" y="27"/>
         </Anchors>
       </Frame>
 
       <Frame parentKey="ResultsListingInset" inherits="AuctionatorInsetTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.ResultsListing" relativePoint="TOPLEFT" x="-24" y="-25"/>
-          <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ResultsListing" relativePoint="BOTTOMRIGHT"  y="2"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ResultsListing" x="-24" y="-25"/>
+          <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ResultsListing"  y="2"/>
+        </Anchors>
+      </Frame>
+      <Frame parentKey="Buy" inherits="PointBlankSniperBuyFrameTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ResultsListing" relativePoint="TOPRIGHT" x="20"/>
+          <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT" x="-20" y="27"/>
         </Anchors>
       </Frame>
     </Frames>
@@ -176,7 +186,8 @@
       <Layer level="BACKGROUND">
         <FontString parentKey="Status" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_STATUS_MESSAGE">
           <Anchors>
-            <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT" relativeKey="$parent.ResultsListing" x="-5" y="-4"/>
+            <Anchor point="TOP" relativePoint="BOTTOM" relativeKey="$parent.ResultsListing" y="-4"/>
+            <Anchor point="RIGHT" x="-20"/>
           </Anchors>
         </FontString>
       </Layer>
