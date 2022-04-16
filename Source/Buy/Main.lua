@@ -150,7 +150,7 @@ function PointBlankSniperBuyFrameMixin:ReceiveEvent(eventName, ...)
     Auctionator.AH.GetItemKeyInfo(details.itemKey, function(itemKeyInfo)
       self.info = itemKeyInfo
 
-      self.Icon:Set(details.itemKey, itemKeyInfo.itemName, itemKeyInfo.iconFileID, itemKeyInfo.quality)
+      self.Icon:Set(details.itemKey, itemKeyInfo.itemName, itemKeyInfo.iconFileID, itemKeyInfo.quality, itemKeyInfo.battlePetLink)
 
       FrameUtil.RegisterFrameForEvents(self, PURCHASE_ITEM_EVENTS)
 
