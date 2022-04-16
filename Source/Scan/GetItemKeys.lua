@@ -13,23 +13,25 @@ function PointBlankSniper.Scan.GetItemKeys(searchTerms)
     local index = GetStartingIndex(1, #nameCache, nameCache, searchString)
     while index < #nameCache and strFind(nameCache[index], searchString, 1, true) ~= nil do
       local check = true
-      local itemKey = PointBlankSniper.Utilities.ItemKeyStringToItemKey(keyCache[index])
 
-      if search.minItemLevel ~= nil then
-        check = check and itemKey.itemLevel >= search.minItemLevel
-      end
+      for _, keyString in ipairs(keyCache[index]) do
+        local itemKey = PointBlankSniper.Utilities.ItemKeyStringToItemKey(keyString)
 
-      check = check and (not search.isExact or searchString == nameCache[index])
+        if search.minItemLevel ~= nil then
+          check = check and itemKey.itemLevel >= search.minItemLevel
+        end
 
-      check = check and not IsBlacklistedID(itemKey.itemID)
+        check = check and (not search.isExact or searchString == nameCache[index])
 
-      if check then
-        local keyString = keyCache[index]
-        if keysToPrice[keyString] ~= nil then
-          keysToPrice[keyString] = math.max(keysToPrice[keyString], search.price or 0)
-        else
-          table.insert(keysToSearchFor, itemKey)
-          keysToPrice[keyString] = search.price
+        check = check and not IsBlacklistedID(itemKey.itemID)
+
+        if check then
+          if keysToPrice[keyString] ~= nil then
+            keysToPrice[keyString] = math.max(keysToPrice[keyString], search.price or 0)
+          else
+            table.insert(keysToSearchFor, itemKey)
+            keysToPrice[keyString] = search.price
+          end
         end
       end
       index = index + 1

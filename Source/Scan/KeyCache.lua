@@ -24,7 +24,7 @@ end
 
 function PointBlankSniperListScannerKeyCacheMixin:SetList(listName)
   if #POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.names == 0 then
-    PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_NO_ITEM_INFORMATION_AVAILABLE)
+    PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_NOT_STARTING_SCAN_NO_INFO)
     return
   end
 
@@ -48,10 +48,16 @@ function PointBlankSniperListScannerKeyCacheMixin:SetList(listName)
       check = check and gotOne
     end
 
+    check = check and (not self.keyFilter or self.keyFilter(itemKey))
+
     if check then
       table.insert(self.keysToSearchFor, itemKey)
     end
   end
+end
+
+function PointBlankSniperListScannerKeyCacheMixin:SetKeyFilter(func)
+  self.keyFilter = func
 end
 
 function PointBlankSniperListScannerKeyCacheMixin:Start(itemKeys, priceMapping, priceCheck)

@@ -62,41 +62,20 @@
         </Scripts>
       </EditBox>
 
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="UseBleep">
-        <KeyValues>
-          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_USE_BLEEP" type="global" />
-        </KeyValues>
+      <Button inherits="UIPanelDynamicResizeButtonTemplate" text="OPTIONS" parentKey="OptionsButton">
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPLEFT" y="-10" x="20"/>
-          <Anchor point="RIGHT" relativePoint="RIGHT" x="-600"/>
+          <Anchor point="TOPRIGHT" x="-20" y="20"/>
         </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="UseFlash">
-        <KeyValues>
-          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_USE_FLASH" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" y="-10" x="-600"/>
-          <Anchor point="RIGHT" relativePoint="RIGHT" x="-400"/>
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="CarryOnAfterResult">
-        <KeyValues>
-          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_CARRY_ON_AFTER_RESULT" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" y="-10" x="-400"/>
-          <Anchor point="RIGHT" relativePoint="RIGHT" x="-200"/>
-        </Anchors>
-      </Frame>
+        <Scripts>
+          <OnClick>self:GetParent():OpenOptions()</OnClick>
+        </Scripts>
+      </Button>
     </Frames>
     <Layers>
       <Layer level="BACKGROUND">
         <FontString parentKey="PriceSourceLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_PRICE_SOURCE_COLON">
           <Anchors>
-            <Anchor point="TOPLEFT" x="30" y="-55"/>
+            <Anchor point="TOPLEFT" x="25" y="-30"/>
           </Anchors>
         </FontString>
       </Layer>
@@ -112,7 +91,7 @@
       <Layer level="BACKGROUND">
         <FontString parentKey="PercentageLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_PERCENTAGE_COLON">
           <Anchors>
-            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.PriceSource.DropDown" x="15" y="-8"/>
+            <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.PriceSource.DropDown" x="10" y="-8"/>
           </Anchors>
         </FontString>
       </Layer>
@@ -133,7 +112,7 @@
       <Layer level="BACKGROUND">
         <FontString parentKey="FilterKeySelectorLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_ITEM_CLASS_COLON">
           <Anchors>
-            <Anchor point="TOPLEFT" x="30" y="-95"/>
+            <Anchor point="TOPLEFT" x="25" y="-80"/>
           </Anchors>
         </FontString>
       </Layer>
@@ -146,13 +125,43 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="NoGearMode">
+      <Frame inherits="AuctionatorConfigurationRadioButtonGroup" parentKey="ScanMode">
         <KeyValues>
-          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_NO_GEAR_MODE" type="global" />
+          <KeyValue key="groupHeadingText" value="POINT_BLANK_SNIPER_L_SCAN_MODE_TEXT" type="global"/>
+          <KeyValue key="selectedValue" value="1" type="global"/>
         </KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.FilterKeySelector" x="40" y="0"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent.Percentage" relativePoint="TOPRIGHT" y="3"/>
         </Anchors>
+        <Frames>
+          <Frame inherits="AuctionatorConfigurationRadioButton">
+            <Anchors>
+              <Anchor point="RIGHT" x="-20"/>
+            </Anchors>
+            <KeyValues>
+              <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_BLANK_MODE_TEXT" type="global"/>
+              <KeyValue key="value" value="1" type="number"/>
+            </KeyValues>
+          </Frame>
+          <Frame inherits="AuctionatorConfigurationRadioButton">
+            <Anchors>
+              <Anchor point="TOPRIGHT" x="-20" y="30" />
+            </Anchors>
+            <KeyValues>
+              <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_KEYS_MODE_TEXT" type="global"/>
+              <KeyValue key="value" value="2" type="number"/>
+            </KeyValues>
+          </Frame>
+          <Frame inherits="AuctionatorConfigurationRadioButton">
+            <Anchors>
+              <Anchor point="TOPRIGHT" x="-20" y="30" />
+            </Anchors>
+            <KeyValues>
+              <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_COMMODITIES_MODE_TEXT" type="global"/>
+              <KeyValue key="value" value="3" type="number"/>
+            </KeyValues>
+          </Frame>
+        </Frames>
       </Frame>
 
 
@@ -164,7 +173,7 @@
       </Frame>
       <Frame parentKey="ResultsListing" inherits="AuctionatorResultsListingTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" x="20" y="-120"/>
+          <Anchor point="TOPLEFT" x="20" y="-110"/>
           <Anchor point="BOTTOMRIGHT" x="-320" y="27"/>
         </Anchors>
       </Frame>

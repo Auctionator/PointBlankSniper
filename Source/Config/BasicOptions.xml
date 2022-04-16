@@ -1,0 +1,49 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+  <Frame
+    name="PointBlankSniperConfigBasicOptionsFrame"
+    mixin="PointBlankSniperConfigBasicOptionsFrameMixin"
+    parent="InterfaceOptionsFrame">
+
+    <Scripts>
+      <OnLoad method="OnLoad"/>
+      <OnShow method="OnShow"/>
+      <OnHide method="Save"/>
+    </Scripts>
+
+    <Frames>
+      <Frame inherits="AuctionatorConfigurationTitleFrame" parentKey="TitleArea">
+        <KeyValues>
+          <KeyValue key="titleText" value="AUCTIONATOR_L_CONFIG_BASIC_OPTIONS_CATEGORY" type="global" />
+          <KeyValue key="subTitleText" value="POINT_BLANK_SNIPER_L_CONFIG_BASIC_OPTIONS_TEXT" type="global"/>
+        </KeyValues>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="UseBleep">
+        <KeyValues>
+          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_USE_BLEEP" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.TitleArea" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="UseFlash">
+        <KeyValues>
+          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_USE_FLASH" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.UseBleep" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="CarryOnAfterResult">
+        <KeyValues>
+          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_CARRY_ON_AFTER_RESULT" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.UseFlash" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+   </Frames>
+  </Frame>
+</Ui>

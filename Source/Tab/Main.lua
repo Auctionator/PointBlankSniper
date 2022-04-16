@@ -20,13 +20,10 @@ function PointBlankSniperTabFrameMixin:OnLoad()
 
   self.ResultsListing:Init(self.DataProvider)
   self.ListName:SetText(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST))
-  self.UseBleep:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_BLEEP))
-  self.UseFlash:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_FLASH))
-  self.CarryOnAfterResult:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT))
   self.PriceSource:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE))
   self.Percentage:SetText(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PERCENTAGE) * 100)
   self.FilterKeySelector:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.ITEM_CLASS))
-  self.NoGearMode:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.KEYS_MODE))
+  self.ScanMode:SetSelectedValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE))
 
   self.scanTime = -1
   self.currentBatch = 0
@@ -108,10 +105,6 @@ function PointBlankSniperTabFrameMixin:UpdateConfigs()
     self:Stop()
   end
 
-  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.USE_BLEEP, self.UseBleep:GetChecked())
-  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.USE_FLASH, self.UseFlash:GetChecked())
-  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT, self.CarryOnAfterResult:GetChecked())
-
   if ChangeCheck(PointBlankSniper.Config.Options.PRICE_SOURCE, self.PriceSource:GetValue()) then
     PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.WAS_PRICE_SOURCE_CHANGED, true)
     self:Stop()
@@ -126,12 +119,13 @@ function PointBlankSniperTabFrameMixin:UpdateConfigs()
     self:Stop()
   end
 
-  if ChangeCheck(PointBlankSniper.Config.Options.KEYS_MODE, self.NoGearMode:GetChecked()) then
+  if ChangeCheck(PointBlankSniper.Config.Options.SCAN_MODE, self.ScanMode:GetValue()) then
     self:Stop()
   end
 end
 
 function PointBlankSniperTabFrameMixin:OnShow()
+  Auctionator.EventBus:Fire(self, PointBlankSniper.Events.TabShown)
   self:UpdateStartButton()
   if self.StartButton:IsEnabled() then
     self:Start()
@@ -142,10 +136,16 @@ function PointBlankSniperTabFrameMixin:Start()
   self.ScannerKeyCache:Stop()
   self.ScannerNameCache:Stop()
 
-  if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.KEYS_MODE) then
-    self.Scanner = self.ScannerKeyCache
-  else
+  if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.Blank then
     self.Scanner = self.ScannerNameCache
+  elseif PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.Keys then
+    self.Scanner = self.ScannerKeyCache
+    self.Scanner:SetKeyFilter(nil)
+  elseif PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.Commodities then
+    self.Scanner = self.ScannerKeyCache
+    self.Scanner:SetKeyFilter(function(itemKey)
+      return not PointBlankSniper.Utilities.IsGear(itemKey.itemID)
+    end)
   end
 
   self.Scanner:SetPriceCheck(PointBlankSniper.PriceCheck.Get())
@@ -192,5 +192,5 @@ end
 
 function PointBlankSniperTabFrameMixin:OpenOptions()
   InterfaceOptionsFrame:Show()
-  InterfaceOptionsFrame_OpenToCategory(COLLECTIONATOR_L_COLLECTIONATOR)
+  InterfaceOptionsFrame_OpenToCategory(POINT_BLANK_SNIPER_L_POINT_BLANK_SNIPER)
 end

@@ -1,10 +1,10 @@
 PointBlankSniperDataItemKeyLoaderMixin = {}
 
 function PointBlankSniperDataItemKeyLoaderMixin:StartLoading()
-  PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_ITEM_INFO_DB_CREATING)
+  PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_ITEM_INFO_DB_UPDATING)
 
   self.index = 1
-  self.source = POINT_BLANK_SNIPER_KNOWN_COMMODITY_KEYS
+  self.source = POINT_BLANK_SNIPER_KNOWN_KEYS
   self.temporarySource = POINT_BLANK_SNIPER_ITEM_CACHE.newKeys
   self.namePairs = {}
   self.waiting = #self.source.itemKeyStrings
@@ -46,8 +46,12 @@ function PointBlankSniperDataItemKeyLoaderMixin:ProcessCompleteNamePairs()
   for _, nameAndKey in ipairs(self.namePairs) do
     local itemKeyString = Auctionator.Utilities.ItemKeyString(nameAndKey.itemKey)
     if nameAndKey.name ~= "" then
-      table.insert(names, nameAndKey.name)
-      table.insert(itemKeyStrings, itemKeyString)
+      if names[#names] == nameAndKey.name then
+        table.insert(itemKeyStrings[#names], itemKeyString)
+      else
+        table.insert(names, nameAndKey.name)
+        table.insert(itemKeyStrings, {itemKeyString})
+      end
       POINT_BLANK_SNIPER_ITEM_CACHE.keysSeen[itemKeyString] = true
     else
       table.insert(POINT_BLANK_SNIPER_ITEM_CACHE.missing, itemKeyString)
@@ -87,7 +91,7 @@ function PointBlankSniperDataItemKeyLoaderMixin:OnUpdate(elapsed)
     if #POINT_BLANK_SNIPER_ITEM_CACHE.missing > 0 then
       PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_ITEM_INFO_DB_MISSING)
     else
-      PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_ITEM_INFO_DB_CREATED)
+      PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_ITEM_INFO_DB_UPDATED)
     end
   end
 end

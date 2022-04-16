@@ -11,4 +11,9 @@ PointBlankSniper.Constants = {
     38, --Recruit's Shirt (vendor version)
     45, --Squire's Shirt (vendor version)
   },
+  ScanModes = {
+    Blank = 1,
+    Keys = 2,
+    Commodities = 3,
+  }
 }

@@ -7,7 +7,7 @@ PointBlankSniper.Config.Options = {
   WAS_PRICE_SOURCE_CHANGED = "was_price_source_changed",
   CURRENT_LIST = "current_list",
   ITEM_CLASS = "item_class",
-  KEYS_MODE = "keys_mode",
+  SCAN_MODE = "scan_mode",
   COLUMNS = "columns",
 }
 
@@ -20,7 +20,7 @@ PointBlankSniper.Config.Defaults = {
   [PointBlankSniper.Config.Options.WAS_PRICE_SOURCE_CHANGED] = false,
   [PointBlankSniper.Config.Options.CURRENT_LIST] = "",
   [PointBlankSniper.Config.Options.ITEM_CLASS] = "",
-  [PointBlankSniper.Config.Options.KEYS_MODE] = false,
+  [PointBlankSniper.Config.Options.SCAN_MODE] = PointBlankSniper.Constants.ScanModes.Blank,
   [PointBlankSniper.Config.Options.COLUMNS] = {},
 }
 
