@@ -7,7 +7,10 @@ local PURCHASE_ITEM_EVENTS = {
 PointBlankSniperBuyFrameMixin = {}
 
 function PointBlankSniperBuyFrameMixin:OnLoad()
-  Auctionator.EventBus:Register(self, { PointBlankSniper.Events.OpenBuyView })
+  Auctionator.EventBus:Register(self, {
+    PointBlankSniper.Events.SnipeSearchStart,
+    PointBlankSniper.Events.OpenBuyView
+  })
 end
 
 function PointBlankSniperBuyFrameMixin:OnHide()
@@ -160,5 +163,7 @@ function PointBlankSniperBuyFrameMixin:ReceiveEvent(eventName, ...)
       end
       Auctionator.AH.SendSearchQuery(details.itemKey, {sortingOrder}, false)
     end)
+  elseif eventName == PointBlankSniper.Events.SnipeSearchStart then
+    self:Hide()
   end
 end
