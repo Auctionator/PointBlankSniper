@@ -17,10 +17,19 @@ end
 function PointBlankSniperDataItemKeyLoaderMixin:ConvertToPartialPairs()
   local seen = {}
   for _, keyString in ipairs(self.source.itemKeyStrings) do
-    local itemKey = PointBlankSniper.Utilities.CleanItemKey(PointBlankSniper.Utilities.ItemKeyStringToItemKey(keyString))
-    local newKeyString = Auctionator.Utilities.ItemKeyString(itemKey)
-    if seen[newKeyString] == nil then
-      seen[newKeyString] = true
+    local itemKey = PointBlankSniper.Utilities.ItemKeyStringToItemKey(keyString)
+    if seen[keyString] == nil then
+      seen[keyString] = true
+      table.insert(self.namePairs, {
+        name = "",
+        itemKey = itemKey,
+      })
+    end
+  end
+  for _, keyString in ipairs(POINT_BLANK_SNIPER_ITEM_CACHE.newKeys) do
+    local itemKey = PointBlankSniper.Utilities.ItemKeyStringToItemKey(keyString)
+    if seen[keyString] == nil then
+      seen[keyString] = true
       table.insert(self.namePairs, {
         name = "",
         itemKey = itemKey,
@@ -48,7 +57,8 @@ function PointBlankSniperDataItemKeyLoaderMixin:ProcessCompleteNamePairs()
   POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.itemKeyStrings = itemKeyStrings
   POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.names = names
   POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.timestamp = time()
-  POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = true
+  POINT_BLANK_SNIPER_ITEM_CACHE.newKeys = {}
+  POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = false
 end
 
 function PointBlankSniperDataItemKeyLoaderMixin:ProcessNextBatch()

@@ -1,3 +1,4 @@
+--/run POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.timestamp = 0
 function PointBlankSniper.ItemKeyCache.ClearCache()
   POINT_BLANK_SNIPER_ITEM_CACHE = {
     version = 1,
