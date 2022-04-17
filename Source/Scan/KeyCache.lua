@@ -80,7 +80,7 @@ function PointBlankSniperListScannerKeyCacheMixin:DoNextSearch()
   local limit = self.keyStartingIndex + KEYS_PER_SEARCH
   while index < limit and index <= #self.keysToSearchFor do
     table.insert(itemKeys, self.keysToSearchFor[index])
-    
+
     index = index + 1
   end
 
