@@ -5,6 +5,7 @@ function PointBlankSniperDataItemKeyLoaderMixin:StartLoading()
 
   self.index = 1
   self.source = POINT_BLANK_SNIPER_KNOWN_COMMODITY_KEYS
+  self.temporarySource = POINT_BLANK_SNIPER_ITEM_CACHE.newKeys
   self.namePairs = {}
   self.waiting = #self.source.itemKeyStrings
   self.elapsed = 0
@@ -17,12 +18,21 @@ end
 function PointBlankSniperDataItemKeyLoaderMixin:ConvertToPartialPairs()
   local seen = {}
   for _, keyString in ipairs(self.source.itemKeyStrings) do
-    local itemKey = PointBlankSniper.Utilities.ItemKeyStringToItemKey(keyString)
     if seen[keyString] == nil then
       seen[keyString] = true
       table.insert(self.namePairs, {
         name = "",
-        itemKey = itemKey,
+        itemKey = PointBlankSniper.Utilities.ItemKeyStringToItemKey(keyString),
+      })
+    end
+  end
+
+  for _, keyString in ipairs(self.temporarySource) do
+    if seen[keyString] == nil then
+      seen[keyString] = true
+      table.insert(self.namePairs, {
+        name = "",
+        itemKey = PointBlankSniper.Utilities.ItemKeyStringToItemKey(keyString),
       })
     end
   end
