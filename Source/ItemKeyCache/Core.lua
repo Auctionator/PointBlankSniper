@@ -17,6 +17,7 @@ function PointBlankSniperDataCoreFrameMixin:OnEvent(event, ...)
     if POINT_BLANK_SNIPER_ITEM_CACHE == nil or POINT_BLANK_SNIPER_ITEM_CACHE.version ~= 1 then
       PointBlankSniper.ItemKeyCache.ClearCache()
     end
+    POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = false
 
     PointBlankSniper.ItemKeyCache.SetupHooks()
 
