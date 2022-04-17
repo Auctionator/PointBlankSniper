@@ -22,6 +22,6 @@ function PointBlankSniperDataCoreFrameMixin:OnEvent(event, ...)
 
   elseif event == "AUCTION_HOUSE_SHOW" and POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.timestamp < POINT_BLANK_SNIPER_KNOWN_COMMODITY_KEYS.timestamp then
     self.NamesLoader = CreateFrame("frame", nil, AuctionHouseFrame, "PointBlankSniperDataNamesLoaderTemplate")
-    self.NamesLoader:StartLoading(POINT_BLANK_SNIPER_ITEM_CACHE)
+    self.NamesLoader:StartLoading()
   end
 end

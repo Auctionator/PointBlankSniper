@@ -47,7 +47,14 @@ end
 
 function PointBlankSniper.Utilities.ItemKeyStringToItemKey(itemKeyString)
   local itemID, itemSuffix, itemLevel, battlePetSpeciesID = strsplit(" ", itemKeyString)
-  return C_AuctionHouse.MakeItemKey(tonumber(itemID), tonumber(itemLevel), tonumber(itemSuffix), tonumber(battlePetSpeciesID))
+  -- Necessary to create key manually as the C_AuctionHouse function sets the
+  -- itemLevel to 20 on battle pets
+  return {
+    itemID = tonumber(itemID),
+    itemLevel = tonumber(itemLevel),
+    itemSuffix = tonumber(itemSuffix),
+    battlePetSpeciesID = tonumber(battlePetSpeciesID)
+  }
 end
 
 function PointBlankSniper.Utilities.IsGear(itemID)
