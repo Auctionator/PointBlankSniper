@@ -24,7 +24,6 @@ function PointBlankSniperListScannerNameCacheMixin:GotAnyTerms()
   return true
 end
 
-
 function PointBlankSniperListScannerNameCacheMixin:Start()
   if not self.registered then
     FrameUtil.RegisterFrameForEvents(self, {
@@ -37,7 +36,6 @@ function PointBlankSniperListScannerNameCacheMixin:Start()
 
   self.results = {}
   self.blankSearchResultsWaiting = 0
-  self.resultsSeen = 0
 
   Auctionator.AH.SendBrowseQuery({
       searchString = "",
@@ -55,8 +53,6 @@ function PointBlankSniperListScannerNameCacheMixin:CacheAndProcessSearchResults(
   if not Auctionator.AH.HasFullBrowseResults() then
     Auctionator.AH.RequestMoreBrowseResults()
   end
-
-  self.resultsSeen = self.resultsSeen + #addedResults
 
   local resultsInfo = {
     cache = {},
