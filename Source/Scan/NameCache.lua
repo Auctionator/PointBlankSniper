@@ -50,10 +50,6 @@ end
 -- Processes each batch of results, saving the names in advance before
 -- submitting them to another function to do the query on them
 function PointBlankSniperListScannerNameCacheMixin:CacheAndProcessSearchResults(addedResults)
-  if not Auctionator.AH.HasFullBrowseResults() then
-    Auctionator.AH.RequestMoreBrowseResults()
-  end
-
   local resultsInfo = {
     cache = {},
     names = {},
@@ -79,7 +75,7 @@ function PointBlankSniperListScannerNameCacheMixin:CacheAndProcessSearchResults(
           self.blankSearchResultsWaiting = self.blankSearchResultsWaiting - 1
           resultsInfo.cachingComplete = self.blankSearchResultsWaiting <= 0 and Auctionator.AH.HasFullBrowseResults()
 
-          self:DoInternalSearch(resultsInfo)
+          self:ProcessCachedResults(resultsInfo)
         end
       end)
     else
@@ -93,7 +89,7 @@ function PointBlankSniperListScannerNameCacheMixin:CacheAndProcessSearchResults(
     self.blankSearchResultsWaiting = self.blankSearchResultsWaiting - 1
     resultsInfo.cachingComplete = self.blankSearchResultsWaiting <= 0 and Auctionator.AH.HasFullBrowseResults()
 
-    self:DoInternalSearch(resultsInfo)
+    self:ProcessCachedResults(resultsInfo)
   end
 end
 
@@ -137,13 +133,17 @@ function PointBlankSniperListScannerNameCacheMixin:DoShoppingListSearch(resultsI
   end
 end
 
-function PointBlankSniperListScannerNameCacheMixin:DoInternalSearch(resultsInfo)
+function PointBlankSniperListScannerNameCacheMixin:ProcessCachedResults(resultsInfo)
   self:DoShoppingListSearch(resultsInfo)
 
   if resultsInfo.cachingComplete then
     Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchComplete, self.results)
   else
     Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchNewResults, self.results)
+
+    if not Auctionator.AH.HasFullBrowseResults() then
+      Auctionator.AH.RequestMoreBrowseResults()
+    end
   end
 end
 
