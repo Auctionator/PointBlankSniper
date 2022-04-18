@@ -4,6 +4,7 @@ PointBlankSniperListScannerKeyCacheMixin = {}
 
 function PointBlankSniperListScannerKeyCacheMixin:OnLoad()
   Auctionator.EventBus:RegisterSource(self, "PointBlankSniperListScannerKeyCacheMixin")
+  self.results = {}
 end
 
 function PointBlankSniperListScannerKeyCacheMixin:GotAnyTerms()
@@ -74,6 +75,7 @@ function PointBlankSniperListScannerKeyCacheMixin:Start(itemKeys, priceMapping, 
 
   self.results = {}
   self.keyStartingIndex = 1
+  self.cancelled = false
 
   Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchStart)
 
@@ -81,6 +83,10 @@ function PointBlankSniperListScannerKeyCacheMixin:Start(itemKeys, priceMapping, 
 end
 
 function PointBlankSniperListScannerKeyCacheMixin:DoNextSearch()
+  if self.cancelled then
+    return
+  end
+
   local itemKeys = {}
   local index = self.keyStartingIndex
   local limit = self.keyStartingIndex + KEYS_PER_SEARCH
@@ -134,6 +140,7 @@ function PointBlankSniperListScannerKeyCacheMixin:Stop()
     })
     self.registered = false
   end
+  self.cancelled = true
   Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchAbort, self.results)
 end
 

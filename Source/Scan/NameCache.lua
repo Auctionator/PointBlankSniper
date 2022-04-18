@@ -2,6 +2,7 @@ PointBlankSniperListScannerNameCacheMixin = {}
 
 function PointBlankSniperListScannerNameCacheMixin:OnLoad()
   Auctionator.EventBus:RegisterSource(self, "PointBlankSniperListScannerNameCacheMixin")
+  self.results = {}
 end
 
 function PointBlankSniperListScannerNameCacheMixin:OnHide()
@@ -36,6 +37,7 @@ function PointBlankSniperListScannerNameCacheMixin:Start()
 
   self.results = {}
   self.blankSearchResultsWaiting = 0
+  self.cancelled = false
 
   Auctionator.AH.SendBrowseQuery({
       searchString = "",
@@ -141,7 +143,7 @@ function PointBlankSniperListScannerNameCacheMixin:ProcessCachedResults(resultsI
   else
     Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchNewResults, self.results)
 
-    if not Auctionator.AH.HasFullBrowseResults() then
+    if not self.cancelled and not Auctionator.AH.HasFullBrowseResults() then
       Auctionator.AH.RequestMoreBrowseResults()
     end
   end
@@ -156,6 +158,7 @@ function PointBlankSniperListScannerNameCacheMixin:Stop()
     })
     self.registered = false
   end
+  self.cancelled = true
   Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchAbort, self.results)
 end
 

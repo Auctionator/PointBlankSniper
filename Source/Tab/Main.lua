@@ -177,6 +177,9 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
   elseif eventName == PointBlankSniper.Events.SnipeSearchNewResults then
     self.currentBatch = self.currentBatch + 1
     self:UpdateStatusMessageOngoing()
+    if not PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT) and self.Alert:AnyItemsFound() then
+      self.Scanner:Stop()
+    end
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
     self.scanTime = debugprofilestop() - self.scanStartTime
     self:UpdateStatusMessageOngoing()
