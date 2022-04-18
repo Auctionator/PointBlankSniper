@@ -3,6 +3,8 @@ PointBlankSniperTabFrameMixin = {}
 function PointBlankSniperTabFrameMixin:OnLoad()
   Auctionator.Debug.Message("PointBlankSniperTabMixin:OnLoad()")
 
+  self.Alert = CreateAndInitFromMixin(PointBlankSniperAlertMixin)
+
   Auctionator.EventBus:Register(self, {
     PointBlankSniper.Events.SnipeSearchStart,
     PointBlankSniper.Events.SnipeSearchNewResults,
@@ -12,8 +14,6 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   Auctionator.EventBus:RegisterSource(self, "PointBlankSniperTabFrame")
 
   PointBlankSniper.Config.InitializeData()
-
-  self.Alert = CreateAndInitFromMixin(PointBlankSniperAlertMixin)
 
   self:SetupMarketData()
   self.FilterKeySelector:Reset()
