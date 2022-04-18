@@ -9,6 +9,7 @@ function PointBlankSniperDataItemKeyLoaderMixin:StartLoading()
   self.namePairs = {}
   self.waiting = #self.source.itemKeyStrings
   self.elapsed = 0
+  self.newKeysNotInDB = {}
   POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = true
 
   self:ConvertToPartialPairs()
@@ -30,6 +31,7 @@ function PointBlankSniperDataItemKeyLoaderMixin:ConvertToPartialPairs()
   for _, keyString in ipairs(self.temporarySource) do
     if seen[keyString] == nil then
       seen[keyString] = true
+      table.insert(self.newKeysNotInDB, keyString)
       table.insert(self.namePairs, {
         name = "",
         itemKey = PointBlankSniper.Utilities.ItemKeyStringToItemKey(keyString),
@@ -61,6 +63,7 @@ function PointBlankSniperDataItemKeyLoaderMixin:ProcessCompleteNamePairs()
   POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.itemKeyStrings = itemKeyStrings
   POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.names = names
   POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.timestamp = time()
+  POINT_BLANK_SNIPER_ITEM_CACHE.newKeys = self.newKeysNotInDB
   POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = false
 end
 
