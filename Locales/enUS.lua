@@ -48,6 +48,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["USE_BLEEP"] = "Play bleep tone"
   L["USE_FLASH"] = "Flash taskbar icon"
   L["CARRY_ON_AFTER_RESULT"] = "Carry on after finding item"
+  L["SHOW_NEW_ITEMS_MESSAGES"] = "Show new items in the database messages"
 
   return L
 end

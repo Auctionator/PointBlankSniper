@@ -8,6 +8,7 @@ PointBlankSniper.Config.Options = {
   CURRENT_LIST = "current_list",
   ITEM_CLASS = "item_class",
   SCAN_MODE = "scan_mode",
+  SHOW_NEW_ITEMS_MESSAGES = "show_new_items_messages",
   COLUMNS = "columns",
 }
 
@@ -18,6 +19,7 @@ PointBlankSniper.Config.Defaults = {
   [PointBlankSniper.Config.Options.PRICE_SOURCE] = PointBlankSniper.Constants.Market.None,
   [PointBlankSniper.Config.Options.PERCENTAGE] = 0.15,
   [PointBlankSniper.Config.Options.WAS_PRICE_SOURCE_CHANGED] = false,
+  [PointBlankSniper.Config.Options.SHOW_NEW_ITEMS_MESSAGES] = true,
   [PointBlankSniper.Config.Options.CURRENT_LIST] = "",
   [PointBlankSniper.Config.Options.ITEM_CLASS] = "",
   [PointBlankSniper.Config.Options.SCAN_MODE] = PointBlankSniper.Constants.ScanModes.Blank,
