@@ -141,7 +141,7 @@ function PointBlankSniperTabFrameMixin:Start()
   elseif PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.Keys then
     self.Scanner = self.ScannerKeyCache
     self.Scanner:SetKeyFilter(nil)
-  elseif PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.Commodities then
+  elseif PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.NoGear then
     self.Scanner = self.ScannerKeyCache
     self.Scanner:SetKeyFilter(function(itemKey)
       return not PointBlankSniper.Utilities.IsGear(itemKey.itemID)

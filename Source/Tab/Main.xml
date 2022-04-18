@@ -157,7 +157,7 @@
               <Anchor point="TOPRIGHT" x="-20" y="30" />
             </Anchors>
             <KeyValues>
-              <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_COMMODITIES_MODE_TEXT" type="global"/>
+              <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_NO_GEAR_MODE_TEXT" type="global"/>
               <KeyValue key="value" value="3" type="number"/>
             </KeyValues>
           </Frame>

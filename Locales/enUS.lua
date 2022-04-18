@@ -13,7 +13,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["SCAN_MODE_TEXT"] = "Scan mode, some modes are faster, experiment:"
   L["BLANK_MODE_TEXT"] = "Blank search (always works)"
   L["KEYS_MODE_TEXT"] = "Keys search (best on different list lengths)"
-  L["COMMODITIES_MODE_TEXT"] = "Commodities only (similar to keys mode)"
+  L["NO_GEAR_MODE_TEXT"] = "No gear search (similar to keys mode)"
 
   L["PRICE_SOURCE_COLON"] = "Price Source:"
   L["PERCENTAGE_COLON"] = "Percentage:"

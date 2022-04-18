@@ -14,6 +14,6 @@ PointBlankSniper.Constants = {
   ScanModes = {
     Blank = 1,
     Keys = 2,
-    Commodities = 3,
+    NoGear = 3,
   }
 }
