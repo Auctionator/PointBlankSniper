@@ -12,7 +12,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
 
   L["SCAN_MODE_TEXT"] = "Scan mode, some modes are faster, experiment:"
   L["BLANK_MODE_TEXT"] = "Blank search (default, always works)"
-  L["KEYS_MODE_TEXT"] = "Keys search (fast, misses incredibly rare items)"
+  L["KEYS_MODE_TEXT"] = "Keys search (fast, misses some rare gear ilvls)"
   L["NO_GEAR_MODE_TEXT"] = "No gear search (like keys, but no gear)"
 
   L["PRICE_SOURCE_COLON"] = "Price Source:"
