@@ -35,7 +35,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["ITEM_INFO_DB_MISSING"] = "Some item info is missing. Please report the missing numbers with a screenshot on the Discord or open a Github issue."
   L["ITEM_INFO_DB_UPDATED"] = "Item information database successfully updated."
   L["NOT_STARTING_SCAN_NO_INFO"] = "Not starting scan as item information is unavailable."
-  L["ITEMS_RECORDED"] = "Database has items/item levels not seen in preinstalled database."
+  L["ITEMS_RECORDED"] = "Database has %s items/item levels not seen in preinstalled database."
 
   L["PRICE_COLON_X"] = "Price: %s"
   L["WAITING"] = "Waiting..."

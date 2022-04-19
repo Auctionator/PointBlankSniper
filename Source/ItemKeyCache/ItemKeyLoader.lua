@@ -7,7 +7,6 @@ function PointBlankSniperDataItemKeyLoaderMixin:StartLoading()
   self.source = POINT_BLANK_SNIPER_KNOWN_KEYS
   self.temporarySource = POINT_BLANK_SNIPER_ITEM_CACHE.newKeys
   self.namePairs = {}
-  self.waiting = #self.source.itemKeyStrings
   self.elapsed = 0
   self.newKeysNotInDB = {}
   POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = true
@@ -38,9 +37,11 @@ function PointBlankSniperDataItemKeyLoaderMixin:ConvertToPartialPairs()
       })
     end
   end
+  self.waiting = #self.namePairs
 end
 
 function PointBlankSniperDataItemKeyLoaderMixin:ProcessCompleteNamePairs()
+  POINT_BLANK_SNIPER_ITEM_CACHE.missing = {}
   table.sort(self.namePairs, function(a, b)
     return a.name < b.name
   end)

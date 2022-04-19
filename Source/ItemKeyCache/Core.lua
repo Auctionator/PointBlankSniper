@@ -12,7 +12,7 @@ end
 function PointBlankSniperDataCoreFrameMixin:ReceiveEvent(eventName, eventData)
   if eventName == PointBlankSniper.Events.TabShown then
     if #POINT_BLANK_SNIPER_ITEM_CACHE.newKeys > 0 and PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SHOW_NEW_ITEMS_MESSAGES) then
-      PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_ITEMS_RECORDED)
+      PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_ITEMS_RECORDED:format(#POINT_BLANK_SNIPER_ITEM_CACHE.newKeys))
     end
 
     if POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.timestamp < POINT_BLANK_SNIPER_KNOWN_KEYS.timestamp then
