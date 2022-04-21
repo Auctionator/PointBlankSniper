@@ -7,8 +7,13 @@ function PointBlankSniperAlertMixin:Init()
     PointBlankSniper.Events.SnipeSearchComplete
   })
 
+  self:Reset()
+end
+
+function PointBlankSniperAlertMixin:Reset()
   self.seenResults = {}
   self.seenInThisScan = {}
+  self.itemsFound = false
 end
 
 function PointBlankSniperAlertMixin:DoAlert()

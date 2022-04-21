@@ -134,6 +134,7 @@ end
 
 function PointBlankSniperTabFrameMixin:StartButtonClicked()
   self.DataProvider:Reset()
+  self.Alert:Reset()
   self:Start()
 end
 
