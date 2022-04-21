@@ -28,7 +28,7 @@
           <Anchor point="TOPLEFT" relativePoint="TOPLEFT" y="20" x="180"/>
         </Anchors>
         <Scripts>
-          <OnClick>self:GetParent():Start()</OnClick>
+          <OnClick>self:GetParent():StartButtonClicked()</OnClick>
         </Scripts>
       </Button>
       <Button parentKey="StopButton" inherits="UIPanelDynamicResizeButtonTemplate" text="POINT_BLANK_SNIPER_L_STOP">

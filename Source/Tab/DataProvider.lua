@@ -53,10 +53,6 @@ end
 
 function PointBlankSniperDataProviderMixin:ReceiveEvent(eventName, results, ...)
   if eventName == PointBlankSniper.Events.SnipeSearchStart then
-    if self.wasAborted then
-      self:Reset()
-    end
-
     self.onSearchStarted()
   elseif eventName == PointBlankSniper.Events.SnipeSearchNewResults then
     self.onSearchStarted()
@@ -64,10 +60,8 @@ function PointBlankSniperDataProviderMixin:ReceiveEvent(eventName, results, ...)
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
     self:Reset()
     self:AppendEntries(results, true)
-    self.wasAborted = false
   elseif eventName == PointBlankSniper.Events.SnipeSearchAbort then
     self:AppendEntries({}, true)
-    self.wasAborted = true
   else
     -- Shopping list change
     self:Reset()

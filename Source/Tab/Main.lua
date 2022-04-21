@@ -132,6 +132,11 @@ function PointBlankSniperTabFrameMixin:OnShow()
   end
 end
 
+function PointBlankSniperTabFrameMixin:StartButtonClicked()
+  self.DataProvider:Reset()
+  self:Start()
+end
+
 function PointBlankSniperTabFrameMixin:Start()
   self.ScannerKeyCache:Stop()
   self.ScannerNameCache:Stop()
