@@ -11,7 +11,7 @@ function PointBlankSniper.Utilities.IsBlacklistedID(itemID)
 end
 
 local function GetStartingIndex(startPoint, endPoint, array, searchString)
-  if startPoint == endPoint then
+  if startPoint >= endPoint then
     return startPoint
   end
 
