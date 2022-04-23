@@ -161,6 +161,15 @@
               <KeyValue key="value" value="3" type="number"/>
             </KeyValues>
           </Frame>
+          <Frame inherits="AuctionatorConfigurationRadioButton">
+            <Anchors>
+              <Anchor point="RIGHT" x="-20"/>
+            </Anchors>
+            <KeyValues>
+              <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_THRESHOLD_MODE_TEXT" type="global"/>
+              <KeyValue key="value" value="4" type="number"/>
+            </KeyValues>
+          </Frame>
         </Frames>
       </Frame>
 
