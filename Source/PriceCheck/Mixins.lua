@@ -4,13 +4,13 @@ function PointBlankSniper.PriceCheck.PriceCheckMixin:CheckResult(price, itemKey)
   error("This needs to be overridden")
 end
 
-PointBlankSniper.PriceCheck.NoneMixin = {}
+PointBlankSniper.PriceCheck.NoneMixin = CreateFromMixins(PointBlankSniper.PriceCheck.PriceCheckMixin)
 
 function PointBlankSniper.PriceCheck.NoneMixin:CheckResult(price, itemKey)
   return true
 end
 
-PointBlankSniper.PriceCheck.TUJMixin = {}
+PointBlankSniper.PriceCheck.TUJMixin = CreateFromMixins(PointBlankSniper.PriceCheck.PriceCheckMixin)
 
 function PointBlankSniper.PriceCheck.TUJMixin:Init(parameter, percentage)
   self.parameter = parameter
@@ -32,7 +32,7 @@ function PointBlankSniper.PriceCheck.TUJMixin:CheckResult(price, itemKey)
   return tujInfo[self.parameter] and price <= tujInfo[self.parameter] * self.percentage
 end
 
-PointBlankSniper.PriceCheck.TSMMixin = {}
+PointBlankSniper.PriceCheck.TSMMixin = CreateFromMixins(PointBlankSniper.PriceCheck.PriceCheckMixin)
 
 function PointBlankSniper.PriceCheck.TSMMixin:Init(parameter, percentage)
   self.parameter = parameter
