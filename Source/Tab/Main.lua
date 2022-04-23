@@ -144,7 +144,6 @@ function PointBlankSniperTabFrameMixin:Start()
 
   if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.Blank then
     self.Scanner = self.ScannerNameCache
-    self.Scanner:SetThresholdCheck(nil)
   elseif PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.Keys then
     self.Scanner = self.ScannerKeyCache
     self.Scanner:SetKeyFilter(nil)
@@ -152,11 +151,6 @@ function PointBlankSniperTabFrameMixin:Start()
     self.Scanner = self.ScannerKeyCache
     self.Scanner:SetKeyFilter(function(itemKey)
       return not PointBlankSniper.Utilities.IsGear(itemKey.itemID)
-    end)
-  elseif PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.Threshold then
-    self.Scanner = self.ScannerNameCache
-    self.Scanner:SetThresholdCheck(function(value)
-      return value > 3000000
     end)
   end
 
