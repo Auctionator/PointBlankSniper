@@ -20,7 +20,7 @@ function PointBlankSniperListScannerKeyCacheMixin:SetPriceCheck(priceCheck)
 end
 
 function PointBlankSniperListScannerKeyCacheMixin:SetCategories(categoryString)
-  self.filters = Auctionator.Search.GetItemClassCategories(categoryString) or {}
+  self.filters = Auctionator.Search.GetItemClassCategories(categoryString)
 end
 
 function PointBlankSniperListScannerKeyCacheMixin:SetList(listName)
@@ -37,7 +37,7 @@ function PointBlankSniperListScannerKeyCacheMixin:SetList(listName)
   for _, itemKey in ipairs(keysToSearchFor) do
     local check = true
 
-    if #self.filters > 0 then
+    if self.filters ~= nil and #self.filters > 0 then
       local gotOne = false
       local classInfo = PointBlankSniper.Utilities.GetClassInfo(itemKey.itemID, itemKey.battlePetSpeciesID)
       for _, f in ipairs(self.filters) do

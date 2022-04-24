@@ -14,7 +14,7 @@ function PointBlankSniperListScannerNameCacheMixin:SetPriceCheck(priceCheck)
 end
 
 function PointBlankSniperListScannerNameCacheMixin:SetCategories(categoryString)
-  self.filters = Auctionator.Search.GetItemClassCategories(categoryString) or {}
+  self.filters = Auctionator.Search.GetItemClassCategories(categoryString)
 end
 
 function PointBlankSniperListScannerNameCacheMixin:SetList(listName)
