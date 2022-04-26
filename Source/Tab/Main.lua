@@ -23,7 +23,7 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   self.PriceSource:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE))
   self.Percentage:SetText(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PERCENTAGE) * 100)
   self.FilterKeySelector:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.ITEM_CLASS))
-  --self.ScanMode:SetSelectedValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE))
+  self.ScanMode:SetSelectedValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE))
 
   self.scanTime = -1
   self.currentBatch = 0
@@ -119,9 +119,9 @@ function PointBlankSniperTabFrameMixin:UpdateConfigs()
     self:Stop()
   end
 
-  --if ChangeCheck(PointBlankSniper.Config.Options.SCAN_MODE, self.ScanMode:GetValue()) then
-  --  self:Stop()
-  --end
+  if ChangeCheck(PointBlankSniper.Config.Options.SCAN_MODE, self.ScanMode:GetValue()) then
+    self:Stop()
+  end
 end
 
 function PointBlankSniperTabFrameMixin:OnShow()
@@ -139,11 +139,9 @@ function PointBlankSniperTabFrameMixin:StartButtonClicked()
 end
 
 function PointBlankSniperTabFrameMixin:Start()
-  --self.ScannerKeyCache:Stop()
+  self.ScannerKeyCache:Stop()
   self.ScannerNameCache:Stop()
 
-  self.Scanner = self.ScannerNameCache
-  --[[
   if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.Blank then
     self.Scanner = self.ScannerNameCache
   elseif PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.Keys then
@@ -155,7 +153,6 @@ function PointBlankSniperTabFrameMixin:Start()
       return not PointBlankSniper.Utilities.IsGear(itemKey.itemID)
     end)
   end
-  ]]
 
   self.Scanner:SetPriceCheck(PointBlankSniper.PriceCheck.Get())
   self.Scanner:SetCategories(self.FilterKeySelector:GetValue())
@@ -171,7 +168,7 @@ function PointBlankSniperTabFrameMixin:OnUpdate()
 end
 
 function PointBlankSniperTabFrameMixin:Stop()
-  --self.ScannerKeyCache:Stop()
+  self.ScannerKeyCache:Stop()
   self.ScannerNameCache:Stop()
 
   self:UpdateStatusMessageStopped()

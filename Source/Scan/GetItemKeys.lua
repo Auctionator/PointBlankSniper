@@ -1,7 +1,7 @@
 function PointBlankSniper.Scan.GetItemKeys(searchTerms)
   local strFind = string.find
-  local nameCache = POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.names
-  local keyCache = POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.itemKeyStrings
+  local nameCache = PointBlankSniper.ItemKeyCache.State.orderedKeys.names
+  local keyCache = PointBlankSniper.ItemKeyCache.State.orderedKeys.itemKeyStrings
   local GetStartingIndex = PointBlankSniper.Utilities.GetStartingIndex
   local IsBlacklistedID = PointBlankSniper.Utilities.IsBlacklistedID
 

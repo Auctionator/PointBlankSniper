@@ -24,7 +24,7 @@ function PointBlankSniperListScannerKeyCacheMixin:SetCategories(categoryString)
 end
 
 function PointBlankSniperListScannerKeyCacheMixin:SetList(listName)
-  if #POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.names == 0 then
+  if #PointBlankSniper.ItemKeyCache.State.orderedKeys.names == 0 then
     PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_NOT_STARTING_SCAN_NO_INFO)
     return
   end
