@@ -18,7 +18,7 @@
     </Scripts>
     <Frames>
       <Frame parentKey="ScannerNameCache" inherits="PointBlankSniperListScannerNameCacheTemplate"/>
-      <Frame parentKey="ScannerKeyCache" inherits="PointBlankSniperListScannerKeyCacheTemplate"/>
+      <!--<Frame parentKey="ScannerKeyCache" inherits="PointBlankSniperListScannerKeyCacheTemplate"/>-->
 
       <Frame parentKey="Buy" inherits="PointBlankSniperBuyFrameTemplate"/>
 
@@ -125,6 +125,7 @@
         </Anchors>
       </Frame>
 
+      <!--
       <Frame inherits="AuctionatorConfigurationRadioButtonGroup" parentKey="ScanMode">
         <KeyValues>
           <KeyValue key="groupHeadingText" value="POINT_BLANK_SNIPER_L_SCAN_MODE_TEXT" type="global"/>
@@ -163,6 +164,7 @@
           </Frame>
         </Frames>
       </Frame>
+      -->
 
 
       <Frame parentKey="DataProvider" mixin="PointBlankSniperDataProviderMixin">

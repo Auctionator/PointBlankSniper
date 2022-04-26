@@ -4,9 +4,9 @@ function PointBlankSniperDataCoreFrameMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, {
     "VARIABLES_LOADED",
   })
-  Auctionator.EventBus:Register(self, {
-    PointBlankSniper.Events.TabShown
-  })
+  --Auctionator.EventBus:Register(self, {
+  --  PointBlankSniper.Events.TabShown
+  --})
 end
 
 function PointBlankSniperDataCoreFrameMixin:ReceiveEvent(eventName, eventData)
@@ -24,11 +24,14 @@ end
 
 function PointBlankSniperDataCoreFrameMixin:OnEvent(event, ...)
   if event == "VARIABLES_LOADED" then
-    if POINT_BLANK_SNIPER_ITEM_CACHE == nil or POINT_BLANK_SNIPER_ITEM_CACHE.version ~= 2 then
-      PointBlankSniper.ItemKeyCache.ClearCache()
-    end
-    POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = false
+    POINT_BLANK_SNIPER_ITEM_CACHE = nil
+    return
 
-    PointBlankSniper.ItemKeyCache.SetupHooks()
+    --if POINT_BLANK_SNIPER_ITEM_CACHE == nil or POINT_BLANK_SNIPER_ITEM_CACHE.version ~= 2 then
+    --  PointBlankSniper.ItemKeyCache.ClearCache()
+    --end
+    --POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = false
+
+    --PointBlankSniper.ItemKeyCache.SetupHooks()
   end
 end
