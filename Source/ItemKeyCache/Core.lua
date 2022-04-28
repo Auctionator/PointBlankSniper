@@ -5,7 +5,6 @@ PointBlankSniperDataCoreFrameMixin = {}
 function PointBlankSniperDataCoreFrameMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, {
     "VARIABLES_LOADED",
-    "PLAYER_LOGOUT",
   })
   Auctionator.EventBus:Register(self, {
     PointBlankSniper.Events.TabShown
@@ -25,6 +24,23 @@ function PointBlankSniperDataCoreFrameMixin:ReceiveEvent(eventName, eventData)
   end
 end
 
+function PointBlankSniperDataCoreFrameMixin:OnUpdate()
+  local stepLeft = 500
+  while stepLeft > 0 do
+    print(stepLeft, self.seenIndex)
+    if self.seenIndex > #PointBlankSniper.ItemKeyCache.State.orderedKeys.itemKeyStrings then
+      self:SetScript("OnUpdate", nil)
+      PointBlankSniper.ItemKeyCache.State.keysSeenPending = false
+      break
+    end
+    for key in ipairs(PointBlankSniper.ItemKeyCache.State.orderedKeys.itemKeyStrings[self.seenIndex]) do
+      PointBlankSniper.ItemKeyCache.State.keysSeen[key] = true
+    end
+    stepLeft = stepLeft - 1
+    self.seenIndex = self.seenIndex + 1
+  end
+end
+
 function PointBlankSniperDataCoreFrameMixin:OnEvent(event, ...)
   if event == "VARIABLES_LOADED" then
     if POINT_BLANK_SNIPER_ITEM_CACHE == nil or POINT_BLANK_SNIPER_ITEM_CACHE.version ~= 3 then
@@ -41,17 +57,14 @@ function PointBlankSniperDataCoreFrameMixin:OnEvent(event, ...)
       }
     end
 
-    if POINT_BLANK_SNIPER_ITEM_CACHE.keysSeen then
-      PointBlankSniper.ItemKeyCache.State.keysSeen = select(2, LibSerialize:Deserialize(POINT_BLANK_SNIPER_ITEM_CACHE.keysSeen))
-    else
-      PointBlankSniper.ItemKeyCache.State.keysSeen = {}
-    end
+    self.seenIndex = 1
+    self:SetScript("OnUpdate", self.OnUpdate)
+    PointBlankSniper.ItemKeyCache.State.keysSeen = {}
+    PointBlankSniper.ItemKeyCache.State.keysSeenPending = true
     PointBlankSniper.ItemKeyCache.State.newKeys = POINT_BLANK_SNIPER_ITEM_CACHE.newKeys
 
     POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = false
 
     PointBlankSniper.ItemKeyCache.SetupHooks()
-  elseif event == "PLAYER_LOGOUT" then
-    POINT_BLANK_SNIPER_ITEM_CACHE.keysSeen = LibSerialize:Serialize(PointBlankSniper.ItemKeyCache.State.keysSeen)
   end
 end
