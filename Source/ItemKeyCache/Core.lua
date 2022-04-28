@@ -27,7 +27,6 @@ end
 function PointBlankSniperDataCoreFrameMixin:OnUpdate()
   local stepLeft = 500
   while stepLeft > 0 do
-    print(stepLeft, self.seenIndex)
     if self.seenIndex > #PointBlankSniper.ItemKeyCache.State.orderedKeys.itemKeyStrings then
       self:SetScript("OnUpdate", nil)
       PointBlankSniper.ItemKeyCache.State.keysSeenPending = false
