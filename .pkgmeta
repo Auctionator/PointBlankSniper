@@ -8,3 +8,6 @@ plain-copy:
   - Tones
 required-dependencies:
   - auctionator
+externals:
+  Libs/LibStub: https://repos.wowace.com/wow/libstub/trunk
+  Libs/LibSerialize: https://github.com/rossnichols/LibSerialize

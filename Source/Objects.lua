@@ -2,7 +2,9 @@ PointBlankSniper = {
   Config = {},
   Scan = {},
   Utilities = {},
-  ItemKeyCache = {},
+  ItemKeyCache = {
+    State = {},
+  },
 
   PriceCheck = {},
 }

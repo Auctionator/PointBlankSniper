@@ -1,14 +1,15 @@
 --/run POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.timestamp = 0
 function PointBlankSniper.ItemKeyCache.ClearCache()
   POINT_BLANK_SNIPER_ITEM_CACHE = {
-    version = 2,
-    orderedKeys = {
-      itemKeyStrings = {},
-      names = {},
-      timestamp = 0,
-    },
+    version = 3,
+    orderedKeys = nil, -- Serialized, this format
+    --{
+    --  itemKeyStrings = {},
+    --  names = {},
+    --  timestamp = 0,
+    --},
     updateInProgress = false,
-    keysSeen = {},
+    keysSeen = nil, -- Serialized, {}
     newKeys = {},
     missing = {},
   }
@@ -17,9 +18,9 @@ end
 PointBlankSniper.ItemKeyCache.CleanGetItemKeyInfo = Auctionator.AH.GetItemKeyInfo
 function PointBlankSniper.ItemKeyCache.SetupHooks()
   hooksecurefunc(Auctionator.AH, "GetItemKeyInfo", function(itemKey, callback)
-    local cache = POINT_BLANK_SNIPER_ITEM_CACHE.keysSeen
-    local allNames = POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.names
-    local allKeyStrings = POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.itemKeyStrings
+    local cache = PointBlankSniper.ItemKeyCache.State.keysSeen
+    local allNames = PointBlankSniper.ItemKeyCache.State.orderedKeys.names
+    local allKeyStrings = PointBlankSniper.ItemKeyCache.State.orderedKeys.itemKeyStrings
 
     itemKey = PointBlankSniper.Utilities.CleanItemKey(itemKey)
 
@@ -36,7 +37,7 @@ function PointBlankSniper.ItemKeyCache.SetupHooks()
           table.insert(allKeyStrings[index], keyString)
         end
         cache[keyString] = true
-        table.insert(POINT_BLANK_SNIPER_ITEM_CACHE.newKeys, keyString)
+        table.insert(PointBlankSniper.ItemKeyCache.State.newKeys, keyString)
       end
     end)
   end)

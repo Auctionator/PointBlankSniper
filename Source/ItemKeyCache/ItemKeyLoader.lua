@@ -1,3 +1,5 @@
+local LibSerialize = LibStub("LibSerialize")
+
 PointBlankSniperDataItemKeyLoaderMixin = {}
 
 function PointBlankSniperDataItemKeyLoaderMixin:StartLoading()
@@ -41,7 +43,9 @@ function PointBlankSniperDataItemKeyLoaderMixin:ConvertToPartialPairs()
 end
 
 function PointBlankSniperDataItemKeyLoaderMixin:ProcessCompleteNamePairs()
-  POINT_BLANK_SNIPER_ITEM_CACHE.missing = {}
+  PointBlankSniper.ItemKeyCache.State.missing = {}
+  PointBlankSniper.ItemKeyCache.State.keysSeen = {}
+
   table.sort(self.namePairs, function(a, b)
     return a.name < b.name
   end)
@@ -55,16 +59,25 @@ function PointBlankSniperDataItemKeyLoaderMixin:ProcessCompleteNamePairs()
         table.insert(names, nameAndKey.name)
         table.insert(itemKeyStrings, {itemKeyString})
       end
-      POINT_BLANK_SNIPER_ITEM_CACHE.keysSeen[itemKeyString] = true
+      PointBlankSniper.ItemKeyCache.State.keysSeen[itemKeyString] = true
     else
-      table.insert(POINT_BLANK_SNIPER_ITEM_CACHE.missing, itemKeyString)
+      table.insert(PointBlankSniper.ItemKeyCache.State.missing, itemKeyString)
       PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_ITEM_INFO_DB_MISSING_ID_X:format(itemKeyString))
     end
   end
-  POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.itemKeyStrings = itemKeyStrings
-  POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.names = names
-  POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.timestamp = time()
+
+  POINT_BLANK_SNIPER_ITEM_CACHE.missing = PointBlankSniper.ItemKeyCache.State.missing
+
+  PointBlankSniper.ItemKeyCache.State.orderedKeys = {
+    itemKeyStrings = itemKeyStrings,
+    names = names,
+    timestamp = time(),
+  }
+  POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys = LibSerialize:Serialize(PointBlankSniper.ItemKeyCache.State.orderedKeys)
+
+  PointBlankSniper.ItemKeyCache.State.newKeys = self.newKeysNotInDB
   POINT_BLANK_SNIPER_ITEM_CACHE.newKeys = self.newKeysNotInDB
+
   POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = false
 end
 
