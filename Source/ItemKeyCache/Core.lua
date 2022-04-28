@@ -68,6 +68,9 @@ function PointBlankSniperDataCoreFrameMixin:Initialize()
   self:SetScript("OnUpdate", self.OnUpdate)
   PointBlankSniper.ItemKeyCache.State.keysSeen = {}
   PointBlankSniper.ItemKeyCache.State.newKeys = POINT_BLANK_SNIPER_ITEM_CACHE.newKeys
+  for _, key in ipairs(PointBlankSniper.ItemKeyCache.State.newKeys) do
+    PointBlankSniper.ItemKeyCache.State.keysSeen[key] = true
+  end
 
   POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = false
 
