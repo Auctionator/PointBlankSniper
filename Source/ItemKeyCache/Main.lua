@@ -9,7 +9,6 @@ function PointBlankSniper.ItemKeyCache.ClearCache()
     --  timestamp = 0,
     --},
     updateInProgress = false,
-    keysSeen = nil, -- Serialized, {}
     newKeys = {},
     missing = {},
   }
