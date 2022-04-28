@@ -24,7 +24,7 @@ function PointBlankSniper.ItemKeyCache.SetupHooks()
     itemKey = PointBlankSniper.Utilities.CleanItemKey(itemKey)
 
     local keyString = Auctionator.Utilities.ItemKeyString(itemKey)
-    if POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress or PointBlankSniper.ItemKeyCache.State.keysSeenPending or cache[keyString] ~= nil then
+    if POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress or PointBlankSniper.ItemKeyCache.State.NotYetLoaded or cache[keyString] ~= nil then
       return
     end
 

@@ -9,10 +9,15 @@ function PointBlankSniperDataCoreFrameMixin:OnLoad()
   Auctionator.EventBus:Register(self, {
     PointBlankSniper.Events.TabShown
   })
+  PointBlankSniper.ItemKeyCache.State.NotYetLoaded = true
 end
 
 function PointBlankSniperDataCoreFrameMixin:ReceiveEvent(eventName, eventData)
   if eventName == PointBlankSniper.Events.TabShown then
+    if PointBlankSniper.ItemKeyCache.State.NotYetLoaded then
+      self:Initialize()
+    end
+
     if #PointBlankSniper.ItemKeyCache.State.newKeys > 0 and PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SHOW_NEW_ITEMS_MESSAGES) then
       PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_ITEMS_RECORDED:format(#PointBlankSniper.ItemKeyCache.State.newKeys))
     end
@@ -29,10 +34,10 @@ function PointBlankSniperDataCoreFrameMixin:OnUpdate()
   while stepLeft > 0 do
     if self.seenIndex > #PointBlankSniper.ItemKeyCache.State.orderedKeys.itemKeyStrings then
       self:SetScript("OnUpdate", nil)
-      PointBlankSniper.ItemKeyCache.State.keysSeenPending = false
+      PointBlankSniper.ItemKeyCache.State.NotYetLoaded = false
       break
     end
-    for key in ipairs(PointBlankSniper.ItemKeyCache.State.orderedKeys.itemKeyStrings[self.seenIndex]) do
+    for _, key in ipairs(PointBlankSniper.ItemKeyCache.State.orderedKeys.itemKeyStrings[self.seenIndex]) do
       PointBlankSniper.ItemKeyCache.State.keysSeen[key] = true
     end
     stepLeft = stepLeft - 1
@@ -45,25 +50,26 @@ function PointBlankSniperDataCoreFrameMixin:OnEvent(event, ...)
     if POINT_BLANK_SNIPER_ITEM_CACHE == nil or POINT_BLANK_SNIPER_ITEM_CACHE.version ~= 3 then
       PointBlankSniper.ItemKeyCache.ClearCache()
     end
-
-    if POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys then
-      PointBlankSniper.ItemKeyCache.State.orderedKeys = select(2, LibSerialize:Deserialize(POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys))
-    else
-      PointBlankSniper.ItemKeyCache.State.orderedKeys = {
-        itemKeyStrings = {},
-        names = {},
-        timestamp = 0,
-      }
-    end
-
-    self.seenIndex = 1
-    self:SetScript("OnUpdate", self.OnUpdate)
-    PointBlankSniper.ItemKeyCache.State.keysSeen = {}
-    PointBlankSniper.ItemKeyCache.State.keysSeenPending = true
-    PointBlankSniper.ItemKeyCache.State.newKeys = POINT_BLANK_SNIPER_ITEM_CACHE.newKeys
-
-    POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = false
-
-    PointBlankSniper.ItemKeyCache.SetupHooks()
   end
+end
+
+function PointBlankSniperDataCoreFrameMixin:Initialize()
+  if POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys then
+    PointBlankSniper.ItemKeyCache.State.orderedKeys = select(2, LibSerialize:Deserialize(POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys))
+  else
+    PointBlankSniper.ItemKeyCache.State.orderedKeys = {
+      itemKeyStrings = {},
+      names = {},
+      timestamp = 0,
+    }
+  end
+
+  self.seenIndex = 1
+  self:SetScript("OnUpdate", self.OnUpdate)
+  PointBlankSniper.ItemKeyCache.State.keysSeen = {}
+  PointBlankSniper.ItemKeyCache.State.newKeys = POINT_BLANK_SNIPER_ITEM_CACHE.newKeys
+
+  POINT_BLANK_SNIPER_ITEM_CACHE.updateInProgress = false
+
+  PointBlankSniper.ItemKeyCache.SetupHooks()
 end
