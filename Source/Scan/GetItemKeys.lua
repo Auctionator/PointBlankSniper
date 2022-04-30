@@ -12,9 +12,8 @@ function PointBlankSniper.Scan.GetItemKeys(searchTerms)
     local searchString = search.searchString
     local index = GetStartingIndex(1, #nameCache, nameCache, searchString)
     while index < #nameCache and strFind(nameCache[index], searchString, 1, true) ~= nil do
-      local check = true
-
       for _, keyString in ipairs(keyCache[index]) do
+        local check = true
         local itemKey = PointBlankSniper.Utilities.ItemKeyStringToItemKey(keyString)
 
         if search.minItemLevel ~= nil then
