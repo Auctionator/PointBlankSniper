@@ -21,9 +21,18 @@ function PointBlankSniperListScannerNameCacheMixin:SetList(listName)
   self.searchFor = PointBlankSniper.Utilities.ConvertList(Auctionator.ShoppingLists.GetListByName(listName))
 end
 
+function PointBlankSniperListScannerNameCacheMixin:SetThresholdCheck(thresholdCheck)
+  self.thresholdCheck = thresholdCheck
+end
+
 function PointBlankSniperListScannerNameCacheMixin:GotAnyTerms()
   return true
 end
+
+local sortPrice = {
+  {sortOrder = Enum.AuctionHouseSortOrder.Price, reverseSort = false},
+  {sortOrder = Enum.AuctionHouseSortOrder.Name, reverseSort = false},
+}
 
 function PointBlankSniperListScannerNameCacheMixin:Start()
   if not self.registered then
@@ -39,14 +48,25 @@ function PointBlankSniperListScannerNameCacheMixin:Start()
   self.blankSearchResultsWaiting = 0
   self.cancelled = false
 
+  local sorts
+  if self.thresholdCheck == nil then
+    sorts = Auctionator.Constants.ShoppingListSorts
+  else
+    sorts = sortPrice
+  end
+
   Auctionator.AH.SendBrowseQuery({
       searchString = "",
       filters = {},
       itemClassFilters = self.filters,
-      sorts = Auctionator.Constants.ShoppingListSorts,
+      sorts = sorts,
   })
 
   Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SnipeSearchStart)
+end
+
+function PointBlankSniperListScannerNameCacheMixin:CachingCompleteCheck()
+  return self.blankSearchResultsWaiting <= 0 and Auctionator.AH.HasFullBrowseResults()
 end
 
 -- Processes each batch of results, saving the names in advance before
@@ -75,7 +95,7 @@ function PointBlankSniperListScannerNameCacheMixin:CacheAndProcessSearchResults(
           resultsInfo.announcedReady = true
 
           self.blankSearchResultsWaiting = self.blankSearchResultsWaiting - 1
-          resultsInfo.cachingComplete = self.blankSearchResultsWaiting <= 0 and Auctionator.AH.HasFullBrowseResults()
+          resultsInfo.cachingComplete = self:CachingCompleteCheck() or (self.thresholdCheck and self.thresholdCheck(resultsInfo.cache[#resultsInfo.cache].minPrice))
 
           self:ProcessCachedResults(resultsInfo)
         end
@@ -89,7 +109,7 @@ function PointBlankSniperListScannerNameCacheMixin:CacheAndProcessSearchResults(
     resultsInfo.announcedReady = true
 
     self.blankSearchResultsWaiting = self.blankSearchResultsWaiting - 1
-    resultsInfo.cachingComplete = self.blankSearchResultsWaiting <= 0 and Auctionator.AH.HasFullBrowseResults()
+    resultsInfo.cachingComplete = self:CachingCompleteCheck() or (self.thresholdCheck and self.thresholdCheck(resultsInfo.cache[#resultsInfo.cache].minPrice))
 
     self:ProcessCachedResults(resultsInfo)
   end
