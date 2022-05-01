@@ -156,7 +156,7 @@ function PointBlankSniperTabFrameMixin:Start()
   elseif PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SCAN_MODE) == PointBlankSniper.Constants.ScanModes.Threshold then
     self.Scanner = self.ScannerNameCache
     self.Scanner:SetThresholdCheck(function(value)
-      return value > 3000000
+      return value > 100
     end)
   end
 
