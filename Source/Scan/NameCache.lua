@@ -156,6 +156,26 @@ function PointBlankSniperListScannerNameCacheMixin:DoShoppingListSearch(resultsI
 end
 
 function PointBlankSniperListScannerNameCacheMixin:ProcessCachedResults(resultsInfo)
+  if self.thresholdCheck ~= nil then
+    local order = {}
+    for index, _ in ipairs(resultsInfo.cache) do
+      table.insert(order, index)
+    end
+    table.sort(order, function(a, b)
+      return resultsInfo.names[a] < resultsInfo.names[b]
+    end)
+    local newResultsInfo = {
+      cache = {},
+      names = {},
+      cachingComplete = resultsInfo.cachingComplete,
+    }
+    for _, index in ipairs(order) do
+      table.insert(newResultsInfo.cache, resultsInfo.cache[index])
+      table.insert(newResultsInfo.names, resultsInfo.names[index])
+    end
+    resultsInfo = newResultsInfo
+  end
+
   self:DoShoppingListSearch(resultsInfo)
 
   if resultsInfo.cachingComplete then
