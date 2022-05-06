@@ -127,7 +127,7 @@ function PointBlankSniperListScannerNameCacheMixin:DoShoppingListSearch(resultsI
   for _, search in ipairs(self.searchFor) do
     local searchString = search.searchString
     local index = GetStartingIndex(1, #nameCache, nameCache, searchString)
-    while index < #nameCache and strFind(nameCache[index], searchString, 1, true) ~= nil do
+    while index <= #nameCache and strFind(nameCache[index], searchString, 1, true) ~= nil do
       local currentResult = resultsInfo.cache[index]
       local check = true
       if not search.price then
