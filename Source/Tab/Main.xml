@@ -210,5 +210,36 @@
         </FontString>
       </Layer>
     </Layers>
+    <Frames>
+      <Frame parentKey="KeysSearchDialog" frameStrata="DIALOG" hidden="true">
+        <Size x="400" y="90"/>
+        <Anchors>
+          <Anchor point="CENTER"/>
+        </Anchors>
+        <Layers>
+          <Layer level="BACKGROUND">
+            <FontString parentKey="Message" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_KEYS_SEARCH_DIALOG_TEXT">
+              <Anchors>
+                <Anchor point="TOPLEFT" y="-20" x="20"/>
+                <Anchor point="RIGHT" x="-20"/>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+        <Frames>
+          <Button parentKey="EnableButton" inherits="UIPanelDynamicResizeButtonTemplate" text="ENABLE">
+            <Anchors>
+              <Anchor point="CENTER"/>
+              <Anchor point="TOP" relativePoint="BOTTOM" y="-10" relativeKey="$parent.Message"/>
+            </Anchors>
+            <Scripts>
+              <OnClick>self:GetParent():GetParent():EnableKeysSearch()</OnClick>
+            </Scripts>
+          </Button>
+
+          <Frame inherits="DialogBorderTemplate"/>
+        </Frames>
+      </Frame>
+    </Frames>
   </Frame>
 </Ui>

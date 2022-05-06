@@ -24,6 +24,7 @@ function PointBlankSniperConfigBasicOptionsFrameMixin:OnShow()
   self.CarryOnAfterResult:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT))
 
   self.ShowNewItemsMessages:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SHOW_NEW_ITEMS_MESSAGES))
+  self.KeysSearch:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.KEYS_SEARCH))
 end
 
 function PointBlankSniperConfigBasicOptionsFrameMixin:Save()
@@ -34,6 +35,7 @@ function PointBlankSniperConfigBasicOptionsFrameMixin:Save()
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT, self.CarryOnAfterResult:GetChecked())
 
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.SHOW_NEW_ITEMS_MESSAGES, self.ShowNewItemsMessages:GetChecked())
+  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.KEYS_SEARCH, self.KeysSearch:GetChecked())
 end
 
 function PointBlankSniperConfigBasicOptionsFrameMixin:Cancel()

@@ -9,6 +9,7 @@ PointBlankSniper.Config.Options = {
   ITEM_CLASS = "item_class",
   SCAN_MODE = "scan_mode",
   SHOW_NEW_ITEMS_MESSAGES = "show_new_items_messages",
+  KEYS_SEARCH = "keys_search",
   COLUMNS = "columns",
 }
 
@@ -23,6 +24,7 @@ PointBlankSniper.Config.Defaults = {
   [PointBlankSniper.Config.Options.CURRENT_LIST] = "",
   [PointBlankSniper.Config.Options.ITEM_CLASS] = "",
   [PointBlankSniper.Config.Options.SCAN_MODE] = PointBlankSniper.Constants.ScanModes.Blank,
+  [PointBlankSniper.Config.Options.KEYS_SEARCH] = false,
   [PointBlankSniper.Config.Options.COLUMNS] = {},
 }
 

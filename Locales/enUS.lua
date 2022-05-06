@@ -46,10 +46,16 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["VIEW_ALL"] = "View All"
 
   L["CONFIG_BASIC_OPTIONS_TEXT"] = "Basic options for enabling features in Point Blank Sniper."
+  L["CONFIG_SCAN_BEHAVIOUR"] = "Scan Behaviour"
   L["USE_BLEEP"] = "Play bleep tone"
   L["USE_FLASH"] = "Flash taskbar icon"
   L["CARRY_ON_AFTER_RESULT"] = "Carry on after finding item"
+
+  L["CONFIG_KEYS_SEARCH_HEADING"] = "Keys Search"
+  L["CONFIG_KEYS_SEARCH"] = "Do search information preprocessing needed for keys search"
   L["SHOW_NEW_ITEMS_MESSAGES"] = "Show new items in the database messages"
+
+  L["KEYS_SEARCH_DIALOG_TEXT"] = "Search information preprocessing required to use this mode"
 
   return L
 end

@@ -1,5 +1,5 @@
 PointBlankSniper.Events = {
-  TabShown = "point_blank_sniper_tab_shown",
+  SetupKeysSearch = "point_blank_sniper_setup_keys_search",
 
   SnipeSearchStart = "point_blank_sniper_search_start",
   SnipeSearchNewResults = "point_blank_sniper_search_new_results",

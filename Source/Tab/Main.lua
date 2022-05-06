@@ -125,7 +125,9 @@ function PointBlankSniperTabFrameMixin:UpdateConfigs()
 end
 
 function PointBlankSniperTabFrameMixin:OnShow()
-  Auctionator.EventBus:Fire(self, PointBlankSniper.Events.TabShown)
+  if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.KEYS_SEARCH) then
+    Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SetupKeysSearch)
+  end
   self:UpdateStartButton()
   if self.StartButton:IsEnabled() then
     self:Start()
@@ -170,6 +172,7 @@ end
 
 function PointBlankSniperTabFrameMixin:OnUpdate()
   self:UpdateConfigs()
+  self:UpdateKeysSearchDialog()
   self:UpdateStartButton()
 end
 
@@ -208,4 +211,14 @@ end
 function PointBlankSniperTabFrameMixin:OpenOptions()
   InterfaceOptionsFrame:Show()
   InterfaceOptionsFrame_OpenToCategory(POINT_BLANK_SNIPER_L_POINT_BLANK_SNIPER)
+end
+
+function PointBlankSniperTabFrameMixin:EnableKeysSearch()
+  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.KEYS_SEARCH, true)
+  self.KeysSearchDialog:Hide()
+  Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SetupKeysSearch)
+end
+
+function PointBlankSniperTabFrameMixin:UpdateKeysSearchDialog()
+  self.KeysSearchDialog:SetShown((self.ScanMode:GetValue() == PointBlankSniper.Constants.ScanModes.Keys or self.ScanMode:GetValue() == PointBlankSniper.Constants.ScanModes.NoGear) and PointBlankSniper.ItemKeyCache.State.orderedKeys == nil)
 end

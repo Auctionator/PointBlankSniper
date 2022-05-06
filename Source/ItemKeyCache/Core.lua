@@ -7,13 +7,13 @@ function PointBlankSniperDataCoreFrameMixin:OnLoad()
     "VARIABLES_LOADED",
   })
   Auctionator.EventBus:Register(self, {
-    PointBlankSniper.Events.TabShown
+    PointBlankSniper.Events.SetupKeysSearch
   })
   PointBlankSniper.ItemKeyCache.State.NotYetLoaded = true
 end
 
 function PointBlankSniperDataCoreFrameMixin:ReceiveEvent(eventName, eventData)
-  if eventName == PointBlankSniper.Events.TabShown then
+  if eventName == PointBlankSniper.Events.SetupKeysSearch then
     if PointBlankSniper.ItemKeyCache.State.NotYetLoaded then
       self:Initialize()
     end
