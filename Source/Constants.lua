@@ -16,14 +16,5 @@ PointBlankSniper.Constants = {
     Keys = 2,
     NoGear = 3,
     Threshold = 4,
-  },
-  DefaultFilters = {
-    Enum.AuctionHouseFilter.PoorQuality,
-    Enum.AuctionHouseFilter.CommonQuality,
-    Enum.AuctionHouseFilter.UncommonQuality,
-    Enum.AuctionHouseFilter.RareQuality,
-    Enum.AuctionHouseFilter.EpicQuality,
-    Enum.AuctionHouseFilter.LegendaryQuality,
-    Enum.AuctionHouseFilter.ArtifactQuality,
-  },
+  }
 }

@@ -57,7 +57,7 @@ function PointBlankSniperListScannerNameCacheMixin:Start()
 
   Auctionator.AH.SendBrowseQuery({
       searchString = "",
-      filters = PointBlankSniper.Constants.DefaultFilters,
+      filters = {},
       itemClassFilters = self.filters,
       sorts = sorts,
   })
