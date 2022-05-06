@@ -202,7 +202,7 @@
     </Frames>
     <Layers>
       <Layer level="BACKGROUND">
-        <FontString parentKey="Status" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_STATUS_MESSAGE">
+        <FontString parentKey="Status" inherits="GameFontHighlight">
           <Anchors>
             <Anchor point="TOP" relativePoint="BOTTOM" relativeKey="$parent.ResultsListing" y="-4"/>
             <Anchor point="RIGHT" x="-20"/>
