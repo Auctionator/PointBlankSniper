@@ -65,7 +65,7 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
     if C_AuctionHouse.GetItemSearchResultsQuantity(itemKey) > 0 then
       self.resultInfo = C_AuctionHouse.GetItemSearchResultInfo(itemKey, 1)
 
-      local displayPrice = math.min(self.resultInfo.buyoutAmount, self.expectedPrice)
+      local displayPrice = math.min(self.resultInfo.buyoutAmount or self.resultInfo.bidAmount, self.expectedPrice)
       self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(Auctionator.Utilities.CreateMoneyString(displayPrice)))
     end
     self:UpdateBuyState()
@@ -100,11 +100,13 @@ function PointBlankSniperBuyFrameMixin:UpdateBuyState()
     if self.info.isCommodity then
       self.BuyButton:SetEnabled(self.resultInfo and self.resultInfo.quantity > 0 and self.resultInfo.unitPrice <= self.expectedPrice)
     else
-      self.BuyButton:SetEnabled(self.resultInfo and self.resultInfo.buyoutAmount <= self.expectedPrice)
+      self.BuyButton:SetEnabled(self.resultInfo and self.resultInfo.buyoutAmount ~= nil and self.resultInfo.buyoutAmount <= self.expectedPrice)
     end
 
     if self.BuyButton:IsEnabled() then
       self.BuyButton:SetText(POINT_BLANK_SNIPER_L_BUY_NOW)
+    elseif not self.info.isCommodity and self.resultInfo.bidAmount ~= nil and self.resultInfo.buyoutAmount == nil then
+      self.BuyButton:SetText(POINT_BLANK_SNIPER_L_BID_ONLY)
     else
       self.BuyButton:SetText(POINT_BLANK_SNIPER_L_SOLD)
     end
