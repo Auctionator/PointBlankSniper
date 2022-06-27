@@ -105,7 +105,7 @@ function PointBlankSniperBuyFrameMixin:UpdateBuyState()
 
     if self.BuyButton:IsEnabled() then
       self.BuyButton:SetText(POINT_BLANK_SNIPER_L_BUY_NOW)
-    elseif not self.info.isCommodity and self.resultInfo.bidAmount ~= nil and self.resultInfo.buyoutAmount == nil then
+    elseif not self.info.isCommodity and self.resultInfo and self.resultInfo.bidAmount ~= nil and self.resultInfo.buyoutAmount == nil then
       self.BuyButton:SetText(POINT_BLANK_SNIPER_L_BID_ONLY)
     else
       self.BuyButton:SetText(POINT_BLANK_SNIPER_L_SOLD)
