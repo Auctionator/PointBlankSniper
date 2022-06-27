@@ -41,7 +41,7 @@
     </Frames>
     <Layers>
       <Layer level="BACKGROUND">
-        <FontString parentKey="ShoppingListNameLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_SHOPPING_LIST_NAME_COLON">
+        <FontString parentKey="ShoppingListNameLabel" inherits="GameFontHighlight" text="POINT_BLANK_SNIPER_L_SHOPPING_LIST_COLON">
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.StopButton" x="40" y="-4"/>
           </Anchors>
@@ -49,16 +49,14 @@
       </Layer>
     </Layers>
     <Frames>
-      <EditBox autoFocus="false" inherits="InputBoxTemplate" parentKey="ListName">
-        <Size x="70" y="20" />
+      <Frame inherits="AuctionatorDropDown" parentKey="ListName">
+        <KeyValues>
+          <KeyValue key="labelText" value="" type="string" />
+        </KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" relativeKey="$parent.ShoppingListNameLabel" x="20" y="4"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ShoppingListNameLabel" relativePoint="TOPRIGHT" y="8"/>
         </Anchors>
-        <Scripts>
-          <OnEscapePressed>self:ClearFocus()</OnEscapePressed>
-          <OnEnterPressed>Auctionator.Components.ReportEnterPressed()</OnEnterPressed>
-        </Scripts>
-      </EditBox>
+      </Frame>
 
       <Button inherits="UIPanelDynamicResizeButtonTemplate" text="OPTIONS" parentKey="OptionsButton">
         <Anchors>

@@ -17,9 +17,9 @@ function PointBlankSniperTabFrameMixin:OnLoad()
 
   self:SetupMarketData()
   self.FilterKeySelector:Reset()
+  self:UpdateShoppingListNames()
 
   self.ResultsListing:Init(self.DataProvider)
-  self.ListName:SetText(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST))
   self.PriceSource:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PRICE_SOURCE))
   self.Percentage:SetText(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.PERCENTAGE) * 100)
   self.FilterKeySelector:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.ITEM_CLASS))
@@ -67,6 +67,15 @@ function PointBlankSniperTabFrameMixin:SetupMarketData()
   self.PriceSource:InitAgain(marketNames, marketValues)
 end
 
+function PointBlankSniperTabFrameMixin:UpdateShoppingListNames()
+  local listNames = {}
+  for _, list in ipairs(Auctionator.ShoppingLists.Lists) do
+    table.insert(listNames, list.name)
+  end
+  self.ListName:InitAgain(listNames, listNames)
+  self.ListName:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST))
+end
+
 function PointBlankSniperTabFrameMixin:UpdateStartButton()
   self.StartButton:SetEnabled(Auctionator.ShoppingLists.ListIndex(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST)) ~= nil)
 end
@@ -101,7 +110,7 @@ local function ChangeCheck(config, newValue)
 end
 
 function PointBlankSniperTabFrameMixin:UpdateConfigs()
-  if ChangeCheck(PointBlankSniper.Config.Options.CURRENT_LIST, self.ListName:GetText()) then
+  if ChangeCheck(PointBlankSniper.Config.Options.CURRENT_LIST, self.ListName:GetValue()) then
     self:Stop()
   end
 
@@ -125,6 +134,7 @@ function PointBlankSniperTabFrameMixin:UpdateConfigs()
 end
 
 function PointBlankSniperTabFrameMixin:OnShow()
+  self:UpdateShoppingListNames()
   if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.KEYS_SEARCH) then
     Auctionator.EventBus:Fire(self, PointBlankSniper.Events.SetupKeysSearch)
   end

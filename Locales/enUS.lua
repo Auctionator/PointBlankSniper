@@ -7,7 +7,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["TAB_HEADER"] = "Point Blank Sniper"
   L["START"] = "Start"
   L["STOP"] = "Stop"
-  L["SHOPPING_LIST_NAME_COLON"] = "Shopping List Name:"
+  L["SHOPPING_LIST_COLON"] = "Shopping List:"
   L["COMPARISON_PRICE"] = "Comparison Price"
 
   L["SCAN_MODE_TEXT"] = "Scan mode, some modes are faster, experiment:"
