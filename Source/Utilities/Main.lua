@@ -38,7 +38,8 @@ function PointBlankSniper.Utilities.ConvertList(list)
     table.insert(result, {
       searchString = CleanSearchString(advancedParams.searchString),
       price = advancedParams.maxPrice,
-      minItemLevel = advancedParams.minItemLevel or 0,
+      minItemLevel = advancedParams.minItemLevel,
+      maxItemLevel = advancedParams.maxItemLevel,
       isExact = advancedParams.isExact
     })
   end

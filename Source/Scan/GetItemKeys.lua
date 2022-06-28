@@ -19,6 +19,9 @@ function PointBlankSniper.Scan.GetItemKeys(searchTerms)
         if search.minItemLevel ~= nil then
           check = check and itemKey.itemLevel >= search.minItemLevel
         end
+        if search.maxItemLevel ~= nil then
+          check = check and itemKey.itemLevel <= search.maxItemLevel
+        end
 
         check = check and (not search.isExact or searchString == nameCache[index])
 
