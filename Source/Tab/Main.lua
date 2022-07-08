@@ -73,7 +73,13 @@ function PointBlankSniperTabFrameMixin:UpdateShoppingListNames()
     table.insert(listNames, list.name)
   end
   self.ListName:InitAgain(listNames, listNames)
-  self.ListName:SetValue(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST))
+
+  local currentList = PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST)
+  if tIndexOf(listNames, currentList) == nil then
+    currentList = listNames[1]
+    PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.CURRENT_LIST, currentList)
+  end
+  self.ListName:SetValue(currentList)
 end
 
 function PointBlankSniperTabFrameMixin:UpdateStartButton()
