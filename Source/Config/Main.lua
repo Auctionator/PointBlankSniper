@@ -42,11 +42,8 @@ function PointBlankSniper.Config.Create(constant, name, defaultValue)
 
   PointBlankSniper.Config.Defaults[PointBlankSniper.Config.Options[constant]] = defaultValue
 
-  if POINT_BLANK_SNIPER_CONFIG ~= nil and AUCTIONATOR_CONFIG[name] == nil then
+  if POINT_BLANK_SNIPER_CONFIG ~= nil and POINT_BLANK_SNIPER_CONFIG[name] == nil then
     POINT_BLANK_SNIPER_CONFIG[name] = defaultValue
-  end
-  if POINT_BLANK_SNIPER_CHARACTER_CONFIG ~= nil and AUCTIONATOR_CHARACTER_CONFIG[name] == nil then
-    POINT_BLANK_SNIPER_CHARACTER_CONFIG[name] = defaultValue
   end
 end
 
@@ -62,7 +59,6 @@ end
 
 function PointBlankSniper.Config.Reset()
   POINT_BLANK_SNIPER_CONFIG = {}
-  POINT_BLANK_SNIPER_CHARACTER_CONFIG = nil
   for option, value in pairs(PointBlankSniper.Config.Defaults) do
     POINT_BLANK_SNIPER_CONFIG[option] = value
   end
