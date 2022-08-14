@@ -12,7 +12,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
 
   L["SCAN_MODE_TEXT"] = "Scan mode, some modes are faster, experiment:"
   L["BLANK_MODE_TEXT"] = "Blank (default, always works)"
-  L["KEYS_MODE_TEXT"] = "Keys (fast, good for common items)"
+  L["KEYS_MODE_TEXT"] = "Keys (fast, good for common items up to 9.2.5)"
   L["NO_GEAR_MODE_TEXT"] = "No gear (like keys, but no gear)"
   L["THRESHOLD_MODE_TEXT"] = "Threshold (like blank, but a limit of 1|TInterface\\MoneyFrame\\UI-SilverIcon:12:12:4:0|t )"
 
