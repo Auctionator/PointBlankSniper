@@ -47,7 +47,7 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
 
       local displayPrice = math.min(self.resultInfo.unitPrice, self.expectedPrice)
       self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(
-        Auctionator.Utilities.CreateMoneyString(displayPrice) ..
+        GetMoneyString(displayPrice, true) ..
         Auctionator.Utilities.CreateCountString(self.resultInfo.quantity)
       ))
     end
@@ -66,7 +66,7 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
       self.resultInfo = C_AuctionHouse.GetItemSearchResultInfo(itemKey, 1)
 
       local displayPrice = math.min(self.resultInfo.buyoutAmount or self.resultInfo.bidAmount, self.expectedPrice)
-      self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(Auctionator.Utilities.CreateMoneyString(displayPrice)))
+      self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(GetMoneyString(displayPrice, true)))
     end
     self:UpdateBuyState()
 
@@ -147,7 +147,7 @@ function PointBlankSniperBuyFrameMixin:ReceiveEvent(eventName, ...)
 
     self.expectedPrice = details.price
     self.expectedItemKey = details.itemKey
-    self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(Auctionator.Utilities.CreateMoneyString(details.price)))
+    self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(GetMoneyString(details.price, true)))
     self:UpdateBuyState()
     Auctionator.AH.GetItemKeyInfo(details.itemKey, function(itemKeyInfo)
       self.info = itemKeyInfo
