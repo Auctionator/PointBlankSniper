@@ -2,6 +2,7 @@ package-as: PointBlankSniper
 ignore:
   - tmp
   - scripts
+  - Lists
 plain-copy:
   - Source
   - Data
