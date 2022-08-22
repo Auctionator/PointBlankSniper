@@ -41,6 +41,7 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
     end
     self.gotResult = true
     self.resultInfo = nil
+    --[[
 
     if C_AuctionHouse.GetCommoditySearchResultsQuantity(itemID) > 0 then
       self.resultInfo = C_AuctionHouse.GetCommoditySearchResultInfo(itemID, 1)
@@ -51,6 +52,7 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
         Auctionator.Utilities.CreateCountString(self.resultInfo.quantity)
       ))
     end
+    ]]
     self:UpdateBuyState()
 
   elseif eventName == "ITEM_SEARCH_RESULTS_UPDATED" then
@@ -98,17 +100,25 @@ function PointBlankSniperBuyFrameMixin:UpdateBuyState()
 
   else
     if self.info.isCommodity then
-      self.BuyButton:SetEnabled(self.resultInfo and self.resultInfo.quantity > 0 and self.resultInfo.unitPrice <= self.expectedPrice)
+      self.BuyButton:SetText(POINT_BLANK_SNIPER_L_COMMODITY)
     else
-      self.BuyButton:SetEnabled(self.resultInfo and self.resultInfo.buyoutAmount ~= nil and self.resultInfo.buyoutAmount <= self.expectedPrice)
-    end
+      --[[
+      if self.info.isCommodity then
+        self.BuyButton:SetEnabled(self.resultInfo and self.resultInfo.quantity > 0 and self.resultInfo.unitPrice <= self.expectedPrice)
+      else
+      ]]
+        self.BuyButton:SetEnabled(self.resultInfo and self.resultInfo.buyoutAmount ~= nil and self.resultInfo.buyoutAmount <= self.expectedPrice)
+      --end
 
-    if self.BuyButton:IsEnabled() then
-      self.BuyButton:SetText(POINT_BLANK_SNIPER_L_BUY_NOW)
-    elseif not self.info.isCommodity and self.resultInfo and self.resultInfo.bidAmount ~= nil and self.resultInfo.buyoutAmount == nil then
-      self.BuyButton:SetText(POINT_BLANK_SNIPER_L_BID_ONLY)
-    else
-      self.BuyButton:SetText(POINT_BLANK_SNIPER_L_SOLD)
+      if self.BuyButton:IsEnabled() then
+        self.BuyButton:SetText(POINT_BLANK_SNIPER_L_BUY_NOW)
+      --[[
+      elseif not self.info.isCommodity and self.resultInfo and self.resultInfo.bidAmount ~= nil and self.resultInfo.buyoutAmount == nil then
+        self.BuyButton:SetText(POINT_BLANK_SNIPER_L_BID_ONLY)
+      ]]
+      else
+        self.BuyButton:SetText(POINT_BLANK_SNIPER_L_SOLD)
+      end
     end
   end
   DynamicResizeButton_Resize(self.BuyButton)
