@@ -40,6 +40,8 @@ local marketToName = {
   [PointBlankSniper.Constants.Market.TSM_DBMarket] = POINT_BLANK_SNIPER_L_TSM_DBMARKET,
   [PointBlankSniper.Constants.Market.TSM_DBRegionMarketAvg] = POINT_BLANK_SNIPER_L_TSM_DBREGIONMARKETAVG,
   [PointBlankSniper.Constants.Market.TSM_DBRegionSaleAvg] = POINT_BLANK_SNIPER_L_TSM_DBREGIONSALEAVG,
+  [PointBlankSniper.Constants.Market.OE_Realm] = POINT_BLANK_SNIPER_L_OE_REALM,
+  [PointBlankSniper.Constants.Market.OE_Region] = POINT_BLANK_SNIPER_L_OE_REGION,
 }
 function PointBlankSniperTabFrameMixin:SetupMarketData()
   local marketNames = {}

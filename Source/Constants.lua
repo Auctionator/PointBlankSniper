@@ -6,6 +6,8 @@ PointBlankSniper.Constants = {
     TSM_DBMarket = 3,
     TSM_DBRegionMarketAvg = 4,
     TSM_DBRegionSaleAvg = 5,
+    OE_Realm = 6,
+    OE_Region = 7,
   },
   VendorBlacklist = {
     38, --Recruit's Shirt (vendor version)

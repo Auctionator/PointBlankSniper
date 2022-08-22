@@ -20,6 +20,14 @@ function PointBlankSniper.PriceCheck.Get()
     end
   end
 
+  if OEMarketInfo then
+    if market == PointBlankSniper.Constants.Market.OE_Realm then
+      return CreateAndInitFromMixin(PointBlankSniper.PriceCheck.OEMixin, 'market', percentage)
+    elseif market == PointBlankSniper.Constants.Market.OE_Region then
+      return CreateAndInitFromMixin(PointBlankSniper.PriceCheck.OEMixin, 'region', percentage)
+    end
+  end
+
   return CreateFromMixins(PointBlankSniper.PriceCheck.NoneMixin)
 end
 
@@ -38,6 +46,14 @@ function PointBlankSniper.PriceCheck.IsAvailable(marketDataType)
     elseif marketDataType == PointBlankSniper.Constants.Market.TSM_DBRegionMarketAvg then
       return true
     elseif marketDataType == PointBlankSniper.Constants.Market.TSM_DBRegionSaleAvg then
+      return true
+    end
+  end
+
+  if OEMarketInfo then
+    if marketDataType == PointBlankSniper.Constants.Market.OE_Realm then
+      return true
+    elseif marketDataType == PointBlankSniper.Constants.Market.OE_Region then
       return true
     end
   end
