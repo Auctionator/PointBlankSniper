@@ -208,18 +208,26 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
     self.scanStartTime = debugprofilestop()
     self:UpdateStatusMessageOngoing()
   elseif eventName == PointBlankSniper.Events.SnipeSearchNewResults then
+    local results = ...
     self.currentBatch = self.currentBatch + 1
     self:UpdateStatusMessageOngoing()
     if not PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT) and self.Alert:AnyItemsFound() then
       self.Scanner:Stop()
+      print("here1")
+      Auctionator.EventBus:Fire(self, PointBlankSniper.Events.OpenBuyView, {itemKey = results[1].itemKey, price = results[1].minPrice})
     end
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
+    local results = ...
     self.scanTime = debugprofilestop() - self.scanStartTime
     self:UpdateStatusMessageOngoing()
     if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT) or not self.Alert:AnyItemsFound() then
       self.Scanner:Start()
     else
       self:Stop()
+      if not PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT) and self.Alert:AnyItemsFound() then
+        print("here2")
+        Auctionator.EventBus:Fire(self, PointBlankSniper.Events.OpenBuyView, {itemKey = results[1].itemKey, price = results[1].minPrice})
+      end
     end
   elseif eventName == PointBlankSniper.Events.OpenBuyView then
     self:Stop()
