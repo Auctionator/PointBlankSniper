@@ -45,9 +45,9 @@ function PointBlankSniperDataProviderMixin:SetUpEvents()
     PointBlankSniper.Events.SnipeSearchNewResults,
     PointBlankSniper.Events.SnipeSearchComplete,
     PointBlankSniper.Events.SnipeSearchAbort,
-    Auctionator.ShoppingLists.Events.EditListItem,
-    Auctionator.ShoppingLists.Events.ListItemAdded,
-    Auctionator.ShoppingLists.Events.ListItemReplaced
+    Auctionator.Shopping.Events.EditListItem,
+    Auctionator.Shopping.Events.ListItemAdded,
+    Auctionator.Shopping.Events.ListItemReplaced
   })
 end
 

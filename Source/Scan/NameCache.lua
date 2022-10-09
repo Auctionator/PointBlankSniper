@@ -18,7 +18,7 @@ function PointBlankSniperListScannerNameCacheMixin:SetCategories(categoryString)
 end
 
 function PointBlankSniperListScannerNameCacheMixin:SetList(listName)
-  self.searchFor = PointBlankSniper.Utilities.ConvertList(Auctionator.ShoppingLists.GetListByName(listName))
+  self.searchFor = PointBlankSniper.Utilities.ConvertList(Auctionator.Shopping.Lists.GetListByName(listName))
 end
 
 function PointBlankSniperListScannerNameCacheMixin:SetThresholdCheck(thresholdCheck)
@@ -50,7 +50,7 @@ function PointBlankSniperListScannerNameCacheMixin:Start()
 
   local sorts
   if self.thresholdCheck == nil then
-    sorts = Auctionator.Constants.ShoppingListSorts
+    sorts = Auctionator.Constants.ShoppingSorts
   else
     sorts = sortPrice
   end
