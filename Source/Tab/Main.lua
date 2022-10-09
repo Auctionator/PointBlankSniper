@@ -71,7 +71,7 @@ end
 
 function PointBlankSniperTabFrameMixin:UpdateShoppingListNames()
   local listNames = {}
-  for _, list in ipairs(Auctionator.ShoppingLists.Lists) do
+  for _, list in ipairs(Auctionator.Shopping.Lists.Data) do
     table.insert(listNames, list.name)
   end
   self.ListName:InitAgain(listNames, listNames)
@@ -85,7 +85,7 @@ function PointBlankSniperTabFrameMixin:UpdateShoppingListNames()
 end
 
 function PointBlankSniperTabFrameMixin:UpdateStartButton()
-  self.StartButton:SetEnabled(Auctionator.ShoppingLists.ListIndex(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST)) ~= nil)
+  self.StartButton:SetEnabled(Auctionator.Shopping.Lists.ListIndex(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CURRENT_LIST)) ~= nil)
 end
 
 local function FormatTime(scanTime)
