@@ -6,7 +6,10 @@ function PointBlankSniperDataItemKeyLoaderMixin:StartLoading()
   PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_ITEM_INFO_DB_UPDATING)
 
   self.index = 1
-  self.source = POINT_BLANK_SNIPER_KNOWN_KEYS
+  self.source = {}
+  for key in POINT_BLANK_SNIPER_KNOWN_KEYS.itemKeyStrings:gmatch("%d+ %d+ %d+ %d+") do
+    self.source[#self.source + 1] = key
+  end
   self.temporarySource = POINT_BLANK_SNIPER_ITEM_CACHE.newKeys
   self.namePairs = {}
   self.elapsed = 0
@@ -19,7 +22,7 @@ end
 
 function PointBlankSniperDataItemKeyLoaderMixin:ConvertToPartialPairs()
   local seen = {}
-  for _, keyString in ipairs(self.source.itemKeyStrings) do
+  for _, keyString in ipairs(self.source) do
     if seen[keyString] == nil then
       seen[keyString] = true
       table.insert(self.namePairs, {
