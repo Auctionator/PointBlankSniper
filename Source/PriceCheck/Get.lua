@@ -17,6 +17,8 @@ function PointBlankSniper.PriceCheck.Get()
       return CreateAndInitFromMixin(PointBlankSniper.PriceCheck.TSMMixin, 'dbregionmarketavg', percentage)
     elseif market == PointBlankSniper.Constants.Market.TSM_DBRegionSaleAvg then
       return CreateAndInitFromMixin(PointBlankSniper.PriceCheck.TSMMixin, 'dbregionsaleavg', percentage)
+    elseif market == PointBlankSniper.Constants.Market.TSM_VendorSellPrice then
+      return CreateAndInitFromMixin(PointBlankSniper.PriceCheck.TSMMixin, 'vendorsell', percentage)
     end
   end
 
@@ -46,6 +48,8 @@ function PointBlankSniper.PriceCheck.IsAvailable(marketDataType)
     elseif marketDataType == PointBlankSniper.Constants.Market.TSM_DBRegionMarketAvg then
       return true
     elseif marketDataType == PointBlankSniper.Constants.Market.TSM_DBRegionSaleAvg then
+      return true
+    elseif marketDataType == PointBlankSniper.Constants.Market.TSM_VendorSellPrice then
       return true
     end
   end

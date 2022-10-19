@@ -23,6 +23,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["TSM_DBMARKET"] = "DBMarket - TradeSkillMaster"
   L["TSM_DBREGIONMARKETAVG"] = "DBRegionMarketAvg - TradeSkillMaster"
   L["TSM_DBREGIONSALEAVG"] = "DBRegionSaleAvg - TradeSkillMaster"
+  L["TSM_VENDORSELL"] = "VendorSell - TradeSkillMaster"
   L["OE_REALM"] = "Realm - Oribos Exchange"
   L["OE_REGION"] = "Region - Oribos Exchange"
 
