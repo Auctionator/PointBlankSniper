@@ -235,7 +235,7 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
 end
 
 function PointBlankSniperTabFrameMixin:OpenOptions()
-  Settings.OpenToCategory(COLLECTIONATOR_L_COLLECTIONATOR)
+  Settings.OpenToCategory(POINT_BLANK_SNIPER_L_POINT_BLANK_SNIPER)
 end
 
 function PointBlankSniperTabFrameMixin:EnableKeysSearch()
