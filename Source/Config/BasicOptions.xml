@@ -2,7 +2,7 @@
   <Frame
     name="PointBlankSniperConfigBasicOptionsFrame"
     mixin="PointBlankSniperConfigBasicOptionsFrameMixin"
-    parent="InterfaceOptionsFrame">
+  >
 
     <Scripts>
       <OnLoad method="OnLoad"/>
