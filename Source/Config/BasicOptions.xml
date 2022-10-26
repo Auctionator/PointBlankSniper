@@ -2,6 +2,7 @@
   <Frame
     name="PointBlankSniperConfigBasicOptionsFrame"
     mixin="PointBlankSniperConfigBasicOptionsFrameMixin"
+    hidden="true"
   >
 
     <Scripts>
