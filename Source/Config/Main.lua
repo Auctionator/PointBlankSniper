@@ -1,15 +1,15 @@
 PointBlankSniper.Config.Options = {
-  USE_BLEEP = "use_bleep",
-  USE_FLASH = "use_flash",
-  CARRY_ON_AFTER_RESULT = "carry_on_after_result",
+  USE_BLEEP = "use_bleep_2",
+  USE_FLASH = "use_flash_2",
+  CARRY_ON_AFTER_RESULT = "carry_on_after_result_2",
   PRICE_SOURCE = "price_source",
   PERCENTAGE = "percentage",
   WAS_PRICE_SOURCE_CHANGED = "was_price_source_changed",
   CURRENT_LIST = "current_list",
   ITEM_CLASS = "item_class",
   SCAN_MODE = "scan_mode",
-  SHOW_NEW_ITEMS_MESSAGES = "show_new_items_messages",
-  KEYS_SEARCH = "keys_search",
+  SHOW_NEW_ITEMS_MESSAGES = "show_new_items_messages_2",
+  KEYS_SEARCH = "keys_search_2",
   COLUMNS = "columns",
 }
 
