@@ -55,12 +55,15 @@ function PointBlankSniperDataProviderMixin:ReceiveEvent(eventName, results, ...)
   if eventName == PointBlankSniper.Events.SnipeSearchStart then
     self.onSearchStarted()
   elseif eventName == PointBlankSniper.Events.SnipeSearchNewResults then
+    self.onPreserveScroll()
     self.onSearchStarted()
     self:AppendEntries(results, false)
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
+    self.onPreserveScroll()
     self:Reset()
     self:AppendEntries(results, true)
   elseif eventName == PointBlankSniper.Events.SnipeSearchAbort then
+    self.onPreserveScroll()
     self:AppendEntries({}, true)
   else
     -- Shopping list change
