@@ -1,7 +1,11 @@
 local PURCHASE_ITEM_EVENTS = {
-  "ITEM_SEARCH_RESULTS_UPDATED",
-  "COMMODITY_SEARCH_RESULTS_UPDATED",
   "COMMODITY_PRICE_UPDATED",
+  "COMMODITY_PRICE_UNAVAILABLE",
+}
+
+local SEARCH_EVENTS = {
+  Auctionator.AH.Events.ItemSearchResultsReady,
+  Auctionator.AH.Events.CommoditySearchResultsReady,
 }
 
 PointBlankSniperBuyFrameMixin = {}
@@ -15,6 +19,7 @@ end
 
 function PointBlankSniperBuyFrameMixin:OnHide()
   FrameUtil.UnregisterFrameForEvents(self, PURCHASE_ITEM_EVENTS)
+  Auctionator.EventBus:Unregister(self, SEARCH_EVENTS)
 
   if self.buyCommodity then
     C_AuctionHouse.CancelCommoditiesPurchase()
@@ -34,43 +39,7 @@ function PointBlankSniperBuyFrameMixin:Reset()
 end
 
 function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
-  if eventName == "COMMODITY_SEARCH_RESULTS_UPDATED" then
-    local itemID = ...
-    if itemID ~= self.expectedItemKey.itemID then
-      return
-    end
-    self.gotResult = true
-    self.resultInfo = nil
-
-    if C_AuctionHouse.GetCommoditySearchResultsQuantity(itemID) > 0 then
-      self.resultInfo = C_AuctionHouse.GetCommoditySearchResultInfo(itemID, 1)
-
-      local displayPrice = math.min(self.resultInfo.unitPrice, self.expectedPrice)
-      self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(
-        GetMoneyString(displayPrice, true) ..
-        Auctionator.Utilities.CreateCountString(self.resultInfo.quantity)
-      ))
-    end
-    self:UpdateBuyState()
-
-  elseif eventName == "ITEM_SEARCH_RESULTS_UPDATED" then
-    local itemKey = ...
-    if Auctionator.Utilities.ItemKeyString(itemKey) ~=
-        Auctionator.Utilities.ItemKeyString(self.expectedItemKey) then
-      return
-    end
-    self.gotResult = true
-    self.resultInfo = nil
-
-    if C_AuctionHouse.GetItemSearchResultsQuantity(itemKey) > 0 then
-      self.resultInfo = C_AuctionHouse.GetItemSearchResultInfo(itemKey, 1)
-
-      local displayPrice = math.min(self.resultInfo.buyoutAmount or self.resultInfo.bidAmount, self.expectedPrice)
-      self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(GetMoneyString(displayPrice, true)))
-    end
-    self:UpdateBuyState()
-
-  elseif eventName == "COMMODITY_PRICE_UPDATED" and self.buyCommodity then
+  if eventName == "COMMODITY_PRICE_UPDATED" and self.buyCommodity then
     local unitPrice, totalPrice = ...
     if unitPrice == self.resultInfo.unitPrice and self.resultInfo.unitPrice <= self.expectedPrice then
       C_AuctionHouse.ConfirmCommoditiesPurchase(self.expectedItemKey.itemID, self.resultInfo.quantity)
@@ -155,6 +124,7 @@ function PointBlankSniperBuyFrameMixin:ReceiveEvent(eventName, ...)
       self.Icon:Set(details.itemKey, itemKeyInfo.itemName, itemKeyInfo.iconFileID, itemKeyInfo.quality, itemKeyInfo.battlePetLink)
 
       FrameUtil.RegisterFrameForEvents(self, PURCHASE_ITEM_EVENTS)
+      Auctionator.EventBus:Register(self, SEARCH_EVENTS)
 
       local sortingOrder
 
@@ -163,9 +133,46 @@ function PointBlankSniperBuyFrameMixin:ReceiveEvent(eventName, ...)
       else
         sortingOrder = {sortOrder = 4, reverseSort = false}
       end
-      Auctionator.AH.SendSearchQuery(details.itemKey, {sortingOrder}, false)
+      Auctionator.AH.SendSearchQueryByItemKey(details.itemKey, {sortingOrder}, false)
     end)
   elseif eventName == PointBlankSniper.Events.SnipeSearchStart then
     self:Hide()
+
+  -- Purchasing scan events
+  elseif eventName == Auctionator.AH.Events.CommoditySearchResultsReady then
+    local itemID = ...
+    if itemID ~= self.expectedItemKey.itemID then
+      return
+    end
+    self.gotResult = true
+    self.resultInfo = nil
+
+    if C_AuctionHouse.GetCommoditySearchResultsQuantity(itemID) > 0 then
+      self.resultInfo = C_AuctionHouse.GetCommoditySearchResultInfo(itemID, 1)
+
+      local displayPrice = math.min(self.resultInfo.unitPrice, self.expectedPrice)
+      self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(
+        GetMoneyString(displayPrice, true) ..
+        Auctionator.Utilities.CreateCountString(self.resultInfo.quantity)
+      ))
+    end
+    self:UpdateBuyState()
+
+  elseif eventName == Auctionator.AH.Events.ItemSearchResultsReady then
+    local itemKey = ...
+    if Auctionator.Utilities.ItemKeyString(itemKey) ~=
+        Auctionator.Utilities.ItemKeyString(self.expectedItemKey) then
+      return
+    end
+    self.gotResult = true
+    self.resultInfo = nil
+
+    if C_AuctionHouse.GetItemSearchResultsQuantity(itemKey) > 0 then
+      self.resultInfo = C_AuctionHouse.GetItemSearchResultInfo(itemKey, 1)
+
+      local displayPrice = math.min(self.resultInfo.buyoutAmount or self.resultInfo.bidAmount, self.expectedPrice)
+      self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(GetMoneyString(displayPrice, true)))
+    end
+    self:UpdateBuyState()
   end
 end
