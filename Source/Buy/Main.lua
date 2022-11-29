@@ -73,7 +73,7 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
 
   elseif eventName == "COMMODITY_PRICE_UPDATED" and self.buyCommodity then
     local unitPrice, totalPrice = ...
-    if unitPrice == self.resultInfo.unitPrice and self.resultInfo.unitPrice <= self.expectedPrice then
+    if unitPrice <= self.resultInfo.unitPrice and self.resultInfo.unitPrice <= self.expectedPrice then
       C_AuctionHouse.ConfirmCommoditiesPurchase(self.expectedItemKey.itemID, self.resultInfo.quantity)
     else
       C_AuctionHouse.CancelCommoditiesPurchase()
