@@ -9,8 +9,12 @@ function PointBlankSniperConfigBasicOptionsFrameMixin:OnLoad()
     self:Cancel()
   end
 
+  self.setup = false
+
   self.okay = function()
-    self:Save()
+    if self.setup then
+      self:Save()
+    end
   end
 
   InterfaceOptions_AddCategory(self, POINT_BLANK_SNIPER_L_POINT_BLANK_SNIPER)
@@ -18,6 +22,8 @@ end
 
 function PointBlankSniperConfigBasicOptionsFrameMixin:OnShow()
   Auctionator.Debug.Message("PointBlankSniperConfigBasicOptionsFrameMixin:OnShow()")
+
+  self.setup = true
 
   self.UseBleep:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_BLEEP))
   self.UseFlash:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_FLASH))
