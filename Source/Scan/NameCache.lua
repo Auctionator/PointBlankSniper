@@ -84,7 +84,7 @@ function PointBlankSniperListScannerNameCacheMixin:CacheAndProcessSearchResults(
   resultsInfo.namesWaiting = resultsInfo.namesWaiting + #addedResults
 
   for _, result in ipairs(addedResults) do
-    if result.totalQuantity ~= 0 then
+    if result.totalQuantity ~= 0 and C_Item.DoesItemExistByID(result.itemKey.itemID) then
       table.insert(resultsInfo.cache, result)
       local index = #resultsInfo.cache
       table.insert(resultsInfo.names, "")
