@@ -23,6 +23,10 @@ function PointBlankSniper.Scan.GetItemKeys(searchTerms)
           check = check and itemKey.itemLevel <= search.maxItemLevel
         end
 
+        if search.tier ~= nil then
+          check = check and C_TradeSkillUI.GetItemReagentQualityByItemInfo(itemKey.itemID) == search.tier
+        end
+
         check = check and (not search.isExact or searchString == nameCache[index])
 
         check = check and not IsBlacklistedID(itemKey.itemID)

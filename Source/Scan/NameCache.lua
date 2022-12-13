@@ -143,6 +143,10 @@ function PointBlankSniperListScannerNameCacheMixin:DoShoppingListSearch(resultsI
         check = check and currentResult.itemKey.itemLevel <= search.maxItemLevel
       end
 
+      if search.tier ~= nil then
+        check = check and C_TradeSkillUI.GetItemReagentQualityByItemInfo(currentResult.itemKey.itemID) == search.tier
+      end
+
       check = check and (not search.isExact or searchString == nameCache[index])
 
       check = check and not IsBlacklistedID(currentResult.itemKey.itemID)

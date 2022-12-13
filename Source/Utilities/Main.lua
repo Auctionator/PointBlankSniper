@@ -40,6 +40,7 @@ function PointBlankSniper.Utilities.ConvertList(list)
       price = advancedParams.maxPrice,
       minItemLevel = advancedParams.minItemLevel,
       maxItemLevel = advancedParams.maxItemLevel,
+      tier = advancedParams.tier,
       isExact = advancedParams.isExact
     })
   end
