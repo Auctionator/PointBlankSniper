@@ -132,6 +132,7 @@ function PointBlankSniperBuyFrameMixin:ViewAll()
     itemKey = self.expectedItemKey,
     minPrice = self.expectedPrice,
   })
+  AuctionHouseFrame.displayMode = nil
 end
 
 function PointBlankSniperBuyFrameMixin:ReceiveEvent(eventName, ...)
