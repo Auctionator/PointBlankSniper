@@ -29,7 +29,7 @@ function PointBlankSniperListScannerKeyCacheMixin:SetList(listName)
     return
   end
 
-  local searchTerms = PointBlankSniper.Utilities.ConvertList(Auctionator.Shopping.Lists.GetListByName(listName))
+  local searchTerms = PointBlankSniper.Utilities.ConvertList(Auctionator.Shopping.ListManager:GetByName(listName))
   local keysToSearchFor, keysToPrice = PointBlankSniper.Scan.GetItemKeys(searchTerms)
   self.keysToSearchFor = {}
   self.keysToPrice = keysToPrice

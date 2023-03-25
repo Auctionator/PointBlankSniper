@@ -33,7 +33,7 @@ function PointBlankSniper.Utilities.ConvertList(list)
   local CleanSearchString = PointBlankSniper.Utilities.CleanSearchString
 
   local result = {}
-  for _, entry in ipairs(list.items) do
+  for _, entry in ipairs(list:GetAllItems()) do
     local advancedParams = Auctionator.Search.SplitAdvancedSearch(entry)
     table.insert(result, {
       searchString = CleanSearchString(advancedParams.searchString),

@@ -18,7 +18,7 @@ function PointBlankSniperListScannerNameCacheMixin:SetCategories(categoryString)
 end
 
 function PointBlankSniperListScannerNameCacheMixin:SetList(listName)
-  self.searchFor = PointBlankSniper.Utilities.ConvertList(Auctionator.Shopping.Lists.GetListByName(listName))
+  self.searchFor = PointBlankSniper.Utilities.ConvertList(Auctionator.Shopping.ListManager:GetByName(listName))
 end
 
 function PointBlankSniperListScannerNameCacheMixin:SetThresholdCheck(thresholdCheck)
