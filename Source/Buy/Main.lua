@@ -135,6 +135,21 @@ function PointBlankSniperBuyFrameMixin:ViewAll()
   AuctionHouseFrame.displayMode = nil
 end
 
+function PointBlankSniperBuyFrameMixin:NameSearch()
+  if self.expectedItemKey.battlePetSpeciesID ~= 0 then
+    Auctionator.API.v1.MultiSearch(POINT_BLANK_SNIPER_L_POINT_BLANK_SNIPER, {
+      self.info.itemName
+    })
+  else
+    local item = Item:CreateFromItemID(self.expectedItemKey.itemID)
+    item:ContinueOnItemLoad(function()
+      Auctionator.API.v1.MultiSearch(POINT_BLANK_SNIPER_L_POINT_BLANK_SNIPER, {
+        item:GetItemName()
+      })
+    end)
+  end
+end
+
 function PointBlankSniperBuyFrameMixin:ReceiveEvent(eventName, ...)
   if eventName == PointBlankSniper.Events.OpenBuyView then
     local details = ...

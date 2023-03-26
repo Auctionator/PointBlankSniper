@@ -57,6 +57,17 @@
           </OnClick>
         </Scripts>
       </Button>
+      <Button parentKey="NameSearchButton" text="POINT_BLANK_SNIPER_L_NAME_SEARCH" inherits="UIPanelDynamicResizeButtonTemplate">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeKey="$parent.NormalSearch" y="-10" />
+          <Anchor point="RIGHT" x="-20" />
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            self:GetParent():NameSearch()
+          </OnClick>
+        </Scripts>
+      </Button>
     </Frames>
   </Frame>
 </Ui>

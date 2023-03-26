@@ -48,6 +48,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["BUYING"] = "Buying..."
   L["BID_ONLY"] = "Bid Only"
   L["VIEW_ALL"] = "View All"
+  L["NAME_SEARCH"] = "Name Search"
 
   L["CONFIG_BASIC_OPTIONS_TEXT"] = "Basic options for enabling features in Point Blank Sniper."
   L["CONFIG_SCAN_BEHAVIOUR"] = "Scan Behaviour"
