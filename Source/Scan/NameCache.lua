@@ -77,6 +77,7 @@ function PointBlankSniperListScannerNameCacheMixin:CacheAndProcessSearchResults(
     names = {},
     namesWaiting = 0,
     announcedReady = false,
+    missing = false,
     cachingComplete = false,
   }
   local CleanSearchString = PointBlankSniper.Utilities.CleanSearchString
@@ -91,7 +92,7 @@ function PointBlankSniperListScannerNameCacheMixin:CacheAndProcessSearchResults(
       Auctionator.AH.GetItemKeyInfo(result.itemKey, function(itemKeyInfo, wasCached)
         resultsInfo.namesWaiting = resultsInfo.namesWaiting - 1
         resultsInfo.names[index] = CleanSearchString(itemKeyInfo.itemName)
-        if resultsInfo.namesWaiting <= 0 then
+        if resultsInfo.namesWaiting == 0 then
           resultsInfo.announcedReady = true
 
           self.blankSearchResultsWaiting = self.blankSearchResultsWaiting - 1
@@ -105,13 +106,26 @@ function PointBlankSniperListScannerNameCacheMixin:CacheAndProcessSearchResults(
     end
   end
 
-  if resultsInfo.namesWaiting <= 0 and not resultsInfo.announcedReady then
+  if resultsInfo.namesWaiting == 0 and not resultsInfo.announcedReady then
     resultsInfo.announcedReady = true
 
     self.blankSearchResultsWaiting = self.blankSearchResultsWaiting - 1
     resultsInfo.cachingComplete = self:CachingCompleteCheck() or (self.thresholdCheck and self.thresholdCheck(resultsInfo.cache[#resultsInfo.cache].minPrice))
 
     self:ProcessCachedResults(resultsInfo)
+  elseif not resultsInfo.announcedReady then
+    C_Timer.After(0.2, function()
+      if resultsInfo.namesWaiting > 0 then
+        resultsInfo.missing = true
+
+        self.announcedReady = true
+        resultsInfo.namesWaiting = 0
+        self.blankSearchResultsWaiting = self.blankSearchResultsWaiting - 1
+
+        resultsInfo.cachingComplete = self:CachingCompleteCheck() or (self.thresholdCheck and self.thresholdCheck(resultsInfo.cache[#resultsInfo.cache].minPrice))
+        self:ProcessCachedResults(resultsInfo)
+      end
+    end)
   end
 end
 
@@ -179,6 +193,22 @@ function PointBlankSniperListScannerNameCacheMixin:ProcessCachedResults(resultsI
     for _, index in ipairs(order) do
       table.insert(newResultsInfo.cache, resultsInfo.cache[index])
       table.insert(newResultsInfo.names, resultsInfo.names[index])
+    end
+    resultsInfo = newResultsInfo
+  end
+
+  -- case when some items are missing their name, filter those items out
+  if resultsInfo.missing then
+    local newResultsInfo = {
+      cache = {},
+      names = {},
+      cachingComplete = resultsInfo.cachingComplete,
+    }
+    for index, name in ipairs(resultsInfo.names) do
+      if name ~= "" then
+        table.insert(newResultsInfo.cache, resultsInfo.cache[index])
+        table.insert(newResultsInfo.names, resultsInfo.names[index])
+      end
     end
     resultsInfo = newResultsInfo
   end
