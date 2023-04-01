@@ -46,7 +46,7 @@
           </OnClick>
         </Scripts>
       </Button>
-      <Button parentKey="NormalSearch" text="POINT_BLANK_SNIPER_L_VIEW_ALL" inherits="UIPanelDynamicResizeButtonTemplate">
+      <Button parentKey="NormalSearch" text="POINT_BLANK_SNIPER_L_BLIZZARD_BUY_UI" inherits="UIPanelDynamicResizeButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT" relativeKey="$parent.BuyButton" y="-10" />
           <Anchor point="RIGHT" x="-20" />
