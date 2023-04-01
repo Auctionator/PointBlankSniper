@@ -12,6 +12,8 @@ function PointBlankSniperResultsRowMixin:OnClick(button, ...)
       :Fire(self, PointBlankSniper.Events.OpenBuyView, {
         itemKey = self.rowData.itemKey,
         price = self.rowData.minPrice,
+        quantity = self.rowData.totalQuantity,
+        comparisonPrice = self.rowData.comparisonPrice
       })
       :UnregisterSource(self)
   end

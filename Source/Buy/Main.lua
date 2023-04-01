@@ -43,14 +43,23 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
     self.gotResult = true
     self.resultInfo = nil
 
+    self.buyResultsCount = C_AuctionHouse.GetCommoditySearchResultsQuantity(itemID)
     if C_AuctionHouse.GetCommoditySearchResultsQuantity(itemID) > 0 then
       self.resultInfo = C_AuctionHouse.GetCommoditySearchResultInfo(itemID, 1)
 
-      local displayPrice = math.min(self.resultInfo.unitPrice, self.expectedPrice)
-      self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(
-        GetMoneyString(displayPrice, true) ..
-        Auctionator.Utilities.CreateCountString(self.resultInfo.quantity)
-      ))
+      local displayPrice = self.resultInfo.unitPrice
+      local ghostCount = self.summaryResultsCount - self.buyResultsCount
+      if not PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SHOW_GHOST_COUNT) or displayPrice <= self.expectedPrice or ghostCount <= 0 then
+        self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(
+          GetMoneyString(displayPrice, true) ..
+          Auctionator.Utilities.CreateCountString(self.resultInfo.quantity)
+        ))
+      else
+        self.Price:SetText(POINT_BLANK_SNIPER_L_GHOST_COLON_X:format(
+          GetMoneyString(self.expectedPrice, true) ..
+          Auctionator.Utilities.CreateCountString(math.max(0, ghostCount))
+        ))
+      end
     end
     self:UpdateBuyState()
 
@@ -66,7 +75,7 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
     if C_AuctionHouse.GetItemSearchResultsQuantity(itemKey) > 0 then
       self.resultInfo = C_AuctionHouse.GetItemSearchResultInfo(itemKey, 1)
 
-      local displayPrice = math.min(self.resultInfo.buyoutAmount or self.resultInfo.bidAmount, self.expectedPrice)
+      local displayPrice = self.resultInfo.buyoutAmount or 0
       self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(GetMoneyString(displayPrice, true)))
     end
     self:UpdateBuyState()
@@ -164,6 +173,7 @@ function PointBlankSniperBuyFrameMixin:ReceiveEvent(eventName, ...)
 
     self.expectedPrice = details.price
     self.expectedItemKey = details.itemKey
+    self.summaryResultsCount = details.quantity
     self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(GetMoneyString(details.price, true)))
     self:UpdateBuyState()
     Auctionator.AH.GetItemKeyInfo(details.itemKey, function(itemKeyInfo)

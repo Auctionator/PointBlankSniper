@@ -29,6 +29,8 @@ function PointBlankSniperConfigBasicOptionsFrameMixin:OnShow()
   self.UseFlash:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_FLASH))
   self.CarryOnAfterResult:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT))
 
+  self.ShowGhostCount:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SHOW_GHOST_COUNT))
+
   self.ShowNewItemsMessages:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SHOW_NEW_ITEMS_MESSAGES))
   self.KeysSearch:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.KEYS_SEARCH))
 end
@@ -39,6 +41,8 @@ function PointBlankSniperConfigBasicOptionsFrameMixin:Save()
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.USE_BLEEP, self.UseBleep:GetChecked())
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.USE_FLASH, self.UseFlash:GetChecked())
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT, self.CarryOnAfterResult:GetChecked())
+
+  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.SHOW_GHOST_COUNT, self.ShowGhostCount:GetChecked())
 
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.SHOW_NEW_ITEMS_MESSAGES, self.ShowNewItemsMessages:GetChecked())
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.KEYS_SEARCH, self.KeysSearch:GetChecked())

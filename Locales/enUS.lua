@@ -42,6 +42,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["ITEMS_RECORDED"] = "Database has %s items/item levels not seen in preinstalled database."
 
   L["PRICE_COLON_X"] = "Price: %s"
+  L["GHOST_COLON_X"] = "Ghost: %s"
   L["WAITING"] = "Waiting..."
   L["BUY_NOW"] = "Buy Now"
   L["SOLD"] = "Sold"
@@ -55,6 +56,9 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["USE_BLEEP"] = "Play bleep tone"
   L["USE_FLASH"] = "Flash taskbar icon"
   L["CARRY_ON_AFTER_RESULT"] = "Carry on after finding item"
+
+  L["CONFIG_BUYING"] = "Buying"
+  L["SHOW_GHOST_COUNT"] = "Show ghost commodity count when available"
 
   L["CONFIG_KEYS_SEARCH_HEADING"] = "Keys Search"
   L["CONFIG_KEYS_SEARCH"] = "Do search information preprocessing needed for keys search"
