@@ -22,6 +22,15 @@ local SNIPE_RESULTS_TABLE_LAYOUT = {
     headerText = AUCTIONATOR_L_RESULTS_NAME_COLUMN,
     cellTemplate = "AuctionatorItemKeyCellTemplate"
   },
+  {
+    headerTemplate = "AuctionatorStringColumnHeaderTemplate",
+    headerParameters = { "isNew" },
+    headerText = POINT_BLANK_SNIPER_L_IS_NEW,
+    cellTemplate = "AuctionatorStringCellTemplate",
+    cellParameters = { "isNew" },
+    width = 80,
+    defaultHide = true,
+  },
 }
 
 PointBlankSniperDataProviderMixin = CreateFromMixins(AuctionatorDataProviderMixin, AuctionatorItemKeyLoadingMixin)
@@ -46,22 +55,45 @@ function PointBlankSniperDataProviderMixin:SetUpEvents()
     PointBlankSniper.Events.SnipeSearchComplete,
     PointBlankSniper.Events.SnipeSearchAbort,
   })
+
+  self.lastRound = {}
+  self.thisRound = {}
+end
+
+local function ResultKey(result)
+  return Auctionator.Utilities.ItemKeyString(result.itemKey) .. " " .. result.minPrice
+end
+
+function PointBlankSniperDataProviderMixin:ProcessThisScan(results, lastBatch)
+  local showHighlights = PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.HIGHLIGHT_NEW_RESULTS)
+  local newResults = CopyTable(results)
+  for _, r in ipairs(newResults) do
+    local key = ResultKey(r)
+    self.thisRound[key] = true
+    local isNew = not self.lastRound[key]
+    r.highlight = isNew and showHighlights
+    r.isNew = isNew and AUCTIONATOR_L_UNDERCUT_YES or AUCTIONATOR_L_UNDERCUT_NO
+  end
+  self:AppendEntries(newResults, lastBatch)
 end
 
 function PointBlankSniperDataProviderMixin:ReceiveEvent(eventName, results, ...)
   if eventName == PointBlankSniper.Events.SnipeSearchStart then
     self.onSearchStarted()
+    self.thisRound = {}
   elseif eventName == PointBlankSniper.Events.SnipeSearchNewResults then
     self.onPreserveScroll()
     self.onSearchStarted()
-    self:AppendEntries(results, false)
+    self:ProcessThisScan(results, false)
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
     self.onPreserveScroll()
     self:Reset()
-    self:AppendEntries(results, true)
+    self:ProcessThisScan(results, true)
+    self.lastRound = self.thisRound
   elseif eventName == PointBlankSniper.Events.SnipeSearchAbort then
     self.onPreserveScroll()
     self:AppendEntries({}, true)
+    self.lastRound = self.thisRound
   end
 end
 
@@ -72,6 +104,7 @@ end
 local COMPARATORS = {
   minPrice = Auctionator.Utilities.NumberComparator,
   name = Auctionator.Utilities.StringComparator,
+  isNew = Auctionator.Utilities.StringComparator,
 }
 
 function PointBlankSniperDataProviderMixin:Sort(fieldName, sortDirection)

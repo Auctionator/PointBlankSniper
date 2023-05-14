@@ -28,6 +28,7 @@ function PointBlankSniperConfigBasicOptionsFrameMixin:OnShow()
   self.UseBleep:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_BLEEP))
   self.UseFlash:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.USE_FLASH))
   self.CarryOnAfterResult:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT))
+  self.HighlightNewResults:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.HIGHLIGHT_NEW_RESULTS))
 
   self.ShowGhostCount:SetChecked(PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SHOW_GHOST_COUNT))
 
@@ -41,6 +42,7 @@ function PointBlankSniperConfigBasicOptionsFrameMixin:Save()
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.USE_BLEEP, self.UseBleep:GetChecked())
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.USE_FLASH, self.UseFlash:GetChecked())
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT, self.CarryOnAfterResult:GetChecked())
+  PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.HIGHLIGHT_NEW_RESULTS, self.HighlightNewResults:GetChecked())
 
   PointBlankSniper.Config.Set(PointBlankSniper.Config.Options.SHOW_GHOST_COUNT, self.ShowGhostCount:GetChecked())
 

@@ -1,5 +1,10 @@
 PointBlankSniperResultsRowMixin = CreateFromMixins(AuctionatorResultsRowTemplateMixin)
 
+function PointBlankSniperResultsRowMixin:Populate(rowData, ...)
+  AuctionatorResultsRowTemplateMixin.Populate(self, rowData, ...)
+  self.SelectedHighlight:SetShown(rowData.highlight)
+end
+
 function PointBlankSniperResultsRowMixin:OnClick(button, ...)
   Auctionator.Debug.Message("PointBlankSniperResultsRowMixin:OnClick", self.rowData and self.rowData.itemKey.itemID)
 

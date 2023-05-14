@@ -55,12 +55,21 @@
         </Anchors>
       </Frame>
 
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="HighlightNewResults">
+        <KeyValues>
+          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_HIGHLIGHT_NEW_RESULTS" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.CarryOnAfterResult" relativePoint="BOTTOMLEFT" />
+        </Anchors>
+      </Frame>
+
       <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="BuyingHeading">
         <KeyValues>
           <KeyValue key="headingText" value="POINT_BLANK_SNIPER_L_CONFIG_BUYING" type="global"/>
         </KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.CarryOnAfterResult" relativePoint="BOTTOMLEFT"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent.HighlightNewResults" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
 

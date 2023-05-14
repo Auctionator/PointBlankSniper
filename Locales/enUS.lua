@@ -56,6 +56,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["USE_BLEEP"] = "Play bleep tone"
   L["USE_FLASH"] = "Flash taskbar icon"
   L["CARRY_ON_AFTER_RESULT"] = "Carry on after finding item"
+  L["HIGHLIGHT_NEW_RESULTS"] = "Highlight new results"
 
   L["CONFIG_BUYING"] = "Buying"
   L["SHOW_GHOST_COUNT"] = "Show ghost commodity count when available"
@@ -65,6 +66,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["SHOW_NEW_ITEMS_MESSAGES"] = "Show new items in the database messages"
 
   L["KEYS_SEARCH_DIALOG_TEXT"] = "Search information preprocessing required to use this mode"
+  L["IS_NEW"] = "Is New?"
 
   return L
 end
