@@ -5,19 +5,19 @@ function PointBlankSniperConfigBasicOptionsFrameMixin:OnLoad()
 
   self.name = POINT_BLANK_SNIPER_L_POINT_BLANK_SNIPER
 
-  self.cancel = function()
-    self:Cancel()
-  end
-
   self.setup = false
 
-  self.okay = function()
+  self.OnCommit = function()
     if self.setup then
       self:Save()
     end
   end
+  self.OnDefault = function() end
+  self.OnRefresh = function() end
 
-  InterfaceOptions_AddCategory(self, POINT_BLANK_SNIPER_L_POINT_BLANK_SNIPER)
+  local category = Settings.RegisterCanvasLayoutCategory(self, self.name)
+  category.ID = self.name
+  Settings.RegisterAddOnCategory(category)
 end
 
 function PointBlankSniperConfigBasicOptionsFrameMixin:OnShow()
