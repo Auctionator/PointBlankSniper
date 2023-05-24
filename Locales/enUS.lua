@@ -60,6 +60,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
 
   L["CONFIG_BUYING"] = "Buying"
   L["SHOW_GHOST_COUNT"] = "Show ghost commodity count when available"
+  L["ALLOW_GHOST_PURCHASES_WARNING"] = "Permit HIGH-RISK purchase attempts of ghost commodity counts (you may lose all the invested gold)"
 
   L["CONFIG_KEYS_SEARCH_HEADING"] = "Keys Search"
   L["CONFIG_KEYS_SEARCH"] = "Do search information preprocessing needed for keys search"

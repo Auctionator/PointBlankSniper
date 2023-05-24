@@ -82,12 +82,22 @@
         </Anchors>
       </Frame>
 
+      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="AllowGhostPurchases">
+        <KeyValues>
+          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_ALLOW_GHOST_PURCHASES_WARNING" type="global" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ShowGhostCount" relativePoint="BOTTOMLEFT" />
+          <Anchor point="RIGHT" x="-20"/>
+        </Anchors>
+      </Frame>
+
       <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="KeysSearchHeading">
         <KeyValues>
           <KeyValue key="headingText" value="POINT_BLANK_SNIPER_L_CONFIG_KEYS_SEARCH_HEADING" type="global"/>
         </KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.ShowGhostCount" relativePoint="BOTTOMLEFT"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent.AllowGhostPurchases" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
 

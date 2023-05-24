@@ -12,6 +12,7 @@ PointBlankSniper.Config.Options = {
   SHOW_NEW_ITEMS_MESSAGES = "show_new_items_messages_2",
   KEYS_SEARCH = "keys_search_2",
   SHOW_GHOST_COUNT = "ghost_count",
+  ALLOW_GHOST_PURCHASES = "allow_ghost_purchases",
   COLUMNS = "columns",
 }
 
@@ -29,6 +30,7 @@ PointBlankSniper.Config.Defaults = {
   [PointBlankSniper.Config.Options.SCAN_MODE] = PointBlankSniper.Constants.ScanModes.Blank,
   [PointBlankSniper.Config.Options.KEYS_SEARCH] = false,
   [PointBlankSniper.Config.Options.SHOW_GHOST_COUNT] = false,
+  [PointBlankSniper.Config.Options.ALLOW_GHOST_PURCHASES] = false,
   [PointBlankSniper.Config.Options.COLUMNS] = {},
 }
 

@@ -30,6 +30,7 @@ function PointBlankSniperBuyFrameMixin:Reset()
   self.expectedItemKey = nil
   self.gotResult = false
   self.resultInfo = nil
+  self.ghostCount = nil
   self.buyCommodity = false
   self:UpdateBuyState()
 end
@@ -50,11 +51,15 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
       local displayPrice = self.resultInfo.unitPrice
       local ghostCount = self.summaryResultsCount - self.buyResultsCount
       if not PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.SHOW_GHOST_COUNT) or displayPrice <= self.expectedPrice or ghostCount <= 0 then
+        self.ghostCount = nil
         self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(
           GetMoneyString(displayPrice, true) ..
           Auctionator.Utilities.CreateCountString(self.resultInfo.quantity)
         ))
       else
+        if PointBlankSniper.Config.Get(PointBlankSnioper.Config.Options.ALLOW_GHOST_PURCHASE_ATTEMPTS) then
+          self.ghostCount = ghostCount
+        end
         self.Price:SetText(POINT_BLANK_SNIPER_L_GHOST_COLON_X:format(
           GetMoneyString(self.expectedPrice, true) ..
           Auctionator.Utilities.CreateCountString(math.max(0, ghostCount))
@@ -82,14 +87,15 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
 
   elseif eventName == "COMMODITY_PRICE_UPDATED" and self.buyCommodity then
     local unitPrice, totalPrice = ...
-    if unitPrice <= self.resultInfo.unitPrice and self.resultInfo.unitPrice <= self.expectedPrice then
-      C_AuctionHouse.ConfirmCommoditiesPurchase(self.expectedItemKey.itemID, self.resultInfo.quantity)
+    if self.ghostCount or (unitPrice <= self.resultInfo.unitPrice and self.resultInfo.unitPrice <= self.expectedPrice) then
+      C_AuctionHouse.ConfirmCommoditiesPurchase(self.expectedItemKey.itemID, self.ghostCount or self.resultInfo.quantity)
     else
       C_AuctionHouse.CancelCommoditiesPurchase()
     end
 
     self.buyCommodity = false
     self.resultInfo = nil
+    self.ghostCount = nil
     self:UpdateBuyState()
 
   elseif eventName == "COMMODITY_PRICE_UNAVAILABLE" and self.buyCommodity then
@@ -108,7 +114,7 @@ function PointBlankSniperBuyFrameMixin:UpdateBuyState()
 
   else
     if self.info.isCommodity then
-      self.BuyButton:SetEnabled(self.resultInfo and self.resultInfo.quantity > 0 and self.resultInfo.unitPrice <= self.expectedPrice)
+      self.BuyButton:SetEnabled(self.ghostCount or (self.resultInfo and self.resultInfo.quantity > 0 and self.resultInfo.unitPrice <= self.expectedPrice))
     else
       self.BuyButton:SetEnabled(self.resultInfo and self.resultInfo.buyoutAmount ~= nil and self.resultInfo.buyoutAmount <= self.expectedPrice)
     end
@@ -128,7 +134,7 @@ function PointBlankSniperBuyFrameMixin:BuyNow()
   assert(self.BuyButton:IsEnabled())
   if self.info.isCommodity then
     self.buyCommodity = true
-    C_AuctionHouse.StartCommoditiesPurchase(self.expectedItemKey.itemID, self.resultInfo.quantity)
+    C_AuctionHouse.StartCommoditiesPurchase(self.expectedItemKey.itemID, self.ghostCount or self.resultInfo.quantity)
   else
     C_AuctionHouse.PlaceBid(self.resultInfo.auctionID, self.resultInfo.buyoutAmount)
   end
