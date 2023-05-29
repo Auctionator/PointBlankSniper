@@ -57,7 +57,7 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
           Auctionator.Utilities.CreateCountString(self.resultInfo.quantity)
         ))
       else
-        if PointBlankSniper.Config.Get(PointBlankSnioper.Config.Options.ALLOW_GHOST_PURCHASE_ATTEMPTS) then
+        if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.ALLOW_GHOST_PURCHASES) then
           self.ghostCount = ghostCount
         end
         self.Price:SetText(POINT_BLANK_SNIPER_L_GHOST_COLON_X:format(
