@@ -7,4 +7,5 @@ PointBlankSniper.Events = {
   SnipeSearchAbort = "point_blank_sniper_search_abort",
 
   OpenBuyView = "point_blank_sniper_open_buy_frame",
+  RemoveSearchTerm = "point_blank_sniper_remove_search_term",
 }

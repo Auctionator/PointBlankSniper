@@ -24,15 +24,17 @@ function PointBlankSniperListScannerKeyCacheMixin:SetCategories(categoryString)
 end
 
 function PointBlankSniperListScannerKeyCacheMixin:SetList(listName)
+  self.listName = listName
   if PointBlankSniper.ItemKeyCache.State.orderedKeys == nil or #PointBlankSniper.ItemKeyCache.State.orderedKeys.names == 0 then
     PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_NOT_STARTING_SCAN_NO_INFO)
     return
   end
 
   local searchTerms = PointBlankSniper.Utilities.ConvertList(Auctionator.Shopping.ListManager:GetByName(listName))
-  local keysToSearchFor, keysToPrice = PointBlankSniper.Scan.GetItemKeys(searchTerms)
+  local keysToSearchFor, keysToPrice, keysToRaw = PointBlankSniper.Scan.GetItemKeys(searchTerms)
   self.keysToSearchFor = {}
   self.keysToPrice = keysToPrice
+  self.keysToRaw = keysToRaw
 
   for _, itemKey in ipairs(keysToSearchFor) do
     local check = true
@@ -105,7 +107,8 @@ function PointBlankSniperListScannerKeyCacheMixin:ScanItemKeyResults(results)
   for _, currentResult in ipairs(results) do
     if currentResult.minPrice ~= 0 then
       local check = true
-      local price = self.keysToPrice[Auctionator.Utilities.ItemKeyString(PointBlankSniper.Utilities.CleanItemKey(currentResult.itemKey))]
+      local keyString = Auctionator.Utilities.ItemKeyString(PointBlankSniper.Utilities.CleanItemKey(currentResult.itemKey))
+      local price = self.keysToPrice[keyString]
       if price == nil then
         check = check and self.priceCheck:CheckResult(currentResult.minPrice, currentResult.itemKey)
       else
@@ -114,6 +117,7 @@ function PointBlankSniperListScannerKeyCacheMixin:ScanItemKeyResults(results)
 
       if check then
         currentResult.comparisonPrice = price
+        currentResult.rawSearchTermInfo = {searchTerm = self.keysToRaw[keyString], listName = self.listName}
         table.insert(self.results, currentResult)
       end
     end

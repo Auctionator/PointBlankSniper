@@ -41,7 +41,8 @@ function PointBlankSniper.Utilities.ConvertList(list)
       minItemLevel = advancedParams.minItemLevel,
       maxItemLevel = advancedParams.maxItemLevel,
       tier = advancedParams.tier,
-      isExact = advancedParams.isExact
+      isExact = advancedParams.isExact,
+      rawSearchTerm = entry,
     })
   end
   return result

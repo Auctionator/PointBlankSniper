@@ -165,6 +165,43 @@ function PointBlankSniperBuyFrameMixin:NameSearch()
   end
 end
 
+local deleteSearchTermDialog= "point_blank_sniper_delete_search_term_dialog"
+StaticPopupDialogs[deleteSearchTermDialog] = {
+  text = "",
+  button1 = ACCEPT,
+  button2 = CANCEL,
+  timeout = 0,
+  exclusive = 1,
+  whileDead = 1,
+  hideOnEscape = 1,
+  OnAccept = function(self)
+    local list = Auctionator.Shopping.ListManager:GetByName(self.data.listName)
+    local index = list:GetIndexForItem(self.data.searchTerm)
+    if index ~= nil then
+      list:DeleteItem(index)
+      PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_SEARCH_TERM_REMOVED)
+    else
+      PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_SEARCH_TERM_ALREADY_REMOVED)
+    end
+    self.data.callback()
+  end
+}
+
+function PointBlankSniperBuyFrameMixin:RemoveSearchTerm()
+  StaticPopupDialogs[deleteSearchTermDialog].text = POINT_BLANK_SNIPER_L_DELETE_SEARCH_TERM_X:format(Auctionator.Search.PrettifySearchString(self.rawSearchTermInfo.searchTerm)):gsub("%%", "%%%%")
+  local data = CopyTable(self.rawSearchTermInfo)
+  data.callback = function()
+    self:UpdateSearchTermButtons()
+  end
+  StaticPopup_Show(deleteSearchTermDialog, nil, nil, data)
+end
+
+function PointBlankSniperBuyFrameMixin:UpdateSearchTermButtons()
+  local list = Auctionator.Shopping.ListManager:GetByName(self.rawSearchTermInfo.listName)
+  local index = list:GetIndexForItem(self.rawSearchTermInfo.searchTerm)
+  self.RemoveSearchTermButton:SetEnabled(index ~= nil)
+end
+
 function PointBlankSniperBuyFrameMixin:ReceiveEvent(eventName, ...)
   if eventName == PointBlankSniper.Events.OpenBuyView then
     local details = ...
@@ -180,8 +217,12 @@ function PointBlankSniperBuyFrameMixin:ReceiveEvent(eventName, ...)
     self.expectedPrice = details.price
     self.expectedItemKey = details.itemKey
     self.summaryResultsCount = details.quantity
+    self.SearchTerm:SetText(details.rawSearchTermInfo and Auctionator.Search.PrettifySearchString(details.rawSearchTermInfo.searchTerm))
+    self.rawSearchTermInfo = details.rawSearchTermInfo
     self.Price:SetText(POINT_BLANK_SNIPER_L_PRICE_COLON_X:format(GetMoneyString(details.price, true)))
     self:UpdateBuyState()
+    self:UpdateSearchTermButtons()
+
     Auctionator.AH.GetItemKeyInfo(details.itemKey, function(itemKeyInfo)
       self.info = itemKeyInfo
 

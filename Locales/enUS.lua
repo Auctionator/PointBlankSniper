@@ -69,5 +69,10 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["KEYS_SEARCH_DIALOG_TEXT"] = "Search information preprocessing required to use this mode"
   L["IS_NEW"] = "Is New?"
 
+  L["REMOVE_SEARCH_TERM"] = "Remove Search Term"
+  L["DELETE_SEARCH_TERM_X"] = "Are you sure you want to remove `%s` from the shopping list?"
+  L["SEARCH_TERM_REMOVED"] = "Search term removed"
+  L["SEARCH_TERM_ALREADY_REMOVED"] = "Search term already removed"
+
   return L
 end

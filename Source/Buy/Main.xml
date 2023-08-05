@@ -69,5 +69,28 @@
         </Scripts>
       </Button>
     </Frames>
+    <Layers>
+      <Layer>
+        <FontString parentKey="SearchTerm" inherits="GameFontHighlight" wordwrap="false">
+          <Anchors>
+            <Anchor point="BOTTOMLEFT" x="40" y="60" />
+            <Anchor point="RIGHT" x="-10" />
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <Frames>
+      <Button parentKey="RemoveSearchTermButton" text="POINT_BLANK_SNIPER_L_REMOVE_SEARCH_TERM" inherits="UIPanelDynamicResizeButtonTemplate">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" x="40" y="20" />
+          <Anchor point="RIGHT" x="-20" />
+        </Anchors>
+        <Scripts>
+          <OnClick>
+            self:GetParent():RemoveSearchTerm()
+          </OnClick>
+        </Scripts>
+      </Button>
+    </Frames>
   </Frame>
 </Ui>

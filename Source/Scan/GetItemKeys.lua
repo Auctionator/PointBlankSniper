@@ -7,6 +7,7 @@ function PointBlankSniper.Scan.GetItemKeys(searchTerms)
 
   local keysToSearchFor = {}
   local keysToPrice = {}
+  local keysToRaw = {}
 
   for _, search in ipairs(searchTerms) do
     local searchString = search.searchString
@@ -38,11 +39,12 @@ function PointBlankSniper.Scan.GetItemKeys(searchTerms)
             table.insert(keysToSearchFor, itemKey)
             keysToPrice[keyString] = search.price
           end
+          keysToRaw[keyString] = search.rawSearchTerm
         end
       end
       index = index + 1
     end
   end
 
-  return keysToSearchFor, keysToPrice
+  return keysToSearchFor, keysToPrice, keysToRaw
 end

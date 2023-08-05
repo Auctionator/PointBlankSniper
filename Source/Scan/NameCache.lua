@@ -18,6 +18,7 @@ function PointBlankSniperListScannerNameCacheMixin:SetCategories(categoryString)
 end
 
 function PointBlankSniperListScannerNameCacheMixin:SetList(listName)
+  self.listName = listName
   self.searchFor = PointBlankSniper.Utilities.ConvertList(Auctionator.Shopping.ListManager:GetByName(listName))
 end
 
@@ -168,6 +169,7 @@ function PointBlankSniperListScannerNameCacheMixin:DoShoppingListSearch(resultsI
       if check then
         if tIndexOf(self.results, currentResult) == nil then
           currentResult.comparisonPrice = search.price
+          currentResult.rawSearchTermInfo = {searchTerm = search.rawSearchTerm, listName = self.listName}
           table.insert(self.results, currentResult)
         end
       end
