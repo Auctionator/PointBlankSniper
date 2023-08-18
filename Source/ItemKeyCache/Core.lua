@@ -55,7 +55,9 @@ end
 
 function PointBlankSniperDataCoreFrameMixin:Initialize()
   if POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys then
-    PointBlankSniper.ItemKeyCache.State.orderedKeys = select(2, LibSerialize:Deserialize(POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys))
+    if PointBlankSniper.ItemKeyCache.State.orderedKeys == nil then
+      PointBlankSniper.ItemKeyCache.State.orderedKeys = select(2, LibSerialize:Deserialize(POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys))
+    end
   else
     PointBlankSniper.ItemKeyCache.State.orderedKeys = {
       itemKeyStrings = {},
