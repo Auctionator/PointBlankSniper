@@ -232,7 +232,13 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
       self:Stop()
       if not PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.CARRY_ON_AFTER_RESULT) and self.Alert:AnyItemsFound() then
         local results = ...
-        Auctionator.EventBus:Fire(self, PointBlankSniper.Events.OpenBuyView, {itemKey = results[1].itemKey, price = results[1].minPrice, quantity = results[1].totalQuantity, comparisonPrice = results[1].comparisonPrice})
+        Auctionator.EventBus:Fire(self, PointBlankSniper.Events.OpenBuyView, {
+          itemKey = results[1].itemKey,
+          price = results[1].minPrice,
+          quantity = results[1].totalQuantity,
+          comparisonPrice = results[1].comparisonPrice,
+          rawSearchTermInfo = results[1].rawSearchTermInfo
+        })
       end
     end
   elseif eventName == PointBlankSniper.Events.OpenBuyView then
