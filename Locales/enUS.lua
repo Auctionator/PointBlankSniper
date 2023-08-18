@@ -14,7 +14,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["BLANK_MODE_TEXT"] = "Blank (default, always works)"
   L["KEYS_MODE_TEXT"] = "Keys (fast, good for common items)"
   L["NO_GEAR_MODE_TEXT"] = "No gear (like keys, but no gear)"
-  L["THRESHOLD_MODE_TEXT"] = "Threshold (like blank, but a limit of 1|TInterface\\MoneyFrame\\UI-SilverIcon:12:12:4:0|t )"
+  L["THRESHOLD_MODE_TEXT"] = "Buyout price of exactly 1|TInterface\\MoneyFrame\\UI-SilverIcon:12:12:4:0|t"
 
   L["PRICE_SOURCE_COLON"] = "Price Source:"
   L["PERCENTAGE_COLON"] = "Percentage:"
