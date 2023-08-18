@@ -215,7 +215,13 @@ function PointBlankSniperTabFrameMixin:ReceiveEvent(eventName, ...)
       self.Scanner:Stop()
 
       local results = ...
-      Auctionator.EventBus:Fire(self, PointBlankSniper.Events.OpenBuyView, {itemKey = results[1].itemKey, price = results[1].minPrice, quantity = results[1].totalQuantity})
+      Auctionator.EventBus:Fire(self, PointBlankSniper.Events.OpenBuyView, {
+        itemKey = results[1].itemKey,
+        price = results[1].minPrice,
+        quantity = results[1].totalQuantity,
+        comparisonPrice = results[1].comparisonPrice,
+        rawSearchTermInfo = results[1].rawSearchTermInfo
+      })
     end
   elseif eventName == PointBlankSniper.Events.SnipeSearchComplete then
     self.scanTime = debugprofilestop() - self.scanStartTime
