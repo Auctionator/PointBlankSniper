@@ -181,8 +181,10 @@ end
 function PointBlankSniperListScannerNameCacheMixin:ProcessCachedResults(resultsInfo)
   if self.thresholdCheck ~= nil then
     local order = {}
-    for index, _ in ipairs(resultsInfo.cache) do
-      table.insert(order, index)
+    for index, result in ipairs(resultsInfo.cache) do
+      if not self.thresholdCheck(result.minPrice) then
+        table.insert(order, index)
+      end
     end
     table.sort(order, function(a, b)
       return resultsInfo.names[a] < resultsInfo.names[b]
