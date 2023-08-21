@@ -15,6 +15,7 @@
       <OnLoad method="OnLoad"/>
       <OnUpdate method="OnUpdate"/>
       <OnShow method="OnShow"/>
+      <OnHide method="OnHide"/>
     </Scripts>
     <Frames>
       <Frame parentKey="ScannerNameCache" inherits="PointBlankSniperListScannerNameCacheTemplate"/>

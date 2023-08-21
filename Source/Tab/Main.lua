@@ -153,6 +153,10 @@ function PointBlankSniperTabFrameMixin:OnShow()
   end
 end
 
+function PointBlankSniperTabFrameMixin:OnHide()
+  self:Hide()
+end
+
 function PointBlankSniperTabFrameMixin:StartButtonClicked()
   self.DataProvider:Reset()
   self.Alert:Reset()
