@@ -49,7 +49,7 @@ function PointBlankSniper.Utilities.ConvertList(list)
 end
 
 function PointBlankSniper.Utilities.ItemKeyStringToItemKey(itemKeyString)
-  local itemID, itemSuffix, itemLevel, battlePetSpeciesID = strsplit(" ", itemKeyString)
+  local itemID, itemSuffix, itemLevel, battlePetSpeciesID = itemKeyString:match("(%d+) (%d+) (%d+) (%d+)")
   -- Necessary to create key manually as the C_AuctionHouse function sets the
   -- itemLevel to 20 on battle pets
   return {
