@@ -12,6 +12,7 @@ function PointBlankSniperBuyFrameMixin:OnLoad()
     PointBlankSniper.Events.SnipeSearchStart,
     PointBlankSniper.Events.OpenBuyView
   })
+  Auctionator.EventBus:RegisterSource(self, "PointBlankSniperBuyFrameMixin")
 end
 
 function PointBlankSniperBuyFrameMixin:OnHide()
@@ -45,6 +46,7 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
     self.resultInfo = nil
 
     self.buyResultsCount = C_AuctionHouse.GetCommoditySearchResultsQuantity(itemID)
+    local displayedQuantity = 0
     if C_AuctionHouse.GetCommoditySearchResultsQuantity(itemID) > 0 then
       self.resultInfo = C_AuctionHouse.GetCommoditySearchResultInfo(itemID, 1)
 
@@ -56,6 +58,7 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
           GetMoneyString(displayPrice, true) ..
           Auctionator.Utilities.CreateCountString(self.resultInfo.quantity)
         ))
+        displayedQuantity = self.resultInfo.quantity
       else
         if PointBlankSniper.Config.Get(PointBlankSniper.Config.Options.ALLOW_GHOST_PURCHASES) then
           self.ghostCount = ghostCount
@@ -64,7 +67,15 @@ function PointBlankSniperBuyFrameMixin:OnEvent(eventName, ...)
           GetMoneyString(self.expectedPrice, true) ..
           Auctionator.Utilities.CreateCountString(math.max(0, ghostCount))
         ))
+        displayedQuantity = math.max(0, ghostCount)
       end
+    end
+
+    local quantityRequired = Auctionator.Search.SplitAdvancedSearch(self.rawSearchTermInfo.searchTerm).quantity
+    if quantityRequired and self.resultInfo and quantityRequired > displayedQuantity then
+      C_Timer.After(0, function()
+        Auctionator.EventBus:Fire(self, PointBlankSniper.Events.QuickStart)
+      end)
     end
     self:UpdateBuyState()
 
