@@ -1,4 +1,5 @@
 local LibSerialize = LibStub("LibSerialize")
+local LibCBOR = LibStub("LibCBOR-1.0")
 
 PointBlankSniperDataCoreFrameMixin = {}
 
@@ -54,9 +55,13 @@ function PointBlankSniperDataCoreFrameMixin:OnEvent(event, ...)
 end
 
 function PointBlankSniperDataCoreFrameMixin:Initialize()
-  if POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys then
+  if POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys or POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeysCBOR then
     if PointBlankSniper.ItemKeyCache.State.orderedKeys == nil then
-      PointBlankSniper.ItemKeyCache.State.orderedKeys = select(2, LibSerialize:Deserialize(POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys))
+      if POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeysCBOR then
+        PointBlankSniper.ItemKeyCache.State.orderedKeys = LibCBOR:Deserialize(POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeysCBOR)
+      else
+        PointBlankSniper.ItemKeyCache.State.orderedKeys = select(2, LibSerialize:Deserialize(POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys))
+      end
     end
   else
     PointBlankSniper.ItemKeyCache.State.orderedKeys = {

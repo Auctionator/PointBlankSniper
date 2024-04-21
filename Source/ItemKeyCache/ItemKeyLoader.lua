@@ -1,4 +1,5 @@
 local LibSerialize = LibStub("LibSerialize")
+local LibCBOR = LibStub("LibCBOR-1.0")
 
 PointBlankSniperDataItemKeyLoaderMixin = {}
 
@@ -76,7 +77,8 @@ function PointBlankSniperDataItemKeyLoaderMixin:ProcessCompleteNamePairs()
     names = names,
     timestamp = time(),
   }
-  POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys = LibSerialize:Serialize(PointBlankSniper.ItemKeyCache.State.orderedKeys)
+  POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeysCBOR = LibCBOR:Serialize(PointBlankSniper.ItemKeyCache.State.orderedKeys)
+  POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys = nil
 
   PointBlankSniper.ItemKeyCache.State.newKeys = self.newKeysNotInDB
   POINT_BLANK_SNIPER_ITEM_CACHE.newKeys = self.newKeysNotInDB

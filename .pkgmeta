@@ -12,3 +12,4 @@ required-dependencies:
 externals:
   Libs/LibStub: https://repos.wowace.com/wow/libstub/trunk
   Libs/LibSerialize: https://github.com/rossnichols/LibSerialize
+  Libs/LibCBOR: https://github.com/plusmouse/LibCBOR

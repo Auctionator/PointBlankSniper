@@ -1,4 +1,5 @@
 <Ui>
-  <Script file="Libs\LibStub\LibStub.lua"/>
+  <Include file="Libs\LibStub\LibStub.lua"/>
   <Include file="Libs\LibSerialize\lib.xml"/>
+  <Include file="Libs\LibCBOR\LibCBOR.lua"/>
 </Ui>
