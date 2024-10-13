@@ -39,6 +39,7 @@ local marketToName = {
   [PointBlankSniper.Constants.Market.TUJ_Region] = POINT_BLANK_SNIPER_L_TUJ_REGION,
   [PointBlankSniper.Constants.Market.TUJ_Realm] = POINT_BLANK_SNIPER_L_TUJ_REALM,
   [PointBlankSniper.Constants.Market.TSM_DBMarket] = POINT_BLANK_SNIPER_L_TSM_DBMARKET,
+  [PointBlankSniper.Constants.Market.TSM_DBRecent] = POINT_BLANK_SNIPER_L_TSM_DBRECENT,
   [PointBlankSniper.Constants.Market.TSM_DBRegionMarketAvg] = POINT_BLANK_SNIPER_L_TSM_DBREGIONMARKETAVG,
   [PointBlankSniper.Constants.Market.TSM_DBRegionSaleAvg] = POINT_BLANK_SNIPER_L_TSM_DBREGIONSALEAVG,
   [PointBlankSniper.Constants.Market.TSM_VendorSellPrice] = POINT_BLANK_SNIPER_L_TSM_VENDORSELL,
