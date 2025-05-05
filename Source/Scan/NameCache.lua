@@ -151,11 +151,13 @@ function PointBlankSniperListScannerNameCacheMixin:DoShoppingListSearch(resultsI
         check = check and currentResult.minPrice <= search.price
       end
 
-      if search.minItemLevel ~= nil then
-        check = check and currentResult.itemKey.itemLevel >= search.minItemLevel
-      end
-      if search.maxItemLevel ~= nil then
-        check = check and currentResult.itemKey.itemLevel <= search.maxItemLevel
+      if currentResult.itemKey.battlePetSpeciesID ~= 0 then
+        if search.minItemLevel ~= nil then
+          check = check and currentResult.itemKey.itemLevel >= search.minItemLevel
+        end
+        if search.maxItemLevel ~= nil then
+          check = check and currentResult.itemKey.itemLevel <= search.maxItemLevel
+        end
       end
 
       if search.tier ~= nil then
