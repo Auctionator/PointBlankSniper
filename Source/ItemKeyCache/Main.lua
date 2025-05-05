@@ -1,16 +1,17 @@
 --/run POINT_BLANK_SNIPER_ITEM_CACHE.orderedKeys.timestamp = 0
 function PointBlankSniper.ItemKeyCache.ClearCache()
   POINT_BLANK_SNIPER_ITEM_CACHE = {
-    version = 3,
+    version = 4,
     orderedKeys = nil, -- Serialized, this format
     --{
     --  itemKeyStrings = {},
     --  names = {},
-    --  timestamp = 0,
     --},
     updateInProgress = false,
-    newKeys = {},
-    missing = {},
+    newKeys = {
+      itemKeyStrings = {},
+      names = {},
+    },
   }
 end
 
@@ -36,7 +37,11 @@ function PointBlankSniper.ItemKeyCache.SetupHooks()
           table.insert(allKeyStrings[index], keyString)
         end
         cache[keyString] = true
-        table.insert(PointBlankSniper.ItemKeyCache.State.newKeys, keyString)
+        table.insert(PointBlankSniper.ItemKeyCache.State.newKeys.itemKeyStrings, keyString)
+        table.insert(PointBlankSniper.ItemKeyCache.State.newKeys.names, itemKeyInfo.itemName)
+        if #PointBlankSniper.ItemKeyCache.State.newKeys.itemKeyStrings > PointBlankSniper.Constants.KeysThreshold then
+          PointBlankSniper.ItemKeyCache.MergeKeys()
+        end
       end
     end)
   end)

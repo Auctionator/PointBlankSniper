@@ -20,5 +20,7 @@ PointBlankSniper.Constants = {
     Keys = 2,
     NoGear = 3,
     Threshold = 4,
-  }
+  },
+
+  KeysThreshold = 20000,
 }
