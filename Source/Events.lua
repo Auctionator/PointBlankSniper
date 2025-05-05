@@ -1,5 +1,6 @@
 PointBlankSniper.Events = {
   SetupKeysSearch = "point_blank_sniper_setup_keys_search",
+  MergeKeys = "point_blank_sniper_merge_keys",
 
   SnipeSearchStart = "point_blank_sniper_search_start",
   SnipeSearchNewResults = "point_blank_sniper_search_new_results",

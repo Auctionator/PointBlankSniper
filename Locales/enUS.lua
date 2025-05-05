@@ -41,6 +41,7 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["ITEM_INFO_DB_UPDATED"] = "Item information database successfully updated."
   L["NOT_STARTING_SCAN_NO_INFO"] = "Not starting scan as item information is unavailable."
   L["ITEMS_RECORDED"] = "Database has %s items/item levels not seen in preinstalled database."
+  L["ITEMS_SYNCED"] = "Database has been synced with the latest items, now has %s items/item levels."
 
   L["PRICE_COLON_X"] = "Price: %s"
   L["GHOST_COLON_X"] = "Ghost: %s"

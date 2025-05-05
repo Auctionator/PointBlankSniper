@@ -1,4 +1,4 @@
-## Interface: 100107
+## Interface: 110105, 110107
 ## Title: Point Blank Sniper
 ## Version: @project-version@
 ## Author: plusmouse
@@ -7,8 +7,5 @@
 ## SavedVariables: POINT_BLANK_SNIPER_CONFIG, POINT_BLANK_SNIPER_ITEM_CACHE
 ## Notes: Scans for great deals using a shopping list
 
-Libs.xml
-
 Locales\Manifest.xml
-Data\Main.lua
 Source\Manifest.xml

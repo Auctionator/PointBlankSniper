@@ -156,6 +156,7 @@ function PointBlankSniperTabFrameMixin:OnShow()
 end
 
 function PointBlankSniperTabFrameMixin:OnHide()
+  Auctionator.EventBus:Fire(self, PointBlankSniper.Events.MergeKeys)
   self:Hide()
 end
 

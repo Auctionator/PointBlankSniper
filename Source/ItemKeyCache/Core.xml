@@ -5,6 +5,4 @@
       <OnEvent method="OnEvent"/>
     </Scripts>
   </Frame>
-  <Frame name="PointBlankSniperDataNamesLoaderTemplate" mixin="PointBlankSniperDataItemKeyLoaderMixin" parent="AuctionHouseFrame" virtual="true">
-  </Frame>
 </Ui>
