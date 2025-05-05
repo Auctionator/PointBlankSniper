@@ -64,40 +64,12 @@
         </Anchors>
       </Frame>
 
-      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="BuyingHeading">
-        <KeyValues>
-          <KeyValue key="headingText" value="POINT_BLANK_SNIPER_L_CONFIG_BUYING" type="global"/>
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.HighlightNewResults" relativePoint="BOTTOMLEFT"/>
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="ShowGhostCount">
-        <KeyValues>
-          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_SHOW_GHOST_COUNT" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.BuyingHeading" relativePoint="BOTTOMLEFT" />
-        </Anchors>
-      </Frame>
-
-      <Frame inherits="AuctionatorConfigurationCheckbox" parentKey="AllowGhostPurchases">
-        <KeyValues>
-          <KeyValue key="labelText" value="POINT_BLANK_SNIPER_L_ALLOW_GHOST_PURCHASES_WARNING" type="global" />
-        </KeyValues>
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.ShowGhostCount" relativePoint="BOTTOMLEFT" />
-          <Anchor point="RIGHT" x="-20"/>
-        </Anchors>
-      </Frame>
-
       <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="KeysSearchHeading">
         <KeyValues>
           <KeyValue key="headingText" value="POINT_BLANK_SNIPER_L_CONFIG_KEYS_SEARCH_HEADING" type="global"/>
         </KeyValues>
         <Anchors>
-          <Anchor point="TOPLEFT" relativeKey="$parent.AllowGhostPurchases" relativePoint="BOTTOMLEFT"/>
+          <Anchor point="TOPLEFT" relativeKey="$parent.HighlightNewResults" relativePoint="BOTTOMLEFT"/>
         </Anchors>
       </Frame>
 
