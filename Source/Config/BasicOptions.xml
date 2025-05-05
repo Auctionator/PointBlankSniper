@@ -90,6 +90,34 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.KeysSearch" relativePoint="BOTTOMLEFT" />
         </Anchors>
       </Frame>
+
+      <Frame inherits="AuctionatorConfigurationHeadingFrame" parentKey="UtilitiesHeading">
+        <KeyValues>
+          <KeyValue key="headingText" value="POINT_BLANK_SNIPER_L_CONFIG_UTILITIES" type="global"/>
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ShowNewItemsMessages" relativePoint="BOTTOMLEFT"/>
+        </Anchors>
+      </Frame>
+
+      <Button parentKey="ReducePricesButton" inherits="UIPanelDynamicResizeButtonTemplate" text="POINT_BLANK_SNIPER_L_CONFIG_REDUCE_PRICES">
+        <Size x="70" y="22"/>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.UtilitiesHeading" relativePoint="BOTTOMLEFT" y="-10" x="25"/>
+        </Anchors>
+        <Scripts>
+          <OnClick>self:GetParent():ReducePrices()</OnClick>
+        </Scripts>
+      </Button>
+
+      <Frame inherits="AuctionatorDropDown" parentKey="ListName">
+        <KeyValues>
+          <KeyValue key="labelText" value="" type="string" />
+        </KeyValues>
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ReducePricesButton" relativePoint="TOPRIGHT" y="3"/>
+        </Anchors>
+      </Frame>
    </Frames>
   </Frame>
 </Ui>

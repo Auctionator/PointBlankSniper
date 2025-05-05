@@ -60,9 +60,11 @@ POINT_BLANK_SNIPER_LOCALES.enUS = function()
   L["CARRY_ON_AFTER_RESULT"] = "Carry on after finding item"
   L["HIGHLIGHT_NEW_RESULTS"] = "Highlight new results"
 
-  L["CONFIG_BUYING"] = "Buying"
-  L["SHOW_GHOST_COUNT"] = "Show ghost commodity count when available"
-  L["ALLOW_GHOST_PURCHASES_WARNING"] = "Permit HIGH-RISK purchase attempts of ghost commodity counts (you may lose all the invested gold)"
+  L["CONFIG_UTILITIES"] = "Utilities"
+  L["CONFIG_REDUCE_PRICES"] = "Reduce prices"
+  L["CONFIG_REDUCE_PRICES_NO_SOURCE"] = "No price source previously selected"
+  L["CONFIG_REDUCING_ON_X"] = "Reducing on %s with source %s"
+  L["CONFIG_ADJUSTED_X_TO_X"] = "Adjusted %s to %s"
 
   L["CONFIG_KEYS_SEARCH_HEADING"] = "Keys Search"
   L["CONFIG_KEYS_SEARCH"] = "Do search information preprocessing needed for keys search"

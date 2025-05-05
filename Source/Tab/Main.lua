@@ -33,19 +33,6 @@ function PointBlankSniperTabFrameMixin:OnLoad()
   self:UpdateStartButton()
   self:UpdateConfigs()
 end
-
-local marketToName = {
-  [PointBlankSniper.Constants.Market.None] = AUCTIONATOR_L_NONE,
-  [PointBlankSniper.Constants.Market.TUJ_Region] = POINT_BLANK_SNIPER_L_TUJ_REGION,
-  [PointBlankSniper.Constants.Market.TUJ_Realm] = POINT_BLANK_SNIPER_L_TUJ_REALM,
-  [PointBlankSniper.Constants.Market.TSM_DBMarket] = POINT_BLANK_SNIPER_L_TSM_DBMARKET,
-  [PointBlankSniper.Constants.Market.TSM_DBRecent] = POINT_BLANK_SNIPER_L_TSM_DBRECENT,
-  [PointBlankSniper.Constants.Market.TSM_DBRegionMarketAvg] = POINT_BLANK_SNIPER_L_TSM_DBREGIONMARKETAVG,
-  [PointBlankSniper.Constants.Market.TSM_DBRegionSaleAvg] = POINT_BLANK_SNIPER_L_TSM_DBREGIONSALEAVG,
-  [PointBlankSniper.Constants.Market.TSM_VendorSellPrice] = POINT_BLANK_SNIPER_L_TSM_VENDORSELL,
-  [PointBlankSniper.Constants.Market.OE_Realm] = POINT_BLANK_SNIPER_L_OE_REALM,
-  [PointBlankSniper.Constants.Market.OE_Region] = POINT_BLANK_SNIPER_L_OE_REGION,
-}
 function PointBlankSniperTabFrameMixin:SetupMarketData()
   local marketNames = {}
   local marketValues = {}
@@ -57,7 +44,7 @@ function PointBlankSniperTabFrameMixin:SetupMarketData()
 
   table.sort(marketValues)
   for _, m in ipairs(marketValues) do
-    table.insert(marketNames, marketToName[m])
+    table.insert(marketNames, PointBlankSniper.Constants.MarketToName[m])
   end
 
   -- Try to select some market that isn't None if the chosen market is

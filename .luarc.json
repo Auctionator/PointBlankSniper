@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
-  "workspace.library": ["../WoWAnnotations/vscode-wow-api/Annotations/", "../WoWAnnotations/GlobalStrings.lua"],
+  "workspace.library": ["../WoWAnnotations/vscode-wow-api/Annotations/", "../WoWAnnotations/GlobalStrings.lua", "../Auctionator"],
   "runtime.version": "Lua 5.1",
   "hint.enable": false,
   "type.weakUnionCheck": true
