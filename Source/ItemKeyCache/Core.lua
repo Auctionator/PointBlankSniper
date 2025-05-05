@@ -2,7 +2,7 @@ PointBlankSniperDataCoreFrameMixin = {}
 
 function PointBlankSniperDataCoreFrameMixin:OnLoad()
   FrameUtil.RegisterFrameForEvents(self, {
-    "VARIABLES_LOADED",
+    "ADDON_LOADED",
   })
   Auctionator.EventBus:Register(self, {
     PointBlankSniper.Events.SetupKeysSearch,
