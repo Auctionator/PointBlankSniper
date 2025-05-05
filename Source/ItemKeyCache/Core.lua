@@ -22,6 +22,9 @@ function PointBlankSniperDataCoreFrameMixin:ReceiveEvent(eventName, eventData)
       PointBlankSniper.Utilities.Message(POINT_BLANK_SNIPER_L_ITEMS_RECORDED:format(#PointBlankSniper.ItemKeyCache.State.newKeys.names))
     end
   elseif eventName == PointBlankSniper.Events.MergeKeys then
+    if PointBlankSniper.ItemKeyCache.State.NotYetLoaded then
+      return
+    end
     PointBlankSniper.ItemKeyCache.MergeKeys()
   end
 end
