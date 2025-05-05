@@ -56,7 +56,7 @@ function PointBlankSniperDataCoreFrameMixin:Initialize()
       PointBlankSniper.ItemKeyCache.State.keysSeen[k] = true
     end
   end
-  for _, key in ipairs(PointBlankSniper.ItemKeyCache.State.newKeys) do
+  for _, key in ipairs(PointBlankSniper.ItemKeyCache.State.newKeys.itemKeyStrings) do
     PointBlankSniper.ItemKeyCache.State.keysSeen[key] = true
   end
 
