@@ -17,7 +17,7 @@ function PointBlankSniper.Scan.GetItemKeys(searchTerms)
         local check = true
         local itemKey = PointBlankSniper.Utilities.ItemKeyStringToItemKey(keyString)
 
-        if itemKey.battlePetSpeciesID ~= 0 then
+        if itemKey.battlePetSpeciesID == 0 then
           if search.minItemLevel ~= nil then
             check = check and itemKey.itemLevel >= search.minItemLevel
           end
